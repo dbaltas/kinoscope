@@ -11,24 +11,65 @@ using System.Data.SQLite;
 	
 	class FirstProgram
 	{
-        static private void CreateDatabase()
+        static void Main(string[] args)
         {
-            var cfg = new Configuration();
-            cfg.Configure();
+            DisplayMenu();
 
-            cfg.AddAssembly(typeof(Researcher).Assembly);
+            while (true)
+            {
 
-            new SchemaExport(cfg).Execute(true, true, false);
+                string input = System.Console.ReadLine();
+                string[] inputArgs = input.Split(' ');
+                string command = inputArgs[0];
 
-            System.Console.WriteLine("database created!");
+                switch (command)
+                {
+                    case "exit":
+                    case "quit":
+                    case "q":
+                    case "bye":
+                        return;
+                    case "createdb":
+                        CreateDb();
+                        System.Console.WriteLine("a new SQLite database has been created");
+                        break;
+                    case "insert":
+                        InsertProject();
+                        break;
+                    case "find":
+                        if (inputArgs.Length < 2)
+                        {
+                            System.Console.WriteLine("please provide researcher id after the find command");
+                            break;
+                        }
+                        FindResearcherById(int.Parse(inputArgs[1]));
+                        break;
+                    default:
+                        DisplayMenu();
+                        break;
+                }
+            }
         }
 
-        static private void ExportDb()
+        static private void DisplayMenu()
+        {
+            System.Console.WriteLine("*********************************");
+            System.Console.WriteLine("Welcome to Observador 0.0");
+            System.Console.WriteLine("");
+            System.Console.WriteLine("  type one of the available commands to get started:");
+            System.Console.WriteLine("  exit: exit the program (aliases: 'quit', 'q', 'bye')");
+            System.Console.WriteLine("  createdb: to create the database file (ob.db)");
+            System.Console.WriteLine("  insert: insert a new researcher and project(with default values, not customizable)");
+            System.Console.WriteLine("  find [id]: find a researcher from the database. ex: 'find 1' brings the researcher with id=1");
+            System.Console.WriteLine("*********************************");
+        }
+
+        static private void CreateDb()
         {
             NHibernateHelper.BuildSchema();
         }
 
-        static private void GenerateFromScript()
+        static private void NotUsedGenerateFromScript()
 		{
 			StreamReader streamReader = new StreamReader("ob.sql");
 			string sql = streamReader.ReadToEnd();
@@ -56,25 +97,18 @@ using System.Data.SQLite;
 		
 		static private void InsertProject()
 		{
-		// null reference thrown on addProject
-            //using (var session = NHibernateHelper.OpenSession())
-            //{
-            //    using (var transaction = session.BeginTransaction())
-            //    {
-		
-					Random rnd = new Random();
-					var researcher = new Researcher { Username = "John"+rnd.Next(1,10000).ToString(), Password = "123" };
-					
-					var project = new Project { Name = "my project"+rnd.Next(1,10000).ToString() };
-					researcher.AddProject(project);
-					NHibernateHelper.OpenSession().Save(researcher);
-            //    }
-            //}
+            Random rnd = new Random();
+            var researcher = new Researcher { Username = "John" + rnd.Next(1, 10000).ToString(), Password = "123" };
+
+            var project = new Project { Name = "my project" + rnd.Next(1, 10000).ToString() };
+            researcher.AddProject(project);
+            NHibernateHelper.OpenSession().Save(researcher);
+
 			System.Console.WriteLine("inserted new project!");
-            GetByUsername((int)researcher.Id);
+            FindResearcherById((int)researcher.Id);
 		}		
 		
-		static private void GetByUsername(int id)
+		static private void FindResearcherById(int id)
 		{
             Researcher researcher = NHibernateHelper.OpenSession().Get<Researcher>(id);
 			System.Console.WriteLine(researcher.Id);
@@ -85,32 +119,6 @@ using System.Data.SQLite;
 				System.Console.WriteLine("     " + project.Id + project.Name);
 			}
 			System.Console.WriteLine("get by username!");
-		}
-
-		static void Main(string[] args)
-		{
-           //args = new string[] { "export" };
-			System.Console.WriteLine("start");
-			
-			if (args.Length == 0) {
-                //NHibernateHelper.OpenSession().
-                //var repository = new DomainRepository<Researcher>();
-                //System.Console.WriteLine(repository.Count().ToString());
-				return;
-			}
-			if (args[0] == "export") {
-				ExportDb();
-			}
-			if (args[0] == "find") {
-				GetByUsername(int.Parse(args[1]));
-			}
-			if (args[0] == "insert") {
-				InsertProject();
-            }
-			if (args[0] == "generate") {
-				GenerateFromScript();
-			}
-			System.Console.WriteLine("end");
 		}
 	}
 
