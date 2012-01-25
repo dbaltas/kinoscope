@@ -50,7 +50,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\BehavioralTestType.cs" />
+    <Compile Include="Domain\Behavior.cs" />
     <Compile Include="Domain\IDomainRepository.cs" />
+    <Compile Include="Mappings\BehavioralTestTypeMap.cs" />
+    <Compile Include="Mappings\BehaviorMap.cs" />
     <Compile Include="Repositories\NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Researcher.cs" />

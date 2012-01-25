@@ -33,6 +33,10 @@ using System.Data.SQLite;
                         CreateDb();
                         System.Console.WriteLine("a new SQLite database has been created");
                         break;
+                    case "behaviors":
+                    case "b":
+                        ListBehaviors();
+                        break;
                     case "insert":
                         InsertProject();
                         break;
@@ -59,6 +63,7 @@ using System.Data.SQLite;
             System.Console.WriteLine("  type one of the available commands to get started:");
             System.Console.WriteLine("  exit: exit the program (aliases: 'quit', 'q', 'bye')");
             System.Console.WriteLine("  createdb: to create the database file (ob.db)");
+            System.Console.WriteLine("  behaviors: list behaviors");
             System.Console.WriteLine("  insert: insert a new researcher and project(with default values, not customizable)");
             System.Console.WriteLine("  find [id]: find a researcher from the database. ex: 'find 1' brings the researcher with id=1");
             System.Console.WriteLine("*********************************");
@@ -67,6 +72,58 @@ using System.Data.SQLite;
         static private void CreateDb()
         {
             NHibernateHelper.BuildSchema();
+            addInitialData();
+        }
+
+        static private void addInitialData()
+        {
+            var behavioralTestType = new BehavioralTestType { Name = "FST", Description = "Forced Swimmend Test"};
+            NHibernateHelper.OpenSession().Save(behavioralTestType);
+
+            var behavior = new Behavior
+            {
+                Name = "Climbing",
+                DefaultKeyStroke = "1",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.TypeState
+            };
+            NHibernateHelper.OpenSession().Save(behavior);
+
+            behavior = new Behavior
+            {
+                Name = "Swimming",
+                DefaultKeyStroke = "2",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.TypeState
+            };
+            NHibernateHelper.OpenSession().Save(behavior);
+
+            behavior = new Behavior
+            {
+                Name = "Floating",
+                DefaultKeyStroke = "3",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.TypeState
+            };
+            NHibernateHelper.OpenSession().Save(behavior);
+
+            behavior = new Behavior
+            {
+                Name = "Diving",
+                DefaultKeyStroke = "4",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.TypeState
+            };
+            NHibernateHelper.OpenSession().Save(behavior);
+
+            behavior = new Behavior
+            {
+                Name = "Head Swinging",
+                DefaultKeyStroke = "5",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.TypeInstant
+            };
+            NHibernateHelper.OpenSession().Save(behavior);
         }
 
         static private void NotUsedGenerateFromScript()
@@ -120,5 +177,17 @@ using System.Data.SQLite;
 			}
 			System.Console.WriteLine("get by username!");
 		}
+
+        static private void ListBehaviors()
+        {
+            var behaviors = NHibernateHelper.OpenSession().CreateCriteria<Behavior>().List();
+
+            System.Console.WriteLine("Behaviors:");
+            foreach (Behavior behavior in behaviors)
+            {
+                System.Console.WriteLine(String.Format("{0}, {3}, {1}, {2}", behavior.Name, behavior.Type, 
+                    behavior.BehavioralTestType.Name, behavior.DefaultKeyStroke));
+            }
+        }
 	}
 
