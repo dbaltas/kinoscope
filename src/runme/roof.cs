@@ -60,7 +60,7 @@ using System.Data.SQLite;
             System.Console.WriteLine("*********************************");
             System.Console.WriteLine("Welcome to Observador 0.0");
             System.Console.WriteLine("");
-            System.Console.WriteLine("  type one of the available commands to get started:");
+            System.Console.WriteLine("  TYPE ONE of the available COMMANDS to get started:");
             System.Console.WriteLine("  exit: exit the program (aliases: 'quit', 'q', 'bye')");
             System.Console.WriteLine("  createdb: to create the database file (ob.db)");
             System.Console.WriteLine("  behaviors: list behaviors");
@@ -158,25 +158,44 @@ using System.Data.SQLite;
             var researcher = new Researcher { Username = "John" + rnd.Next(1, 10000).ToString(), Password = "123" };
 
             var project = new Project { Name = "my project" + rnd.Next(1, 10000).ToString() };
-            researcher.AddProject(project);
-            NHibernateHelper.OpenSession().Save(researcher);
+            var behavioralTestType = NHibernateHelper.OpenSession().Get<BehavioralTestType>(1);
+            var behavioralTest = new BehavioralTest { Name = "first test", Project = project, BehavioralTestType = behavioralTestType};
 
-			System.Console.WriteLine("inserted new project!");
+            project.AddBehavioralTest(behavioralTest);
+            researcher.AddProject(project);
+
+            NHibernateHelper.OpenSession().Save(researcher);
+            //NHibernateHelper.OpenSession().Save(behavioralTest);
+
+			System.Console.WriteLine("inserted new researcher with project!");
             FindResearcherById((int)researcher.Id);
 		}		
 		
 		static private void FindResearcherById(int id)
 		{
             Researcher researcher = NHibernateHelper.OpenSession().Get<Researcher>(id);
-			System.Console.WriteLine(researcher.Id);
-			System.Console.WriteLine("projects:");
+            if (researcher == null)
+            {
+                System.Console.WriteLine("no researcher with this ID");
+                return;
+            }
+            System.Console.WriteLine("Researcher:");
+            System.Console.WriteLine(String.Format("  username: {1}, id:{0}", researcher.Id, researcher.Username));
+            System.Console.WriteLine("");
+			System.Console.WriteLine("  projects:");
 			/* lazy loading issue*/
 			foreach (var project in researcher.Projects)
 			{
-				System.Console.WriteLine("     " + project.Id + project.Name);
+                System.Console.WriteLine(String.Format("     name:{1} id:{0}", project.Id, project.Name));
+                System.Console.WriteLine("     tests:"); 
+                foreach (var behavioralTest in project.BehavioralTests)
+                {
+                    System.Console.WriteLine(String.Format("       name:{0}, {1}", behavioralTest.Name, behavioralTest.BehavioralTestType.Name));
+                }
 			}
-			System.Console.WriteLine("get by username!");
-		}
+            System.Console.WriteLine("");
+            System.Console.WriteLine("");
+        }
 
         static private void ListBehaviors()
         {

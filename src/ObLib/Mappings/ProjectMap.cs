@@ -10,6 +10,9 @@ namespace ObLib.Domain
             Map(x => x.Name);
             References(x => x.Researcher).Column("ResearcherId");
             Map(x => x.Tm);
+            HasMany(x => x.BehavioralTests).KeyColumn("ProjectID")
+                            .Cascade.All()
+                            .Inverse();
         }
     }
 }
