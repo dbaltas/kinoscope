@@ -48,6 +48,9 @@ using System.Data.SQLite;
                         }
                         FindResearcherById(int.Parse(inputArgs[1]));
                         break;
+                    case "all":
+                        ListResearchers();
+                        break;
                     default:
                         DisplayMenu();
                         break;
@@ -66,6 +69,7 @@ using System.Data.SQLite;
             System.Console.WriteLine("  behaviors: list behaviors");
             System.Console.WriteLine("  insert: insert a new researcher and project(with default values, not customizable)");
             System.Console.WriteLine("  find [id]: find a researcher from the database. ex: 'find 1' brings the researcher with id=1");
+            System.Console.WriteLine("  all: display all researchers");
             System.Console.WriteLine("*********************************");
         }
 
@@ -78,7 +82,7 @@ using System.Data.SQLite;
         static private void addInitialData()
         {
             var behavioralTestType = new BehavioralTestType { Name = "FST", Description = "Forced Swimmend Test"};
-            NHibernateHelper.OpenSession().Save(behavioralTestType);
+            behavioralTestType.Save();
 
             var behavior = new Behavior
             {
@@ -87,7 +91,7 @@ using System.Data.SQLite;
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.TypeState
             };
-            NHibernateHelper.OpenSession().Save(behavior);
+            behavior.Save();
 
             behavior = new Behavior
             {
@@ -96,7 +100,7 @@ using System.Data.SQLite;
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.TypeState
             };
-            NHibernateHelper.OpenSession().Save(behavior);
+            behavior.Save();
 
             behavior = new Behavior
             {
@@ -105,7 +109,7 @@ using System.Data.SQLite;
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.TypeState
             };
-            NHibernateHelper.OpenSession().Save(behavior);
+            behavior.Save();
 
             behavior = new Behavior
             {
@@ -114,7 +118,7 @@ using System.Data.SQLite;
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.TypeState
             };
-            NHibernateHelper.OpenSession().Save(behavior);
+            behavior.Save();
 
             behavior = new Behavior
             {
@@ -123,7 +127,7 @@ using System.Data.SQLite;
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.TypeInstant
             };
-            NHibernateHelper.OpenSession().Save(behavior);
+            behavior.Save();
         }
 
         static private void NotUsedGenerateFromScript()
@@ -142,16 +146,6 @@ using System.Data.SQLite;
 			System.Console.WriteLine("created database file from sql file");		
 		}
 		
-		static private void InsertResearcher()
-		{
-			Random rnd = new Random();
-			var researcher = new Researcher { Username = "John"+rnd.Next(1,10000).ToString(), Password = "123" };
-            //var repository = new DomainRepository<Researcher>();
-            //repository.Add(researcher);
-            NHibernateHelper.OpenSession().Save(researcher);
-			System.Console.WriteLine("inserted new researcher!");
-		}			
-		
 		static private void InsertProject()
 		{
             Random rnd = new Random();
@@ -164,13 +158,22 @@ using System.Data.SQLite;
             project.AddBehavioralTest(behavioralTest);
             researcher.AddProject(project);
 
-            NHibernateHelper.OpenSession().Save(researcher);
-            //NHibernateHelper.OpenSession().Save(behavioralTest);
+            researcher.Save();
 
 			System.Console.WriteLine("inserted new researcher with project!");
             FindResearcherById((int)researcher.Id);
-		}		
-		
+		}
+
+        static private void ListResearchers()
+        {
+            var researchers = Researcher.All();
+
+            foreach (Researcher researcher in researchers)
+            {
+                FindResearcherById(researcher.Id);
+            }
+        }
+
 		static private void FindResearcherById(int id)
 		{
             Researcher researcher = NHibernateHelper.OpenSession().Get<Researcher>(id);
@@ -199,7 +202,7 @@ using System.Data.SQLite;
 
         static private void ListBehaviors()
         {
-            var behaviors = NHibernateHelper.OpenSession().CreateCriteria<Behavior>().List();
+            var behaviors = Behavior.All();
 
             System.Console.WriteLine("Behaviors:");
             foreach (Behavior behavior in behaviors)

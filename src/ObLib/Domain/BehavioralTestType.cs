@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ObLib.Domain
 {
-	public class BehavioralTestType
+    public class BehavioralTestType : ActiveRecordBase<BehavioralTestType>
 	{
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }

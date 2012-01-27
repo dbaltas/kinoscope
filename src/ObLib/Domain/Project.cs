@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ObLib.Domain
 {
-    public class Project
+    public class Project : ActiveRecordBase<Project>
     {
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }

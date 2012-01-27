@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ObLib.Domain
 {
-	public class Behavior
+	public class Behavior : ActiveRecordBase<Behavior>
 	{
         public const string TypeState = "State";
         public const string TypeInstant = "Instant";
