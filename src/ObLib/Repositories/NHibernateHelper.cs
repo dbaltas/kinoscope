@@ -12,6 +12,8 @@ namespace ObLib.Repositories
 	{
         private const string DbFile = "ob.db";
 
+        private static ISession _openSession;
+
         private static ISessionFactory _sessionFactory;
 
 		private static ISessionFactory SessionFactory
@@ -50,10 +52,14 @@ namespace ObLib.Repositories
             new SchemaExport(configuration.BuildConfiguration())
                 .Create(false, true);
         }
-		
+
 		public static ISession OpenSession()
 		{
-			return SessionFactory.OpenSession();
+            if (_openSession == null)
+            {
+                _openSession = SessionFactory.OpenSession();
+            }
+            return _openSession;
 		}
 	}
 

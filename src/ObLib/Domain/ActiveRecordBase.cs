@@ -18,10 +18,14 @@ namespace ObLib.Domain
             return NHibernateHelper.OpenSession().CreateCriteria<ActiveRecordBase<T>>().List();
         }
 
+        public static T Find(Int32 id)
+        {
+            return NHibernateHelper.OpenSession().Get<T>(id);
+        }
+
         public virtual void Save()
         {
             NHibernateHelper.OpenSession().Save(this);
         }
-
     }
 }

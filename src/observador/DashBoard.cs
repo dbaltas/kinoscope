@@ -26,16 +26,27 @@ namespace observador
             Application.Exit();
         }
 
-        private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
+        private void bQuit_Click(object sender, EventArgs e)
         {
-            AdminResearchers form = new AdminResearchers();
-            form.Show();
+            Application.Exit();
         }
 
         private void bCreateDatabase_Click(object sender, EventArgs e)
         {
             NHibernateHelper.BuildSchema();
             SeedData.AddInitialData();
+        }
+
+        private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdminResearchers form = new AdminResearchers();
+            form.Show();
+        }
+
+        private void bResearchers_Click(object sender, EventArgs e)
+        {
+            AdminResearchers form = new AdminResearchers();
+            form.Show();
         }
     }
 }

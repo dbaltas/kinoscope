@@ -38,6 +38,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bCreateDatabase = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.bResearchers = new System.Windows.Forms.Button();
+            this.bQuit = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +51,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(781, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(906, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -99,10 +101,10 @@
             // 
             // bCreateDatabase
             // 
-            this.bCreateDatabase.Location = new System.Drawing.Point(512, 81);
+            this.bCreateDatabase.Location = new System.Drawing.Point(718, 60);
             this.bCreateDatabase.Name = "bCreateDatabase";
             this.bCreateDatabase.Size = new System.Drawing.Size(162, 84);
-            this.bCreateDatabase.TabIndex = 1;
+            this.bCreateDatabase.TabIndex = 2;
             this.bCreateDatabase.Text = "create database";
             this.bCreateDatabase.UseVisualStyleBackColor = true;
             this.bCreateDatabase.Click += new System.EventHandler(this.bCreateDatabase_Click);
@@ -110,17 +112,39 @@
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.label1.Location = new System.Drawing.Point(66, 45);
+            this.label1.Location = new System.Drawing.Point(280, 60);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(400, 120);
+            this.label1.Size = new System.Drawing.Size(432, 120);
             this.label1.TabIndex = 2;
             this.label1.Text = resources.GetString("label1.Text");
+            // 
+            // bResearchers
+            // 
+            this.bResearchers.Location = new System.Drawing.Point(55, 60);
+            this.bResearchers.Name = "bResearchers";
+            this.bResearchers.Size = new System.Drawing.Size(162, 84);
+            this.bResearchers.TabIndex = 1;
+            this.bResearchers.Text = "researchers";
+            this.bResearchers.UseVisualStyleBackColor = true;
+            this.bResearchers.Click += new System.EventHandler(this.bResearchers_Click);
+            // 
+            // bQuit
+            // 
+            this.bQuit.Location = new System.Drawing.Point(718, 180);
+            this.bQuit.Name = "bQuit";
+            this.bQuit.Size = new System.Drawing.Size(162, 84);
+            this.bQuit.TabIndex = 4;
+            this.bQuit.Text = "Exit";
+            this.bQuit.UseVisualStyleBackColor = true;
+            this.bQuit.Click += new System.EventHandler(this.bQuit_Click);
             // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(781, 208);
+            this.ClientSize = new System.Drawing.Size(906, 276);
+            this.Controls.Add(this.bQuit);
+            this.Controls.Add(this.bResearchers);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bCreateDatabase);
             this.Controls.Add(this.menuStrip1);
@@ -145,5 +169,7 @@
         private System.Windows.Forms.ToolStripMenuItem researchersToolStripMenuItem;
         private System.Windows.Forms.Button bCreateDatabase;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bResearchers;
+        private System.Windows.Forms.Button bQuit;
     }
 }
