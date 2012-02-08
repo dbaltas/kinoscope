@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using ObLib.Repositories;
@@ -25,7 +26,22 @@ namespace ObLib.Domain
 
         public virtual void Save()
         {
-            NHibernateHelper.OpenSession().Save(this);
+            ISession session = NHibernateHelper.OpenSession();
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Save(this);
+                transaction.Commit();
+            }
+        }
+
+        public virtual void Delete()
+        {
+            ISession session = NHibernateHelper.OpenSession();
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Delete(this);
+                transaction.Commit();
+            }
         }
     }
 }

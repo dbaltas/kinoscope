@@ -13,9 +13,19 @@ namespace observador
 {
     public partial class AdminResearcher : Form
     {
+        private Researcher _researcher = null;
+
         public AdminResearcher()
         {
             InitializeComponent();
+        }
+
+        public AdminResearcher(Researcher researcher) : this()
+        {
+            _researcher = researcher;
+            txtUsername.Text = researcher.Username;
+            txtPassword.Text = researcher.Password;
+            txtConfirmPassword.Text = researcher.Password;
         }
 
         private void bCancel_Click(object sender, EventArgs e)
@@ -25,7 +35,7 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            Researcher researcher = new Researcher();
+            Researcher researcher = _researcher ?? new Researcher();
             researcher.Username = txtUsername.Text;
             researcher.Password = txtPassword.Text;
             researcher.Save();

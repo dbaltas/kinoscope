@@ -17,21 +17,12 @@ namespace observador
         public AdminResearchers()
         {
             InitializeComponent();
+            dgvResearchers.AutoGenerateColumns = false;
         }
 
         private void LoadForm()
         {
-            var researchers = Researcher.All();
-            DataGridViewRow row = new DataGridViewRow();
-
-            dgvResearchers.Rows.Clear();
-
-            foreach (Researcher researcher in researchers)
-            {
-                string[] row1 = new string[] { researcher.Id.ToString(), 
-                    researcher.Username, researcher.Projects.Count().ToString() };
-                dgvResearchers.Rows.Add(row1);
-            }
+            dgvResearchers.DataSource = Researcher.All();
         }
 
         private void AdminResearchers_Load(object sender, EventArgs e)
@@ -47,19 +38,29 @@ namespace observador
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
             AdminResearcher form = new AdminResearcher();
-            form.Show();
+            form.ShowDialog();
+            LoadForm();
+        }
+
+        private void toolStripButtonEdit_Click(object sender, EventArgs e)
+        {
+            AdminResearcher form = new AdminResearcher((Researcher)dgvResearchers.CurrentRow.DataBoundItem);
+            form.ShowDialog();
+            LoadForm();
         }
 
         private void toolStripButtonRemove_Click(object sender, EventArgs e)
         {
-            DataGridViewRow rowToDelete = dgvResearchers.CurrentRow;
+            Researcher researcherToDelete = (Researcher)dgvResearchers.CurrentRow.DataBoundItem;
 
-            String deleteMsg = String.Format("Are you sure you want to delete user {0}?", rowToDelete.Cells["username"].Value.ToString());
+            String deleteMsg = String.Format("Are you sure you want to delete user {0}?", researcherToDelete.Username);
             DialogResult dialogResult = MessageBox.Show(deleteMsg, "Delete Researcher", MessageBoxButtons.YesNo);
             if (dialogResult == System.Windows.Forms.DialogResult.No) {
                 return;
             }
-            MessageBox.Show("method not implemented");
+
+            researcherToDelete.Delete();
+            LoadForm();
         }
 
         private void toolStripButtonRefresh_Click(object sender, EventArgs e)
