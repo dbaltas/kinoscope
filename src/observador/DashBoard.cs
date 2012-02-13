@@ -48,5 +48,16 @@ namespace observador
             AdminResearchers form = new AdminResearchers();
             form.Show();
         }
+
+        private void DashBoard_Load(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.ShowDialog();
+
+            if(!login.IsUserAuthenticated)
+            {
+                Application.Exit();
+            }
+        }
     }
 }

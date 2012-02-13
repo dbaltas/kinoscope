@@ -13,6 +13,8 @@ namespace observador
 {
     public partial class Login : ObWin.Form
     {
+        public bool IsUserAuthenticated { get; private set; }
+
         public Login()
         {
             InitializeComponent();
@@ -20,26 +22,14 @@ namespace observador
 
         private void bCancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            IsUserAuthenticated = false;
+            Close();
         }
 
         private void bLogin_Click(object sender, EventArgs e)
         {
-            DashBoard form = new DashBoard();
-            if (IsUSerAuthenticated())
-            {
-                form.ShowDialog();
-            }
-        }
-
-        private bool IsUSerAuthenticated()
-        {
-            return true;
-        }
-
-        private void bLogin_Click_1(object sender, EventArgs e)
-        {
-
+            IsUserAuthenticated = true;
+            Close();
         }
     }
 }
