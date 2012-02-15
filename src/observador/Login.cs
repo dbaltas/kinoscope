@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ObLib.Domain;
 using ObWin;
 
 namespace observador
@@ -28,7 +29,12 @@ namespace observador
 
         private void bLogin_Click(object sender, EventArgs e)
         {
+            Researcher.Authenticate(txtUsername.Text, txtPassword.Text);
             IsUserAuthenticated = true;
+            if (Researcher.Current() == null)
+            {
+                MessageBox.Show("user was not authenticated, (re)create the database and login as username:admin password:123");
+            }
             Close();
         }
     }

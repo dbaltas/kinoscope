@@ -40,6 +40,14 @@ using System.Data.SQLite;
                     case "insert":
                         InsertProject();
                         break;
+                    case "auth":
+                        if (inputArgs.Length < 3)
+                        {
+                            System.Console.WriteLine("please provide valid username and password");
+                            break;
+                        }
+                        AuthenticateResearcher(inputArgs[1].ToString(), inputArgs[2].ToString());
+                        break;
                     case "find":
                         if (inputArgs.Length < 2)
                         {
@@ -58,10 +66,29 @@ using System.Data.SQLite;
             }
         }
 
+        private static void AuthenticateResearcher(string username, string password)
+        {
+            Researcher researcher = Researcher.Authenticate(username, password);
+            if (researcher == null)
+            {
+                System.Console.WriteLine("error: user could not be authenticated");
+                return;
+            }
+            System.Console.WriteLine("OK: user authenticated");
+        }
+
         static private void DisplayMenu()
         {
             System.Console.WriteLine("*********************************");
-            System.Console.WriteLine("Welcome to Observador 0.0");
+            if (Researcher.Current() != null)
+            {
+                System.Console.WriteLine(String.Format("Welcome {0}", 
+                    Researcher.Current().Username));
+            }
+            else
+            {
+                System.Console.WriteLine("Welcome to Observador 0.0");
+            }
             System.Console.WriteLine("");
             System.Console.WriteLine("  TYPE ONE of the available COMMANDS to get started:");
             System.Console.WriteLine("  exit: exit the program (aliases: 'quit', 'q', 'bye')");
@@ -69,6 +96,7 @@ using System.Data.SQLite;
             System.Console.WriteLine("  behaviors: list behaviors");
             System.Console.WriteLine("  insert: insert a new researcher and project(with default values, not customizable)");
             System.Console.WriteLine("  find [id]: find a researcher from the database. ex: 'find 1' brings the researcher with id=1");
+            System.Console.WriteLine("  auth: authenticate researcher, provide username, password");
             System.Console.WriteLine("  all: display all researchers");
             System.Console.WriteLine("*********************************");
         }
@@ -149,7 +177,7 @@ using System.Data.SQLite;
 		static private void InsertProject()
 		{
             Random rnd = new Random();
-            var researcher = new Researcher { Username = "John" + rnd.Next(1, 10000).ToString(), Password = "123" };
+            var researcher = new Researcher { Username = "john" + rnd.Next(1, 10000).ToString(), Password = "123" };
 
             var project = new Project { Name = "my project" + rnd.Next(1, 10000).ToString() };
             var behavioralTestType = NHibernateHelper.OpenSession().Get<BehavioralTestType>(1);

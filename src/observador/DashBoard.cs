@@ -58,6 +58,10 @@ namespace observador
             {
                 Application.Exit();
             }
+            if (Researcher.Current() != null)
+            {
+                tssResearcher.Text = String.Format("Researcher {0} logged in",  Researcher.Current().Username);
+            }
         }
     }
 }

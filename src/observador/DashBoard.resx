@@ -128,4 +128,7 @@ Also one default researcher with one project will be inserted.
 To verify that the data is ok, you can visit the researchers 
 from the admin menu and expect to find one row there.</value>
   </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>132, 17</value>
+  </metadata>
 </root>
