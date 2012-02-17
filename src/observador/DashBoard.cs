@@ -43,6 +43,12 @@ namespace observador
             form.Show();
         }
 
+        private void myProjectsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProjectListForm form = new ProjectListForm();
+            form.Show();
+        }
+
         private void bResearchers_Click(object sender, EventArgs e)
         {
             AdminResearchers form = new AdminResearchers();

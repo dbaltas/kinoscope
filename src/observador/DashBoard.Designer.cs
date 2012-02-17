@@ -42,6 +42,7 @@
             this.bQuit = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
+            this.myProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +51,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.homeToolStripMenuItem,
+            this.myProjectsToolStripMenuItem,
             this.adminToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -156,6 +158,13 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
+            // myProjectsToolStripMenuItem
+            // 
+            this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
+            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.myProjectsToolStripMenuItem.Text = "My Projects";
+            this.myProjectsToolStripMenuItem.Click += new System.EventHandler(this.myProjectsToolStripMenuItem_Click);
+            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,5 +204,6 @@
         private System.Windows.Forms.Button bQuit;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tssResearcher;
+        private System.Windows.Forms.ToolStripMenuItem myProjectsToolStripMenuItem;
     }
 }
