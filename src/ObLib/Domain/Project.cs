@@ -23,6 +23,5 @@ namespace ObLib.Domain
             behavioralTest.Project = this;
             BehavioralTests.Add(behavioralTest);
         }
-
     }
 }

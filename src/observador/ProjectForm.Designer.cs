@@ -32,6 +32,7 @@
             this.bSave = new System.Windows.Forms.Button();
             this.lName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.bCreateFSTProject = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // bCancel
@@ -71,11 +72,22 @@
             this.txtName.Size = new System.Drawing.Size(141, 20);
             this.txtName.TabIndex = 4;
             // 
+            // bCreateFSTProject
+            // 
+            this.bCreateFSTProject.Location = new System.Drawing.Point(155, 90);
+            this.bCreateFSTProject.Name = "bCreateFSTProject";
+            this.bCreateFSTProject.Size = new System.Drawing.Size(75, 23);
+            this.bCreateFSTProject.TabIndex = 7;
+            this.bCreateFSTProject.Text = "create FST";
+            this.bCreateFSTProject.UseVisualStyleBackColor = true;
+            this.bCreateFSTProject.Click += new System.EventHandler(this.bCreateFst_Click);
+            // 
             // ProjectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(348, 139);
+            this.Controls.Add(this.bCreateFSTProject);
             this.Controls.Add(this.lName);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.bSave);
@@ -93,5 +105,6 @@
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.Label lName;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Button bCreateFSTProject;
     }
 }

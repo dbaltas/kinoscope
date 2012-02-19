@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ObLib.Domain;
+using ObLib;
 
 namespace observador
 {
@@ -41,6 +42,12 @@ namespace observador
                 Researcher.Current().AddProject(project);
             }
             Researcher.Current().Save();
+            this.Close();
+        }
+
+        private void bCreateFst_Click(object sender, EventArgs e)
+        {
+            SeedData.CreateDefaultFst(Researcher.Current(), txtName.Text);
             this.Close();
         }
     }

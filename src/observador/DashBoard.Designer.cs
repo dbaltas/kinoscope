@@ -33,8 +33,10 @@
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.entitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.researchersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bCreateDatabase = new System.Windows.Forms.Button();
@@ -43,7 +45,6 @@
             this.bQuit = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
-            this.createDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +54,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.homeToolStripMenuItem,
             this.myProjectsToolStripMenuItem,
+            this.entitiesToolStripMenuItem,
             this.adminToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -83,6 +85,12 @@
             this.myProjectsToolStripMenuItem.Text = "My Projects";
             this.myProjectsToolStripMenuItem.Click += new System.EventHandler(this.myProjectsToolStripMenuItem_Click);
             // 
+            // entitiesToolStripMenuItem
+            // 
+            this.entitiesToolStripMenuItem.Name = "entitiesToolStripMenuItem";
+            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.entitiesToolStripMenuItem.Text = "Entities";
+            // 
             // adminToolStripMenuItem
             // 
             this.adminToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -98,6 +106,13 @@
             this.researchersToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
+            // 
+            // createDatabaseToolStripMenuItem
+            // 
+            this.createDatabaseToolStripMenuItem.Name = "createDatabaseToolStripMenuItem";
+            this.createDatabaseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.createDatabaseToolStripMenuItem.Text = "CreateDatabase";
+            this.createDatabaseToolStripMenuItem.Click += new System.EventHandler(this.createDatabaseToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -167,13 +182,6 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
-            // createDatabaseToolStripMenuItem
-            // 
-            this.createDatabaseToolStripMenuItem.Name = "createDatabaseToolStripMenuItem";
-            this.createDatabaseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
-            this.createDatabaseToolStripMenuItem.Text = "CreateDatabase";
-            this.createDatabaseToolStripMenuItem.Click += new System.EventHandler(this.createDatabaseToolStripMenuItem_Click);
-            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -215,5 +223,6 @@
         private System.Windows.Forms.ToolStripStatusLabel tssResearcher;
         private System.Windows.Forms.ToolStripMenuItem myProjectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createDatabaseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem entitiesToolStripMenuItem;
     }
 }

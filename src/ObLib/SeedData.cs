@@ -63,6 +63,79 @@ namespace ObLib
             researcher.Save();
         }
 
+
+        public static void CreateDefaultFst(Researcher researcher, String name)
+        {
+            if (researcher == null)
+            {
+                Logger.logError("Invalod Researcher");
+                return;
+            }
+
+            var project = new Project { Name = name, Tm = DateTime.Now };
+
+            var preTest = new BehavioralTest
+            {
+                Name = "preTest",
+                Project = project,
+                BehavioralTestType = BehavioralTestType.Fst,
+                Tm = DateTime.Now
+            };
+
+            project.AddBehavioralTest(preTest);
+
+
+            var test = new BehavioralTest
+            {
+                Name = "test",
+                Project = project,
+                BehavioralTestType = BehavioralTestType.Fst,
+                Tm = DateTime.Now
+            };
+            project.AddBehavioralTest(test);
+
+            Researcher.Current().AddProject(project);
+            Researcher.Current().Save();
+
+            var preTestSession = new Session
+            {
+                Name = "default",
+                BehavioralTest = preTest,
+                Tm = DateTime.Now
+            };
+
+            preTestSession.Save();
+
+            var preTestTrial = new Trial
+            {
+                Name = "Default trial",
+                Session = preTestSession,
+                Duration = 15 * 60,
+                Tm = DateTime.Now
+            };
+
+            preTestTrial.Save();
+
+            var testSession = new Session
+            {
+                Name = "default",
+                BehavioralTest = test,
+                Tm = DateTime.Now
+            };
+
+            testSession.Save();
+
+            var testTrial = new Trial
+            {
+                Name = "Default trial",
+                Session = preTestSession,
+                Duration = 5 * 60,
+                Tm = DateTime.Now
+            };
+
+            testTrial.Save();
+        }
+
         static private void InsertProject()
         {
             Random rnd = new Random();
