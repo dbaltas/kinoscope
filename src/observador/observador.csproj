@@ -46,17 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminResearcher.cs">
+    <Compile Include="Admin\ResearcherForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdminResearcher.Designer.cs">
-      <DependentUpon>AdminResearcher.cs</DependentUpon>
+    <Compile Include="Admin\ResearcherForm.Designer.cs">
+      <DependentUpon>ResearcherForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdminResearchers.cs">
+    <Compile Include="Admin\ResearcherListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdminResearchers.Designer.cs">
-      <DependentUpon>AdminResearchers.cs</DependentUpon>
+    <Compile Include="Admin\ResearcherListForm.Designer.cs">
+      <DependentUpon>ResearcherListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ProjectListForm.cs">
       <SubType>Form</SubType>
@@ -84,12 +84,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SeedData.cs" />
-    <EmbeddedResource Include="AdminResearcher.resx">
-      <DependentUpon>AdminResearcher.cs</DependentUpon>
+    <EmbeddedResource Include="Admin\ResearcherForm.resx">
+      <DependentUpon>ResearcherForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdminResearchers.resx">
-      <DependentUpon>AdminResearchers.cs</DependentUpon>
+    <EmbeddedResource Include="Admin\ResearcherListForm.resx">
+      <DependentUpon>ResearcherListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectListForm.resx">
       <DependentUpon>ProjectListForm.cs</DependentUpon>

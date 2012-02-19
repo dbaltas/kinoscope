@@ -8,13 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 
 using ObLib.Domain;
-using ObLib.Repositories;
 
 namespace observador
 {
-    public partial class AdminResearchers : Form
+    public partial class AdminResearcherListForm : Form
     {
-        public AdminResearchers()
+        public AdminResearcherListForm()
         {
             InitializeComponent();
             dgvResearchers.AutoGenerateColumns = false;
@@ -37,14 +36,14 @@ namespace observador
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
         {
-            AdminResearcher form = new AdminResearcher();
+            AdminResearcherForm form = new AdminResearcherForm();
             form.ShowDialog();
             LoadForm();
         }
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
-            AdminResearcher form = new AdminResearcher((Researcher)dgvResearchers.CurrentRow.DataBoundItem);
+            AdminResearcherForm form = new AdminResearcherForm((Researcher)dgvResearchers.CurrentRow.DataBoundItem);
             form.ShowDialog();
             LoadForm();
         }

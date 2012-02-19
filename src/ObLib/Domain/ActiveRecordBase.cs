@@ -6,7 +6,6 @@ using System.Text;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using ObLib.Repositories;
 using ObLib.Domain;
 
 namespace ObLib.Domain

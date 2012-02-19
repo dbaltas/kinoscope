@@ -5,8 +5,6 @@ using System.Text;
 
 using NHibernate.Criterion;
 
-using ObLib.Repositories;
-
 namespace ObLib.Domain
 {
     public class Researcher : ActiveRecordBase<Researcher>

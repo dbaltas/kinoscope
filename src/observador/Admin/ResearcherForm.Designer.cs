@@ -1,6 +1,6 @@
 ﻿namespace observador
 {
-    partial class AdminResearcher
+    partial class AdminResearcherForm
     {
         /// <summary>
         /// Required designer variable.

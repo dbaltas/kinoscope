@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 
 using ObLib.Domain;
-using ObLib.Repositories;
 
-namespace observador
+namespace ObLib
 {
-    class SeedData
+    public class SeedData
     {
         static public void AddInitialData()
         {
@@ -60,13 +59,14 @@ namespace observador
             };
             behavior.Save();
 
-            InsertProject();
+            var researcher = new Researcher { Username = "admin", Password = "123" };
+            researcher.Save();
         }
 
         static private void InsertProject()
         {
             Random rnd = new Random();
-            var researcher = new Researcher { Username = "admin", Password = "123" };
+            var researcher = new Researcher { Username = "john" + rnd.Next(1, 10000).ToString(), Password = "123" };
 
             var project = new Project { Name = "my project" + rnd.Next(1, 10000).ToString() };
             //var behavioralTestType = null;// NHibernateHelper.OpenSession().Get<BehavioralTestType>(1);

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using ObLib.Domain;
-using ObLib.Repositories;
+using ObLib;
 
 using ObWin;
 
@@ -35,12 +35,19 @@ namespace observador
         {
             NHibernateHelper.BuildSchema();
             SeedData.AddInitialData();
+            Application.Exit();
         }
 
         private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AdminResearchers form = new AdminResearchers();
+            AdminResearcherListForm form = new AdminResearcherListForm();
             form.Show();
+        }
+
+        private void createDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NHibernateHelper.BuildSchema();
+            SeedData.AddInitialData();
         }
 
         private void myProjectsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -51,7 +58,7 @@ namespace observador
 
         private void bResearchers_Click(object sender, EventArgs e)
         {
-            AdminResearchers form = new AdminResearchers();
+            AdminResearcherListForm form = new AdminResearcherListForm();
             form.Show();
         }
 

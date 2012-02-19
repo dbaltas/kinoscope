@@ -11,16 +11,16 @@ using ObLib.Domain;
 
 namespace observador
 {
-    public partial class AdminResearcher : Form
+    public partial class AdminResearcherForm : Form
     {
         private Researcher _researcher = null;
 
-        public AdminResearcher()
+        public AdminResearcherForm()
         {
             InitializeComponent();
         }
 
-        public AdminResearcher(Researcher researcher) : this()
+        public AdminResearcherForm(Researcher researcher) : this()
         {
             _researcher = researcher;
             txtUsername.Text = researcher.Username;

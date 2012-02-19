@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ObLib.Domain;
-using ObLib.Repositories;
+
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using System.IO;

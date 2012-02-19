@@ -58,12 +58,13 @@
     <Compile Include="Mappings\BehavioralTestTypeMap.cs" />
     <Compile Include="Mappings\BehaviorMap.cs" />
     <Compile Include="Mappings\BehavioralTestMap.cs" />
-    <Compile Include="Repositories\NHibernateHelper.cs" />
+    <Compile Include="Mappings\NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Researcher.cs" />
     <Compile Include="Domain\Project.cs" />
     <Compile Include="Mappings\ResearcherMap.cs" />
     <Compile Include="Mappings\ProjectMap.cs" />
+    <Compile Include="SeedData.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Design\" />

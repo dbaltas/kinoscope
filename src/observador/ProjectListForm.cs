@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 
 using ObLib.Domain;
-using ObLib.Repositories;
 
 namespace observador
 {
