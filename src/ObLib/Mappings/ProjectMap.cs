@@ -11,7 +11,7 @@ namespace ObLib.Domain
             References(x => x.Researcher).Column("ResearcherId");
             Map(x => x.Tm);
             HasMany(x => x.BehavioralTests).KeyColumn("ProjectID")
-                            .Cascade.All();
+                            .Cascade.AllDeleteOrphan();
         }
     }
 }
