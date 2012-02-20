@@ -21,6 +21,7 @@ namespace observador
 
         private void LoadForm()
         {
+            dgvResearchers.DataSource = null; // Let DataGridView know that reference has changed
             dgvResearchers.DataSource = Researcher.All();
         }
 

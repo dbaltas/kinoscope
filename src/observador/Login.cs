@@ -31,7 +31,7 @@ namespace observador
         {
             Researcher.Authenticate(txtUsername.Text, txtPassword.Text);
             IsUserAuthenticated = true;
-            if (Researcher.Current() == null)
+            if (Researcher.Current == null)
             {
                 MessageBox.Show("user was not authenticated, (re)create the database and login as username:admin password:123");
             }

@@ -80,10 +80,10 @@ using System.Data.SQLite;
         static private void DisplayMenu()
         {
             System.Console.WriteLine("*********************************");
-            if (Researcher.Current() != null)
+            if (Researcher.Current != null)
             {
                 System.Console.WriteLine(String.Format("Welcome {0}", 
-                    Researcher.Current().Username));
+                    Researcher.Current.Username));
             }
             else
             {

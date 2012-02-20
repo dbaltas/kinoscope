@@ -21,7 +21,8 @@ namespace observador
 
         private void LoadForm()
         {
-            dgvProjects.DataSource = Researcher.Current().Projects;
+            dgvProjects.DataSource = null; // Let DataGridView know that reference has changed
+            dgvProjects.DataSource = Researcher.Current.Projects;
         }
 
         private void AdminResearchers_Load(object sender, EventArgs e)
@@ -58,7 +59,9 @@ namespace observador
                 return;
             }
 
-            projectToDelete.Delete();
+            Researcher.Current.Projects.Remove(projectToDelete);
+            Researcher.Current.Save();
+
             LoadForm();
         }
 

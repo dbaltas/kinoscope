@@ -14,9 +14,10 @@ namespace ObLib.Domain
         public virtual string Password { get; set; }
         public virtual DateTime Tm { get; set; }
         public virtual IList<Project> Projects { get; set; }
+
         public virtual int ProjectCount { get { return Projects.Count; } }
 
-        private static Researcher _current;
+        public static Researcher Current { get; set; }
 
         public Researcher()
         {
@@ -38,19 +39,9 @@ namespace ObLib.Domain
                     .UniqueResult<Researcher>();
             if (researcher != null)
             {
-                _current = researcher;
+                Current = researcher;
             }
             return researcher;
-        }
-
-        public static Researcher Current()
-        {
-            return _current;
-        }
-
-        public static void setCurrent(Researcher researcher)
-        {
-            _current = researcher;
         }
     }
 }

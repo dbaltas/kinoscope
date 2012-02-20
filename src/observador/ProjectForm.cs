@@ -39,15 +39,15 @@ namespace observador
             project.Tm = DateTime.Now;
             if (_project == null)
             {
-                Researcher.Current().AddProject(project);
+                Researcher.Current.AddProject(project);
             }
-            Researcher.Current().Save();
+            Researcher.Current.Save();
             this.Close();
         }
 
         private void bCreateFst_Click(object sender, EventArgs e)
         {
-            SeedData.CreateDefaultFst(Researcher.Current(), txtName.Text);
+            SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
             this.Close();
         }
     }

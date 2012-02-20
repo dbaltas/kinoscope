@@ -94,8 +94,8 @@ namespace ObLib
             };
             project.AddBehavioralTest(test);
 
-            Researcher.Current().AddProject(project);
-            Researcher.Current().Save();
+            Researcher.Current.AddProject(project);
+            Researcher.Current.Save();
 
             var preTestSession = new Session
             {
