@@ -21,8 +21,9 @@ namespace observador
 
         private void LoadForm()
         {
-            dgvProjects.DataSource = null; // Let DataGridView know that reference has changed
-            dgvProjects.DataSource = Researcher.Current.Projects;
+            BindingSource bindingSource = new BindingSource() { AllowNew = false };
+            bindingSource.DataSource = Researcher.Current.Projects;
+            dgvProjects.DataSource = bindingSource;
         }
 
         private void AdminResearchers_Load(object sender, EventArgs e)
@@ -44,6 +45,12 @@ namespace observador
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
+            if(dgvProjects.CurrentRow == null)
+            {
+                MessageBox.Show("No project to edit.");
+                return;
+            }
+
             ProjectForm form = new ProjectForm((Project)dgvProjects.CurrentRow.DataBoundItem);
             form.ShowDialog();
             LoadForm();
@@ -51,6 +58,12 @@ namespace observador
 
         private void toolStripButtonRemove_Click(object sender, EventArgs e)
         {
+            if(dgvProjects.CurrentRow == null)
+            {
+                MessageBox.Show("No project to delete.");
+                return;
+            }
+
             Project projectToDelete = (Project)dgvProjects.CurrentRow.DataBoundItem;
 
             String deleteMsg = String.Format("Are you sure you want to delete project {0}?", projectToDelete.Name);

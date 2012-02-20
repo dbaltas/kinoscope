@@ -21,8 +21,9 @@ namespace observador
 
         private void LoadForm()
         {
-            dgvResearchers.DataSource = null; // Let DataGridView know that reference has changed
-            dgvResearchers.DataSource = Researcher.All();
+            BindingSource bindingSource = new BindingSource() { AllowNew = false };
+            bindingSource.DataSource = Researcher.All();
+            dgvResearchers.DataSource = bindingSource;
         }
 
         private void AdminResearchers_Load(object sender, EventArgs e)
@@ -44,6 +45,12 @@ namespace observador
 
         private void toolStripButtonEdit_Click(object sender, EventArgs e)
         {
+            if (dgvResearchers.CurrentRow == null)
+            {
+                MessageBox.Show("No user to edit.");
+                return;
+            }
+
             AdminResearcherForm form = new AdminResearcherForm((Researcher)dgvResearchers.CurrentRow.DataBoundItem);
             form.ShowDialog();
             LoadForm();
@@ -51,6 +58,12 @@ namespace observador
 
         private void toolStripButtonRemove_Click(object sender, EventArgs e)
         {
+            if (dgvResearchers.CurrentRow == null)
+            {
+                MessageBox.Show("No user to delete.");
+                return;
+            }
+
             Researcher researcherToDelete = (Researcher)dgvResearchers.CurrentRow.DataBoundItem;
 
             String deleteMsg = String.Format("Are you sure you want to delete user {0}?", researcherToDelete.Username);

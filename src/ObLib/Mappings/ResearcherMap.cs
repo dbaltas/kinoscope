@@ -11,8 +11,7 @@ namespace ObLib.Domain
             Map(x => x.Password);
             Map(x => x.Tm);
             HasMany(x => x.Projects).KeyColumn("ResearcherId")
-                .Cascade.All()
-                .Inverse();			
+                .Cascade.All();			
         }
     }
 }
