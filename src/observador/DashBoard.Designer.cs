@@ -45,6 +45,8 @@
             this.bQuit = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
+            this.subjectGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -68,26 +70,29 @@
             this.homeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.homeToolStripMenuItem.Text = "Home";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // myProjectsToolStripMenuItem
             // 
             this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
-            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
+            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.myProjectsToolStripMenuItem.Text = "My Projects";
             // 
             // entitiesToolStripMenuItem
             // 
+            this.entitiesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.subjectGroupsToolStripMenuItem,
+            this.subjectsToolStripMenuItem});
             this.entitiesToolStripMenuItem.Name = "entitiesToolStripMenuItem";
-            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.entitiesToolStripMenuItem.Text = "Entities";
             // 
             // adminToolStripMenuItem
@@ -96,20 +101,20 @@
             this.researchersToolStripMenuItem,
             this.createDatabaseToolStripMenuItem});
             this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
-            this.adminToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.adminToolStripMenuItem.Text = "Admin";
             // 
             // researchersToolStripMenuItem
             // 
             this.researchersToolStripMenuItem.Name = "researchersToolStripMenuItem";
-            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
             // 
             // createDatabaseToolStripMenuItem
             // 
             this.createDatabaseToolStripMenuItem.Name = "createDatabaseToolStripMenuItem";
-            this.createDatabaseToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.createDatabaseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.createDatabaseToolStripMenuItem.Text = "CreateDatabase";
             this.createDatabaseToolStripMenuItem.Click += new System.EventHandler(this.createDatabaseToolStripMenuItem_Click);
             // 
@@ -118,13 +123,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // bCreateDatabase
@@ -181,6 +186,20 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
+            // subjectGroupsToolStripMenuItem
+            // 
+            this.subjectGroupsToolStripMenuItem.Name = "subjectGroupsToolStripMenuItem";
+            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.subjectGroupsToolStripMenuItem.Text = "Subject Groups";
+            this.subjectGroupsToolStripMenuItem.Click += new System.EventHandler(this.subjectGroupsToolStripMenuItem_Click);
+            // 
+            // subjectsToolStripMenuItem
+            // 
+            this.subjectsToolStripMenuItem.Name = "subjectsToolStripMenuItem";
+            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.subjectsToolStripMenuItem.Text = "Subjects";
+            this.subjectsToolStripMenuItem.Click += new System.EventHandler(this.subjectsToolStripMenuItem_Click);
+            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -222,5 +241,7 @@
         private System.Windows.Forms.ToolStripMenuItem myProjectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createDatabaseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem entitiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem subjectGroupsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem subjectsToolStripMenuItem;
     }
 }

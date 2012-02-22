@@ -12,6 +12,10 @@ namespace ObLib.Domain
             Map(x => x.Tm);
             HasMany(x => x.BehavioralTests).KeyColumn("ProjectID")
                             .Cascade.AllDeleteOrphan();
+            HasMany(x => x.SubjectGroups).KeyColumn("ProjectID")
+                            .Cascade.AllDeleteOrphan();
+            HasMany(x => x.Subjects).KeyColumn("ProjectID")
+                            .Cascade.AllDeleteOrphan();
         }
     }
 }

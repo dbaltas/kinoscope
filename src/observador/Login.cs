@@ -29,6 +29,12 @@ namespace observador
 
         private void bLogin_Click(object sender, EventArgs e)
         {
+            SubmitForm();
+        }
+
+        private void SubmitForm()
+        {
+            Cursor.Current = Cursors.WaitCursor;
             Researcher.Authenticate(txtUsername.Text, txtPassword.Text);
             IsUserAuthenticated = true;
             if (Researcher.Current == null)

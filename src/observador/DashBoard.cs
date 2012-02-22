@@ -52,6 +52,17 @@ namespace observador
             SeedData.AddInitialData();
         }
 
+        private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SubjectGroupListForm form = new SubjectGroupListForm();
+            form.Show();
+        }
+
+        private void subjectsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("not implemented");
+        }
+
         private void bResearchers_Click(object sender, EventArgs e)
         {
             AdminResearcherListForm form = new AdminResearcherListForm();
