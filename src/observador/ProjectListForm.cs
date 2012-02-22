@@ -72,7 +72,7 @@ namespace observador
                 return;
             }
 
-            Researcher.Current.Projects.Remove(projectToDelete);
+            Researcher.Current.RemoveProject(projectToDelete);
             Researcher.Current.Save();
 
             LoadForm();

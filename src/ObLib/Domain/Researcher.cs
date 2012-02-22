@@ -9,11 +9,24 @@ namespace ObLib.Domain
 {
     public class Researcher : ActiveRecordBase<Researcher>
     {
+        private IList<Project> _projects;
+
         public virtual int Id { get; set; }
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
         public virtual DateTime Tm { get; set; }
-        public virtual IList<Project> Projects { get; set; }
+
+        public virtual IList<Project> Projects
+        {
+            get { return _projects; }
+            set
+            {
+                _projects = value;
+                ActiveProject = Projects.Count == 0 ? null : Projects[0];
+            }
+        }
+
+        public virtual Project ActiveProject { get; set; }
 
         public virtual int ProjectCount { get { return Projects.Count; } }
 
@@ -28,6 +41,21 @@ namespace ObLib.Domain
         {
             project.Researcher = this;
             Projects.Add(project);
+
+            if (ActiveProject == null)
+            {
+                ActiveProject = project;
+            }
+        }
+
+        public virtual void RemoveProject(Project project)
+        {
+            Projects.Remove(project);
+
+            if (ActiveProject == project)
+            {
+                ActiveProject = Projects.Count == 0 ? null : Projects[0];
+            }
         }
 
         public static Researcher Authenticate(String username, String password)

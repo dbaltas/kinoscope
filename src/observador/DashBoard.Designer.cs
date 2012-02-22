@@ -68,27 +68,26 @@
             this.homeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.homeToolStripMenuItem.Text = "Home";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // myProjectsToolStripMenuItem
             // 
             this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
-            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.myProjectsToolStripMenuItem.Text = "My Projects";
-            this.myProjectsToolStripMenuItem.Click += new System.EventHandler(this.myProjectsToolStripMenuItem_Click);
             // 
             // entitiesToolStripMenuItem
             // 
             this.entitiesToolStripMenuItem.Name = "entitiesToolStripMenuItem";
-            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.entitiesToolStripMenuItem.Text = "Entities";
             // 
             // adminToolStripMenuItem
@@ -97,20 +96,20 @@
             this.researchersToolStripMenuItem,
             this.createDatabaseToolStripMenuItem});
             this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
-            this.adminToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.adminToolStripMenuItem.Text = "Admin";
             // 
             // researchersToolStripMenuItem
             // 
             this.researchersToolStripMenuItem.Name = "researchersToolStripMenuItem";
-            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
             // 
             // createDatabaseToolStripMenuItem
             // 
             this.createDatabaseToolStripMenuItem.Name = "createDatabaseToolStripMenuItem";
-            this.createDatabaseToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.createDatabaseToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.createDatabaseToolStripMenuItem.Text = "CreateDatabase";
             this.createDatabaseToolStripMenuItem.Click += new System.EventHandler(this.createDatabaseToolStripMenuItem_Click);
             // 
@@ -119,20 +118,20 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // bCreateDatabase
             // 
-            this.bCreateDatabase.Location = new System.Drawing.Point(718, 60);
+            this.bCreateDatabase.Location = new System.Drawing.Point(718, 118);
             this.bCreateDatabase.Name = "bCreateDatabase";
-            this.bCreateDatabase.Size = new System.Drawing.Size(162, 84);
+            this.bCreateDatabase.Size = new System.Drawing.Size(162, 62);
             this.bCreateDatabase.TabIndex = 2;
             this.bCreateDatabase.Text = "create database";
             this.bCreateDatabase.UseVisualStyleBackColor = true;
@@ -149,9 +148,9 @@
             // 
             // bResearchers
             // 
-            this.bResearchers.Location = new System.Drawing.Point(55, 60);
+            this.bResearchers.Location = new System.Drawing.Point(718, 39);
             this.bResearchers.Name = "bResearchers";
-            this.bResearchers.Size = new System.Drawing.Size(162, 84);
+            this.bResearchers.Size = new System.Drawing.Size(162, 64);
             this.bResearchers.TabIndex = 1;
             this.bResearchers.Text = "researchers";
             this.bResearchers.UseVisualStyleBackColor = true;
@@ -159,9 +158,9 @@
             // 
             // bQuit
             // 
-            this.bQuit.Location = new System.Drawing.Point(718, 180);
+            this.bQuit.Location = new System.Drawing.Point(718, 195);
             this.bQuit.Name = "bQuit";
-            this.bQuit.Size = new System.Drawing.Size(162, 84);
+            this.bQuit.Size = new System.Drawing.Size(162, 69);
             this.bQuit.TabIndex = 4;
             this.bQuit.Text = "Exit";
             this.bQuit.UseVisualStyleBackColor = true;
@@ -171,7 +170,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssResearcher});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 254);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 275);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(906, 22);
             this.statusStrip1.TabIndex = 5;
@@ -186,7 +185,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 276);
+            this.ClientSize = new System.Drawing.Size(906, 297);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.bQuit);
             this.Controls.Add(this.bResearchers);
@@ -195,7 +194,6 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DashBoard";
-            this.Text = "Observador v 0.0 - DashBoard";
             this.Load += new System.EventHandler(this.DashBoard_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
