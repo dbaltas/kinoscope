@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Subject.cs" />
+    <Compile Include="Domain\SubjectGroup.cs" />
     <Compile Include="Domain\Trial.cs" />
     <Compile Include="Domain\Session.cs" />
     <Compile Include="Logger.cs" />
@@ -61,6 +63,8 @@
     <Compile Include="Mappings\BehavioralTestTypeMap.cs" />
     <Compile Include="Mappings\BehaviorMap.cs" />
     <Compile Include="Mappings\BehavioralTestMap.cs" />
+    <Compile Include="Mappings\SubjectMap.cs" />
+    <Compile Include="Mappings\SubjectGroupMap.cs" />
     <Compile Include="Mappings\TrialMap.cs" />
     <Compile Include="Mappings\SessionMap.cs" />
     <Compile Include="Mappings\NHibernateHelper.cs" />
