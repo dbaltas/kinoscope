@@ -71,5 +71,10 @@ namespace ObLib.Domain
             }
             return researcher;
         }
+
+        public override string ToString()
+        {
+            return Username;
+        }
     }
 }

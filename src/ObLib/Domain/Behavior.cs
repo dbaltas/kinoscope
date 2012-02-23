@@ -5,8 +5,8 @@ using System.Text;
 
 namespace ObLib.Domain
 {
-	public class Behavior : ActiveRecordBase<Behavior>
-	{
+    public class Behavior : ActiveRecordBase<Behavior>
+    {
         public const string TypeState = "State";
         public const string TypeInstant = "Instant";
 
@@ -16,5 +16,10 @@ namespace ObLib.Domain
         public virtual BehavioralTestType BehavioralTestType { get; set; }
         public virtual string DefaultKeyStroke { get; set; }
         public virtual DateTime Tm { get; set; }
-	}
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
 }

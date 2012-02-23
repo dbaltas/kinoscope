@@ -7,6 +7,16 @@ namespace observador
 {
     static class Program
     {
+        public static string GetTitle()
+        {
+            Version version = new Version(Application.ProductVersion);
+            return string.Format(
+                Properties.Settings.Default.TitleFormat,
+                Application.ProductName,
+                version.Major,
+                version.Minor);
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

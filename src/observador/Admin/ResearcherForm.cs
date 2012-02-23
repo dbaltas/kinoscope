@@ -22,10 +22,13 @@ namespace observador
 
         public AdminResearcherForm(Researcher researcher) : this()
         {
-            _researcher = researcher;
-            txtUsername.Text = researcher.Username;
-            txtPassword.Text = researcher.Password;
-            txtConfirmPassword.Text = researcher.Password;
+            if (researcher != null)
+            {
+                _researcher = researcher;
+                txtUsername.Text = researcher.Username;
+                txtPassword.Text = researcher.Password;
+                txtConfirmPassword.Text = researcher.Password;
+            }
         }
 
         private void bCancel_Click(object sender, EventArgs e)

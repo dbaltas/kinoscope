@@ -36,20 +36,21 @@
             // 
             // bCancel
             // 
-            this.bCancel.Location = new System.Drawing.Point(74, 90);
+            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancel.Location = new System.Drawing.Point(200, 41);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
-            this.bCancel.TabIndex = 0;
+            this.bCancel.TabIndex = 3;
             this.bCancel.Text = "cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(244, 90);
+            this.bSave.Location = new System.Drawing.Point(78, 41);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
-            this.bSave.TabIndex = 1;
+            this.bSave.TabIndex = 2;
             this.bSave.Text = "Save";
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
@@ -57,29 +58,33 @@
             // lName
             // 
             this.lName.AutoSize = true;
-            this.lName.Location = new System.Drawing.Point(81, 45);
+            this.lName.Location = new System.Drawing.Point(12, 9);
             this.lName.Name = "lName";
             this.lName.Size = new System.Drawing.Size(35, 13);
-            this.lName.TabIndex = 6;
+            this.lName.TabIndex = 0;
             this.lName.Text = "Name";
             // 
             // txtName
             // 
-            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.Location = new System.Drawing.Point(178, 38);
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtName.Location = new System.Drawing.Point(53, 6);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(141, 20);
-            this.txtName.TabIndex = 4;
+            this.txtName.Size = new System.Drawing.Size(275, 20);
+            this.txtName.TabIndex = 1;
             // 
             // SubjectGroupForm
             // 
+            this.AcceptButton = this.bSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 139);
+            this.CancelButton = this.bCancel;
+            this.ClientSize = new System.Drawing.Size(340, 76);
             this.Controls.Add(this.lName);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.bCancel);
+            this.MinimumSize = new System.Drawing.Size(348, 110);
             this.Name = "SubjectGroupForm";
             this.Text = "Subject Group";
             this.ResumeLayout(false);

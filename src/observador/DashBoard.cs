@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,14 +11,10 @@ using System.Windows.Forms;
 using ObLib.Domain;
 using ObLib;
 
-using ObWin;
-
 namespace observador
 {
     public partial class DashBoard : ObWin.Form
     {
-        private const string title = "Observador v0.0";
-
         public DashBoard()
         {
             InitializeComponent();
@@ -42,8 +39,7 @@ namespace observador
 
         private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AdminResearcherListForm form = new AdminResearcherListForm();
-            form.Show();
+            ShowResearcherListForm();
         }
 
         private void createDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -54,8 +50,13 @@ namespace observador
 
         private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SubjectGroupListForm form = new SubjectGroupListForm();
-            form.Show();
+            if (Researcher.Current.ActiveProject == null)
+            {
+                MessageBox.Show("Please create a project first.");
+                return;
+            }
+
+            ShowSubjectGroupListForm();
         }
 
         private void subjectsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -65,8 +66,7 @@ namespace observador
 
         private void bResearchers_Click(object sender, EventArgs e)
         {
-            AdminResearcherListForm form = new AdminResearcherListForm();
-            form.Show();
+            ShowResearcherListForm();
         }
 
         private void DashBoard_Load(object sender, EventArgs e)
@@ -95,8 +95,63 @@ namespace observador
             Text = string.Format(
                 "{0} - {1}",
                 activeProject == null ? "No project selected" : activeProject.Name,
-                title);
+                Program.GetTitle());
         }
+
+        #region List forms
+
+        private void ShowResearcherListForm()
+        {
+            //Form form = new AdminResearcherListForm();
+
+            DataGridViewColumn[] columns = new DataGridViewColumn[] {
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Username", HeaderText = "username" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "ProjectCount", HeaderText = "projects" }};
+
+            Form form = new ListForm<Researcher>(
+                columns,
+                Researcher.All,
+                (item) => new AdminResearcherForm(item)) { ItemTypeDescription = "researcher", Text = "Researchers" };
+
+            form.ShowDialog();
+        }
+
+        private void ShowProjectListForm()
+        {
+            //Form form = new ProjectListForm();
+
+            DataGridViewColumn[] columns = new DataGridViewColumn[] {
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+
+            Form form = new ListForm<Project>(
+                columns,
+                () => (IList)Researcher.Current.Projects,
+                (item) => new ProjectForm(item)) { ItemTypeDescription = "project", Text = "My Projects" };
+
+            form.ShowDialog();
+        }
+
+        private static void ShowSubjectGroupListForm()
+        {
+            //Form form = new SubjectGroupListForm();
+
+            DataGridViewColumn[] columns = new DataGridViewColumn[] {
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+
+            Form form = new ListForm<SubjectGroup>(
+                columns,
+                () => (IList)Researcher.Current.ActiveProject.SubjectGroups,
+                (item) => new SubjectGroupForm(item)) { ItemTypeDescription = "subject group", Text = "Subject Groups" };
+
+            form.ShowDialog();
+        }
+
+        #endregion
 
         #region Projects menu
 
@@ -128,8 +183,7 @@ namespace observador
 
         private void manageProjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ProjectListForm form = new ProjectListForm();
-            form.ShowDialog();
+            ShowProjectListForm();
 
             FillProjectsMenu();
             DisplayActiveProject();

@@ -11,6 +11,7 @@ using ObLib.Domain;
 
 namespace observador
 {
+    [Obsolete("Use ListForm<Project> instead.")]
     public partial class ProjectListForm : Form
     {
         public ProjectListForm()

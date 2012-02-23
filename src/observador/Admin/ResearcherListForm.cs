@@ -11,6 +11,7 @@ using ObLib.Domain;
 
 namespace observador
 {
+    [Obsolete("Use ListForm<Researcher> instead.")]
     public partial class AdminResearcherListForm : Form
     {
         public AdminResearcherListForm()

@@ -23,8 +23,11 @@ namespace observador
 
         public SubjectGroupForm(SubjectGroup subjectGroup) : this()
         {
-            _subjectGroup = subjectGroup;
-            txtName.Text = subjectGroup.Name;
+            if (subjectGroup != null)
+            {
+                _subjectGroup = subjectGroup;
+                txtName.Text = subjectGroup.Name;
+            }
         }
 
         private void bCancel_Click(object sender, EventArgs e)

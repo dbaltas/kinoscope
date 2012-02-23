@@ -11,6 +11,7 @@ using ObLib.Domain;
 
 namespace observador
 {
+    [Obsolete("Use ListForm<SubjectGroup> instead.")]
     public partial class SubjectGroupListForm : Form
     {
         public SubjectGroupListForm()

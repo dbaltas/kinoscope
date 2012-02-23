@@ -32,5 +32,10 @@ namespace ObLib.Domain
         }
 
         private const string _FST = "FST";
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

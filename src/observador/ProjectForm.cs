@@ -23,8 +23,11 @@ namespace observador
 
         public ProjectForm(Project project) : this()
         {
-            _project = project;
-            txtName.Text = project.Name;
+            if (project != null)
+            {
+                _project = project;
+                txtName.Text = project.Name;
+            }
         }
 
         private void bCancel_Click(object sender, EventArgs e)

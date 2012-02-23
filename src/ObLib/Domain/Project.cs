@@ -38,5 +38,16 @@ namespace ObLib.Domain
             subject.Project = this;
             Subjects.Add(subject);
         }
+
+        public override void Delete()
+        {
+            Researcher.RemoveProject(this);
+            Researcher.Save();
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

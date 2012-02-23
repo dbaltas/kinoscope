@@ -43,5 +43,10 @@ namespace observador
             }
             Close();
         }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            Text = string.Format("{0} - Login", Program.GetTitle());
+        }
     }
 }
