@@ -110,11 +110,17 @@
             // 
             // dgvMain
             // 
+            this.dgvMain.AllowUserToDeleteRows = false;
+            this.dgvMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Location = new System.Drawing.Point(12, 42);
             this.dgvMain.Name = "dgvMain";
-            this.dgvMain.Size = new System.Drawing.Size(446, 266);
+            this.dgvMain.Size = new System.Drawing.Size(447, 266);
             this.dgvMain.TabIndex = 2;
+            this.dgvMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListForm_KeyDown);
             // 
             // ListForm
             // 
@@ -126,6 +132,7 @@
             this.Name = "ListForm";
             this.Text = "ListForm";
             this.Load += new System.EventHandler(this.ListForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListForm_KeyDown);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();

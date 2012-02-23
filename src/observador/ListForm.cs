@@ -56,19 +56,45 @@ namespace observador
             LoadForm();
         }
 
-        private void toolStripButtonClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        #region Toolstrip buttons
 
         private void toolStripButtonAdd_Click(object sender, EventArgs e)
+        {
+            OrderNew();
+        }
+
+        private void toolStripButtonEdit_Click(object sender, EventArgs e)
+        {
+            OrderEdit();
+        }
+
+        private void toolStripButtonRemove_Click(object sender, EventArgs e)
+        {
+            OrderRemove();
+        }
+
+        private void toolStripButtonRefresh_Click(object sender, EventArgs e)
+        {
+            OrderRefresh();
+        }
+
+        private void toolStripButtonClose_Click(object sender, EventArgs e)
+        {
+            OrderClose();
+        }
+
+        #endregion
+
+        #region Order implementations
+
+        private void OrderNew()
         {
             Form form = _createDetailForm(null);
             form.ShowDialog();
             LoadForm();
         }
 
-        private void toolStripButtonEdit_Click(object sender, EventArgs e)
+        private void OrderEdit()
         {
             if (dgvMain.CurrentRow == null)
             {
@@ -81,7 +107,7 @@ namespace observador
             LoadForm();
         }
 
-        private void toolStripButtonRemove_Click(object sender, EventArgs e)
+        private void OrderRemove()
         {
             if (dgvMain.CurrentRow == null)
             {
@@ -106,9 +132,44 @@ namespace observador
             LoadForm();
         }
 
-        private void toolStripButtonRefresh_Click(object sender, EventArgs e)
+        private void OrderRefresh()
         {
             LoadForm();
+        }
+
+        private void OrderClose()
+        {
+            Close();
+        }
+
+        #endregion
+
+        private void ListForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.N:
+                    if (Control.ModifierKeys == Keys.Control)
+                    {
+                        OrderNew();
+                    }
+                    break;
+                case Keys.E:
+                    if (Control.ModifierKeys == Keys.Control)
+                    {
+                        OrderEdit();
+                    }
+                    break;
+                case Keys.Delete:
+                    OrderRemove();
+                    break;
+                case Keys.F5:
+                    OrderRefresh();
+                    break;
+                case Keys.Escape:
+                    Close();
+                    break;
+            }
         }
     }
 }
