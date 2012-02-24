@@ -19,10 +19,20 @@ namespace observador
         public SubjectForm()
         {
             InitializeComponent();
-            cbSubjectGroup.DataSource = Researcher.Current.ActiveProject.SubjectGroups;
+            List<SubjectGroup> comboBoxSubjectGroups = new List<SubjectGroup>();
+
+            SubjectGroup emptySubjectGroup = new SubjectGroup();
+            emptySubjectGroup.Id = -1;
+            emptySubjectGroup.Name = "<None>";
+
+            comboBoxSubjectGroups.Add(emptySubjectGroup);
+            comboBoxSubjectGroups.AddRange(Researcher.Current.ActiveProject.SubjectGroups);
+
+            cbSubjectGroup.DataSource = comboBoxSubjectGroups;
         }
 
-        public SubjectForm(Subject subject) : this()
+        public SubjectForm(Subject subject)
+            : this()
         {
             cbSex.SelectedIndex = 0;
 
@@ -30,7 +40,9 @@ namespace observador
             {
                 _subject = subject;
                 txtCode.Text = subject.Code;
-                cbSubjectGroup.SelectedItem = subject.SubjectGroup;
+
+                cbSubjectGroup.SelectedItem = subject.SubjectGroup ?? cbSubjectGroup.Items[0];
+
                 txtStrain.Text = subject.Strain;
                 cbSex.SelectedItem = subject.Sex;
                 dtDob.Value = subject.DateOfBirth;
@@ -46,22 +58,39 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            Subject subject = _subject ?? new Subject();
-
-            subject.Code = txtCode.Text;
-            subject.SubjectGroup = (SubjectGroup)cbSubjectGroup.SelectedItem;
-            subject.Strain = txtStrain.Text;
-            subject.Sex = cbSex.SelectedItem.ToString();
-            subject.DateOfBirth = dtDob.Value;
-            subject.Origin = txtOrigin.Text;
-            subject.Weight = Decimal.Parse(txtWeight.Text);
-            subject.Tm = DateTime.Now;
-            if (_subject == null)
+            try
             {
-                Researcher.Current.ActiveProject.AddSubject(subject);
+                Subject subject = _subject ?? new Subject();
+
+                subject.Code = txtCode.Text;
+                subject.Strain = txtStrain.Text;
+                subject.Sex = cbSex.SelectedItem.ToString();
+                subject.DateOfBirth = dtDob.Value;
+                subject.Origin = txtOrigin.Text;
+                subject.Weight = txtWeight.Text == "" ? (Decimal?)null : Decimal.Parse(txtWeight.Text);
+                subject.Tm = DateTime.Now;
+
+                subject.SubjectGroup = (SubjectGroup)cbSubjectGroup.SelectedItem;
+                if (subject.SubjectGroup.Id == -1)
+                {
+                    subject.SubjectGroup = null;
+                }
+                else
+                {
+                    subject.SubjectGroup.AddSubject(subject);
+                }
+
+                if (_subject == null)
+                {
+                    Researcher.Current.ActiveProject.AddSubject(subject);
+                }
+                subject.Project.Save();
+                this.Close();
             }
-            subject.Project.Save();
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
         }
     }
 }

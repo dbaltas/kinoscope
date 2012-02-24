@@ -15,12 +15,16 @@ namespace ObLib.Domain
         public virtual string Sex { get; set; }
         public virtual DateTime DateOfBirth { get; set; }
         public virtual string Origin { get; set; }
-        public virtual Decimal Weight { get; set; }
+        public virtual Decimal? Weight { get; set; }
         public virtual DateTime Tm { get; set; }
 
         public override void Delete()
         {
             Project.Subjects.Remove(this);
+            if (SubjectGroup != null)
+            {
+                SubjectGroup.Subjects.Remove(this);
+            }
             Project.Save();
         }
 

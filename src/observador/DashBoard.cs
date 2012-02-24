@@ -141,6 +141,7 @@ namespace observador
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectCount", HeaderText = "subjects" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
 
             Form form = new ListForm<SubjectGroup>(
@@ -165,7 +166,7 @@ namespace observador
             Form form = new ListForm<Subject>(
                 columns,
                 () => (IList)Researcher.Current.ActiveProject.Subjects,
-                (item) => new SubjectForm(item)) { ItemTypeDescription = "subject", Text = "Subjects" };
+                (item) => new SubjectForm(item)) { ItemTypeDescription = "subject", Text = "Subjects", Width = 900 };
 
             form.ShowDialog();
         }

@@ -8,6 +8,8 @@ namespace ObLib.Domain
         {
             Id(x => x.Id);
             References(x => x.Project).Column("ProjectId");
+            HasMany(x => x.Subjects).KeyColumn("SubjectGroupId")
+                .Cascade.None();
             Map(x => x.Name);
             Map(x => x.Tm);
         }

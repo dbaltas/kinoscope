@@ -21,7 +21,8 @@ namespace observador
             InitializeComponent();
         }
 
-        public SubjectGroupForm(SubjectGroup subjectGroup) : this()
+        public SubjectGroupForm(SubjectGroup subjectGroup)
+            : this()
         {
             if (subjectGroup != null)
             {
@@ -37,16 +38,23 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            SubjectGroup subjectGroup = _subjectGroup ?? new SubjectGroup();
-
-            subjectGroup.Name = txtName.Text;
-            subjectGroup.Tm = DateTime.Now;
-            if (_subjectGroup == null)
+            try
             {
-                Researcher.Current.ActiveProject.AddSubjectGroup(subjectGroup);
+                SubjectGroup subjectGroup = _subjectGroup ?? new SubjectGroup();
+
+                subjectGroup.Name = txtName.Text;
+                subjectGroup.Tm = DateTime.Now;
+                if (_subjectGroup == null)
+                {
+                    Researcher.Current.ActiveProject.AddSubjectGroup(subjectGroup);
+                }
+                subjectGroup.Project.Save();
+                this.Close();
             }
-            subjectGroup.Project.Save();
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
         }
     }
 }

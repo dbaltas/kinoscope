@@ -8,7 +8,7 @@ namespace ObLib.Domain
         {
             Id(x => x.Id);
             References(x => x.Project).Column("ProjectId");
-            References(x => x.SubjectGroup).Column("SubjectId");
+            References(x => x.SubjectGroup).Column("SubjectGroupId");
             Map(x => x.Code);
             Map(x => x.Strain);
             Map(x => x.Sex);

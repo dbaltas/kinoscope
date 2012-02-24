@@ -18,6 +18,7 @@ namespace ObLib.Domain
         public Project()
         {
             BehavioralTests = new List<BehavioralTest>();
+            Subjects = new List<Subject>();
             SubjectGroups = new List<SubjectGroup>();
         }
 

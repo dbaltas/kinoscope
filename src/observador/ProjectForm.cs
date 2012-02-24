@@ -21,7 +21,8 @@ namespace observador
             InitializeComponent();
         }
 
-        public ProjectForm(Project project) : this()
+        public ProjectForm(Project project)
+            : this()
         {
             if (project != null)
             {
@@ -37,15 +38,22 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            Project project = _project ?? new Project();
-            project.Name = txtName.Text;
-            project.Tm = DateTime.Now;
-            if (_project == null)
+            try
             {
-                Researcher.Current.AddProject(project);
+                Project project = _project ?? new Project();
+                project.Name = txtName.Text;
+                project.Tm = DateTime.Now;
+                if (_project == null)
+                {
+                    Researcher.Current.AddProject(project);
+                }
+                Researcher.Current.Save();
+                this.Close();
             }
-            Researcher.Current.Save();
-            this.Close();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
         }
 
         private void bCreateFst_Click(object sender, EventArgs e)

@@ -20,7 +20,8 @@ namespace observador
             InitializeComponent();
         }
 
-        public AdminResearcherForm(Researcher researcher) : this()
+        public AdminResearcherForm(Researcher researcher)
+            : this()
         {
             if (researcher != null)
             {
@@ -38,11 +39,18 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            Researcher researcher = _researcher ?? new Researcher();
-            researcher.Username = txtUsername.Text;
-            researcher.Password = txtPassword.Text;
-            researcher.Save();
-            this.Close();
+            try
+            {
+                Researcher researcher = _researcher ?? new Researcher();
+                researcher.Username = txtUsername.Text;
+                researcher.Password = txtPassword.Text;
+                researcher.Save();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!");
+            }
         }
     }
 }
