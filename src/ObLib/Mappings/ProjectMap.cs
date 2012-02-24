@@ -10,11 +10,11 @@ namespace ObLib.Domain
             Map(x => x.Name);
             References(x => x.Researcher).Column("ResearcherId");
             Map(x => x.Tm);
-            HasMany(x => x.BehavioralTests).KeyColumn("ProjectID")
+            HasMany(x => x.BehavioralTests).KeyColumn("ProjectId")
                             .Cascade.AllDeleteOrphan();
-            HasMany(x => x.SubjectGroups).KeyColumn("ProjectID")
+            HasMany(x => x.SubjectGroups).KeyColumn("ProjectId")
                             .Cascade.AllDeleteOrphan();
-            HasMany(x => x.Subjects).KeyColumn("ProjectID")
+            HasMany(x => x.Subjects).KeyColumn("ProjectId")
                             .Cascade.AllDeleteOrphan();
         }
     }

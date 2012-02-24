@@ -11,6 +11,18 @@ namespace ObLib.Domain
         public virtual BehavioralTest BehavioralTest { get; set; }
         public virtual string Name { get; set; }
         public virtual DateTime Tm { get; set; }
+        public virtual IList<Trial> Trials { get; set; }
+
+        public Session()
+        {
+            Trials = new List<Trial>();
+        }
+
+        public virtual void AddTrial(Trial trial)
+        {
+            trial.Session = this;
+            Trials.Add(trial);
+        }
 
         public override string ToString()
         {

@@ -19,7 +19,7 @@ namespace ObLib
                 Name = "Climbing",
                 DefaultKeyStroke = "1",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -28,7 +28,7 @@ namespace ObLib
                 Name = "Swimming",
                 DefaultKeyStroke = "2",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -37,7 +37,7 @@ namespace ObLib
                 Name = "Floating",
                 DefaultKeyStroke = "3",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -46,7 +46,7 @@ namespace ObLib
                 Name = "Diving",
                 DefaultKeyStroke = "4",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -55,7 +55,7 @@ namespace ObLib
                 Name = "Head Swinging",
                 DefaultKeyStroke = "5",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeInstant
+                Type = Behavior.BehaviorType.Instant
             };
             behavior.Save();
 
@@ -68,7 +68,7 @@ namespace ObLib
         {
             if (researcher == null)
             {
-                Logger.logError("Invalod Researcher");
+                Logger.logError("Invalid Researcher");
                 return;
             }
 
@@ -77,63 +77,52 @@ namespace ObLib
             var preTest = new BehavioralTest
             {
                 Name = "preTest",
-                Project = project,
                 BehavioralTestType = BehavioralTestType.Fst,
                 Tm = DateTime.Now
             };
-
             project.AddBehavioralTest(preTest);
-
 
             var test = new BehavioralTest
             {
                 Name = "test",
-                Project = project,
                 BehavioralTestType = BehavioralTestType.Fst,
                 Tm = DateTime.Now
             };
             project.AddBehavioralTest(test);
 
             Researcher.Current.AddProject(project);
-            Researcher.Current.Save();
 
             var preTestSession = new Session
             {
                 Name = "default",
-                BehavioralTest = preTest,
                 Tm = DateTime.Now
             };
-
-            preTestSession.Save();
+            preTest.AddSession(preTestSession);
 
             var preTestTrial = new Trial
             {
                 Name = "Default trial",
-                Session = preTestSession,
                 Duration = 15 * 60,
                 Tm = DateTime.Now
             };
-
-            preTestTrial.Save();
+            preTestSession.AddTrial(preTestTrial);
 
             var testSession = new Session
             {
                 Name = "default",
-                BehavioralTest = test,
                 Tm = DateTime.Now
             };
-
-            testSession.Save();
+            test.AddSession(testSession);
 
             var testTrial = new Trial
             {
                 Name = "Default trial",
-                Session = preTestSession,
                 Duration = 5 * 60,
                 Tm = DateTime.Now
             };
+            preTestSession.AddTrial(testTrial);
 
-            testTrial.Save();
+            Researcher.Current.Save();
         }
 
         static private void InsertProject()

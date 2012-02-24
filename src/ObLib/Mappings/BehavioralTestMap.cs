@@ -11,6 +11,7 @@ namespace ObLib.Domain
             References(x => x.BehavioralTestType).Column("BehavioralTestTypeId");
             Map(x => x.Name);
             Map(x => x.Tm);
+            HasMany(x => x.Sessions).KeyColumn("BehavioralTestId").Cascade.AllDeleteOrphan();
         }
     }
 }

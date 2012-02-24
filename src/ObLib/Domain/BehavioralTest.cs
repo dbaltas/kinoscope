@@ -12,6 +12,18 @@ namespace ObLib.Domain
         public virtual BehavioralTestType BehavioralTestType { get; set; }
         public virtual string Name { get; set; }
         public virtual DateTime Tm { get; set; }
+        public virtual IList<Session> Sessions { get; set; }
+
+        public BehavioralTest()
+        {
+            Sessions = new List<Session>();
+        }
+
+        public virtual void AddSession(Session session)
+        {
+            session.BehavioralTest = this;
+            Sessions.Add(session);
+        }
 
         public override string ToString()
         {

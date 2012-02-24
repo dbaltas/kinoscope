@@ -37,7 +37,8 @@
             // 
             // bCancel
             // 
-            this.bCancel.Location = new System.Drawing.Point(261, 32);
+            this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.bCancel.Location = new System.Drawing.Point(249, 32);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 4;
@@ -47,7 +48,7 @@
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(74, 32);
+            this.bSave.Location = new System.Drawing.Point(62, 32);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             // bCreateFSTProject
             // 
-            this.bCreateFSTProject.Location = new System.Drawing.Point(155, 32);
+            this.bCreateFSTProject.Location = new System.Drawing.Point(143, 32);
             this.bCreateFSTProject.Name = "bCreateFSTProject";
             this.bCreateFSTProject.Size = new System.Drawing.Size(75, 23);
             this.bCreateFSTProject.TabIndex = 3;

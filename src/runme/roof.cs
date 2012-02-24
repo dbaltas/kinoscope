@@ -117,7 +117,7 @@ using System.Data.SQLite;
                 Name = "Climbing",
                 DefaultKeyStroke = "1",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -126,7 +126,7 @@ using System.Data.SQLite;
                 Name = "Swimming",
                 DefaultKeyStroke = "2",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -135,7 +135,7 @@ using System.Data.SQLite;
                 Name = "Floating",
                 DefaultKeyStroke = "3",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -144,7 +144,7 @@ using System.Data.SQLite;
                 Name = "Diving",
                 DefaultKeyStroke = "4",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeState
+                Type = Behavior.BehaviorType.State
             };
             behavior.Save();
 
@@ -153,7 +153,7 @@ using System.Data.SQLite;
                 Name = "Head Swinging",
                 DefaultKeyStroke = "5",
                 BehavioralTestType = behavioralTestType,
-                Type = Behavior.TypeInstant
+                Type = Behavior.BehaviorType.Instant
             };
             behavior.Save();
         }

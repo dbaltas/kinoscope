@@ -28,6 +28,7 @@ namespace observador
             {
                 _project = project;
                 txtName.Text = project.Name;
+                bCreateFSTProject.Hide();
             }
         }
 
