@@ -33,7 +33,7 @@ namespace ObLib.Domain
             SubjectGroups.Add(subjectGroup);
         }
 
-        public virtual void AddSubjects(Subject subject)
+        public virtual void AddSubject(Subject subject)
         {
             subject.Project = this;
             Subjects.Add(subject);

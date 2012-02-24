@@ -18,6 +18,12 @@ namespace ObLib.Domain
         public virtual Decimal Weight { get; set; }
         public virtual DateTime Tm { get; set; }
 
+        public override void Delete()
+        {
+            Project.Subjects.Remove(this);
+            Project.Save();
+        }
+
         public override string ToString()
         {
             return Code;

@@ -61,7 +61,13 @@ namespace observador
 
         private void subjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("not implemented");
+            if (Researcher.Current.ActiveProject == null)
+            {
+                MessageBox.Show("Please create a project first.");
+                return;
+            }
+
+            ShowSubjectListForm();
         }
 
         private void bResearchers_Click(object sender, EventArgs e)
@@ -102,8 +108,6 @@ namespace observador
 
         private void ShowResearcherListForm()
         {
-            //Form form = new AdminResearcherListForm();
-
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Username", HeaderText = "username" },
@@ -119,8 +123,6 @@ namespace observador
 
         private void ShowProjectListForm()
         {
-            //Form form = new ProjectListForm();
-
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
@@ -136,8 +138,6 @@ namespace observador
 
         private static void ShowSubjectGroupListForm()
         {
-            //Form form = new SubjectGroupListForm();
-
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
@@ -147,6 +147,25 @@ namespace observador
                 columns,
                 () => (IList)Researcher.Current.ActiveProject.SubjectGroups,
                 (item) => new SubjectGroupForm(item)) { ItemTypeDescription = "subject group", Text = "Subject Groups" };
+
+            form.ShowDialog();
+        }
+
+        private static void ShowSubjectListForm()
+        {
+            DataGridViewColumn[] columns = new DataGridViewColumn[] {
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectGroup", HeaderText = "subject group" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Code", HeaderText = "code" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Strain", HeaderText = "strain" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Sex", HeaderText = "sex" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "DateOfBirth", HeaderText = "DOB" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+
+            Form form = new ListForm<Subject>(
+                columns,
+                () => (IList)Researcher.Current.ActiveProject.Subjects,
+                (item) => new SubjectForm(item)) { ItemTypeDescription = "subject", Text = "Subjects" };
 
             form.ShowDialog();
         }

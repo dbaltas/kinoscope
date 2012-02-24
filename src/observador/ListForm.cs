@@ -154,11 +154,17 @@ namespace observador
                         OrderNew();
                     }
                     break;
+                case Keys.Insert:
+                    OrderNew();
+                    break;
                 case Keys.E:
                     if (Control.ModifierKeys == Keys.Control)
                     {
                         OrderEdit();
                     }
+                    break;
+                case Keys.F2:
+                    OrderEdit();
                     break;
                 case Keys.Delete:
                     OrderRemove();
