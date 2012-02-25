@@ -28,7 +28,10 @@ namespace observador
             {
                 _project = project;
                 txtName.Text = project.Name;
-                bCreateFSTProject.Hide();
+            }
+            else
+            {
+                bSave.Text = "Create FST Project";
             }
         }
 
@@ -41,14 +44,16 @@ namespace observador
         {
             try
             {
-                Project project = _project ?? new Project();
-                project.Name = txtName.Text;
-                project.Tm = DateTime.Now;
                 if (_project == null)
                 {
-                    Researcher.Current.AddProject(project);
+                    SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
+                    this.Close();
                 }
-                Researcher.Current.Save();
+                else
+                {
+                    _project.Name = txtName.Text;
+                    _project.Save();
+                }
                 this.Close();
             }
             catch (Exception ex)

@@ -32,9 +32,19 @@ namespace observador
 
         private void bCreateDatabase_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
+            if (Researcher.Current != null)
+            {
+                Researcher.Current.Delete();
+            }
+            if (BehavioralTestType.Fst != null)
+            {
+                BehavioralTestType.Fst.Delete();
+            }
             NHibernateHelper.BuildSchema();
             SeedData.AddInitialData();
-            Application.Exit();
+            MessageBox.Show("Database Created. Application will now restart");
+            Application.Restart();
         }
 
         private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -189,6 +199,7 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "session" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "RunCount", HeaderText = "Runs" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
 
             Form form = new ListForm<Subject>(

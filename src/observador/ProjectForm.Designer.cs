@@ -32,7 +32,6 @@
             this.bSave = new System.Windows.Forms.Button();
             this.lName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
-            this.bCreateFSTProject = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // bCancel
@@ -74,16 +73,6 @@
             this.txtName.Size = new System.Drawing.Size(283, 20);
             this.txtName.TabIndex = 1;
             // 
-            // bCreateFSTProject
-            // 
-            this.bCreateFSTProject.Location = new System.Drawing.Point(143, 32);
-            this.bCreateFSTProject.Name = "bCreateFSTProject";
-            this.bCreateFSTProject.Size = new System.Drawing.Size(75, 23);
-            this.bCreateFSTProject.TabIndex = 3;
-            this.bCreateFSTProject.Text = "create FST";
-            this.bCreateFSTProject.UseVisualStyleBackColor = true;
-            this.bCreateFSTProject.Click += new System.EventHandler(this.bCreateFst_Click);
-            // 
             // ProjectForm
             // 
             this.AcceptButton = this.bSave;
@@ -91,7 +80,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(348, 67);
-            this.Controls.Add(this.bCreateFSTProject);
             this.Controls.Add(this.lName);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.bSave);
@@ -110,6 +98,5 @@
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.Label lName;
         private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Button bCreateFSTProject;
     }
 }

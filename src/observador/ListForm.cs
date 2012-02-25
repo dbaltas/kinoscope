@@ -172,6 +172,7 @@ namespace observador
                     }
                     break;
                 case Keys.F2:
+                case Keys.Enter:
                     OrderEdit();
                     break;
                 case Keys.Delete:

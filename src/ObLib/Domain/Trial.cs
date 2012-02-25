@@ -12,6 +12,19 @@ namespace ObLib.Domain
         public virtual string Name { get; set; }
         public virtual Int32 Duration { get; set; }
         public virtual DateTime Tm { get; set; }
+        public virtual IList<Run> Runs { get; set; }
+        public virtual int RunCount { get { return Runs.Count; } }
+
+        public Trial()
+        {
+            Runs = new List<Run>();
+        }
+
+        public virtual void AddRun(Run run)
+        {
+            run.Trial = this;
+            Runs.Add(run);
+        }
 
         public override string ToString()
         {
