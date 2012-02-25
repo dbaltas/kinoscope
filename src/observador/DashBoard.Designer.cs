@@ -34,6 +34,8 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subjectGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.researchersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createDatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +47,7 @@
             this.bQuit = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
-            this.subjectGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.subjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -76,7 +77,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -89,11 +90,26 @@
             // entitiesToolStripMenuItem
             // 
             this.entitiesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.trialsToolStripMenuItem,
             this.subjectGroupsToolStripMenuItem,
             this.subjectsToolStripMenuItem});
             this.entitiesToolStripMenuItem.Name = "entitiesToolStripMenuItem";
             this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.entitiesToolStripMenuItem.Text = "Entities";
+            // 
+            // subjectGroupsToolStripMenuItem
+            // 
+            this.subjectGroupsToolStripMenuItem.Name = "subjectGroupsToolStripMenuItem";
+            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.subjectGroupsToolStripMenuItem.Text = "Subject Groups";
+            this.subjectGroupsToolStripMenuItem.Click += new System.EventHandler(this.subjectGroupsToolStripMenuItem_Click);
+            // 
+            // subjectsToolStripMenuItem
+            // 
+            this.subjectsToolStripMenuItem.Name = "subjectsToolStripMenuItem";
+            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.subjectsToolStripMenuItem.Text = "Subjects";
+            this.subjectsToolStripMenuItem.Click += new System.EventHandler(this.subjectsToolStripMenuItem_Click);
             // 
             // adminToolStripMenuItem
             // 
@@ -186,19 +202,12 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
-            // subjectGroupsToolStripMenuItem
+            // trialsToolStripMenuItem
             // 
-            this.subjectGroupsToolStripMenuItem.Name = "subjectGroupsToolStripMenuItem";
-            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.subjectGroupsToolStripMenuItem.Text = "Subject Groups";
-            this.subjectGroupsToolStripMenuItem.Click += new System.EventHandler(this.subjectGroupsToolStripMenuItem_Click);
-            // 
-            // subjectsToolStripMenuItem
-            // 
-            this.subjectsToolStripMenuItem.Name = "subjectsToolStripMenuItem";
-            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.subjectsToolStripMenuItem.Text = "Subjects";
-            this.subjectsToolStripMenuItem.Click += new System.EventHandler(this.subjectsToolStripMenuItem_Click);
+            this.trialsToolStripMenuItem.Name = "trialsToolStripMenuItem";
+            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.trialsToolStripMenuItem.Text = "Trials";
+            this.trialsToolStripMenuItem.Click += new System.EventHandler(this.trialsToolStripMenuItem_Click);
             // 
             // DashBoard
             // 
@@ -243,5 +252,6 @@
         private System.Windows.Forms.ToolStripMenuItem entitiesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem subjectGroupsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem subjectsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem trialsToolStripMenuItem;
     }
 }

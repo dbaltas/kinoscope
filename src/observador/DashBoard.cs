@@ -48,6 +48,17 @@ namespace observador
             SeedData.AddInitialData();
         }
 
+        private void trialsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Researcher.Current.ActiveProject == null)
+            {
+                MessageBox.Show("Please create a project first.");
+                return;
+            }
+
+            ShowTrialListForm();
+        }
+
         private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Researcher.Current.ActiveProject == null)
@@ -171,6 +182,11 @@ namespace observador
             form.ShowDialog();
         }
 
+        private static void ShowTrialListForm()
+        {
+            Form form = new TrialListForm();
+            form.ShowDialog();
+        }
         #endregion
 
         #region Projects menu
