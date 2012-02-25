@@ -67,12 +67,6 @@
     <Compile Include="Admin\ResearcherForm.Designer.cs">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="TrialListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TrialListForm.Designer.cs">
-      <DependentUpon>TrialListForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SubjectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,9 +107,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Admin\ResearcherForm.resx">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TrialListForm.resx">
-      <DependentUpon>TrialListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SubjectForm.resx">
       <DependentUpon>SubjectForm.cs</DependentUpon>

@@ -26,7 +26,7 @@ namespace ObLib.Domain
 
         public override string ToString()
         {
-            return Name;
+            return String.Format("{0}: {1}", BehavioralTest.Name, Name);
         }
     }
 }

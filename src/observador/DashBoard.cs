@@ -184,7 +184,18 @@ namespace observador
 
         private static void ShowTrialListForm()
         {
-            Form form = new TrialListForm();
+            DataGridViewColumn[] columns = new DataGridViewColumn[] {
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "session" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+
+            Form form = new ListForm<Subject>(
+                columns,
+                () => (IList)Researcher.Current.ActiveProject.Trials,
+                (item) => new SubjectForm(item), false) { ItemTypeDescription = "trial", Text = "Trials", Width = 900};
+
             form.ShowDialog();
         }
         #endregion

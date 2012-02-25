@@ -24,12 +24,18 @@ namespace observador
         public ListForm(
             DataGridViewColumn[] gridColumns,
             DataSourceDelegate createDataSource,
-            CreateDetailFormDelegate createDetailForm
+            CreateDetailFormDelegate createDetailForm, 
+            bool ShowToolStrip = true
             )
         {
             ItemTypeDescription = "item";
 
             InitializeComponent();
+
+            if (!ShowToolStrip)
+            {
+                toolStrip1.Hide();
+            }
 
             dgvMain.AutoGenerateColumns = false;
 
@@ -39,6 +45,8 @@ namespace observador
             }
 
             dgvMain.Columns.AddRange(gridColumns);
+            dgvMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvMain.MultiSelect = false;
 
             _createDataSource = createDataSource;
             _createDetailForm = createDetailForm;
@@ -176,6 +184,11 @@ namespace observador
                     Close();
                     break;
             }
+        }
+
+        private void dgvMain_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            OrderEdit();
         }
     }
 }

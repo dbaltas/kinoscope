@@ -120,6 +120,7 @@
             this.dgvMain.Name = "dgvMain";
             this.dgvMain.Size = new System.Drawing.Size(447, 266);
             this.dgvMain.TabIndex = 2;
+            this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellDoubleClick);
             this.dgvMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListForm_KeyDown);
             // 
             // ListForm
