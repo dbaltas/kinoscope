@@ -104,58 +104,7 @@ using System.Data.SQLite;
         static private void CreateDb()
         {
             NHibernateHelper.BuildSchema();
-            addInitialData();
-        }
-
-        static private void addInitialData()
-        {
-            var behavioralTestType = new BehavioralTestType { Name = "FST", Description = "Forced Swimmend Test"};
-            behavioralTestType.Save();
-
-            var behavior = new Behavior
-            {
-                Name = "Climbing",
-                DefaultKeyStroke = "1",
-                BehavioralTestType = behavioralTestType,
-                Type = Behavior.BehaviorType.State
-            };
-            behavior.Save();
-
-            behavior = new Behavior
-            {
-                Name = "Swimming",
-                DefaultKeyStroke = "2",
-                BehavioralTestType = behavioralTestType,
-                Type = Behavior.BehaviorType.State
-            };
-            behavior.Save();
-
-            behavior = new Behavior
-            {
-                Name = "Floating",
-                DefaultKeyStroke = "3",
-                BehavioralTestType = behavioralTestType,
-                Type = Behavior.BehaviorType.State
-            };
-            behavior.Save();
-
-            behavior = new Behavior
-            {
-                Name = "Diving",
-                DefaultKeyStroke = "4",
-                BehavioralTestType = behavioralTestType,
-                Type = Behavior.BehaviorType.State
-            };
-            behavior.Save();
-
-            behavior = new Behavior
-            {
-                Name = "Head Swinging",
-                DefaultKeyStroke = "5",
-                BehavioralTestType = behavioralTestType,
-                Type = Behavior.BehaviorType.Instant
-            };
-            behavior.Save();
+            ObLib.SeedData.AddInitialData();
         }
 
         static private void NotUsedGenerateFromScript()

@@ -13,21 +13,27 @@ namespace ObLib.Domain
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         public virtual DateTime Tm { get; set; }
+        private static BehavioralTestType _fst;
 
         public static BehavioralTestType Fst
         {
             get
             {
-                BehavioralTestType behavioralTestType = NHibernateHelper.OpenSession()
-                        .CreateCriteria(typeof(BehavioralTestType))
-                        .Add(Restrictions.Eq("Name", _FST))
-                        .UniqueResult<BehavioralTestType>();
-
-                if (behavioralTestType == null)
+                if (_fst == null)
                 {
-                    Logger.logError("NO FST behavioral test type found");
+                    BehavioralTestType behavioralTestType = NHibernateHelper.OpenSession()
+                            .CreateCriteria(typeof(BehavioralTestType))
+                            .Add(Restrictions.Eq("Name", _FST))
+                            .UniqueResult<BehavioralTestType>();
+
+                    if (behavioralTestType == null)
+                    {
+                        Logger.logError("NO FST behavioral test type found");
+                    }
+                    _fst = behavioralTestType;
                 }
-                return behavioralTestType;
+
+                return _fst;
             }
         }
 

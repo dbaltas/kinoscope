@@ -37,9 +37,16 @@ namespace observador
             {
                 Researcher.Current.Delete();
             }
-            if (BehavioralTestType.Fst != null)
+            try
             {
-                BehavioralTestType.Fst.Delete();
+                if (BehavioralTestType.Fst != null)
+                {
+                    BehavioralTestType.Fst.Delete();
+                }
+
+            } catch(Exception exception)
+            {
+                Logger.logError(exception.ToString());
             }
             NHibernateHelper.BuildSchema();
             SeedData.AddInitialData();
@@ -202,10 +209,10 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "RunCount", HeaderText = "Runs" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
 
-            Form form = new ListForm<Subject>(
+            Form form = new ListForm<Trial>(
                 columns,
                 () => (IList)Researcher.Current.ActiveProject.Trials,
-                (item) => new SubjectForm(item), false) { ItemTypeDescription = "trial", Text = "Trials", Width = 900};
+                (item) => new TrialForm(item), false) { ItemTypeDescription = "trial", Text = "Trials", Width = 900};
 
             form.ShowDialog();
         }

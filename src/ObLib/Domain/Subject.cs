@@ -32,5 +32,18 @@ namespace ObLib.Domain
         {
             return Code;
         }
+
+        public virtual Run RunForTrial(Trial trial)
+        {
+            foreach (Run run in trial.Runs)
+            {
+                if (run.Subject.Code == this.Code)
+                {
+                    return run;
+                }
+            }
+
+            return null;
+        }
     }
 }

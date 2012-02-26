@@ -11,6 +11,8 @@ namespace ObLib.Domain
             Map(x => x.Name);
             Map(x => x.Duration);
             Map(x => x.Tm);
+            HasMany(x => x.Runs).KeyColumn("TrialId")
+                .Cascade.AllDeleteOrphan();
         }
     }
 }
