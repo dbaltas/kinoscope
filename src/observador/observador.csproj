@@ -67,6 +67,7 @@
     <Compile Include="Admin\ResearcherForm.Designer.cs">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IEventVisualiser.cs" />
     <Compile Include="ListFormCreator.cs" />
     <Compile Include="RunForm.cs">
       <SubType>Form</SubType>
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextEventVisualiser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TrialForm.cs">
       <SubType>Form</SubType>
     </Compile>

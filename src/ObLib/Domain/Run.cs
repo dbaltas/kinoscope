@@ -43,6 +43,14 @@ namespace ObLib.Domain
             RunEvents.Add(runEvent);
         }
 
+        public virtual void AddRunEvents(List<RunEvent> runEvents)
+        {
+            foreach (RunEvent runEvent in runEvents)
+            {
+                AddRunEvent(runEvent);
+            }
+        }
+
         public override string ToString()
         {
             return String.Format("{0}, {1}", Trial, Subject);
