@@ -62,7 +62,7 @@
             this.toolStripButtonAdd.Name = "toolStripButtonAdd";
             this.toolStripButtonAdd.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonAdd.Text = "Add";
-            this.toolStripButtonAdd.ToolTipText = "Add New";
+            this.toolStripButtonAdd.ToolTipText = "Add New (INS)";
             this.toolStripButtonAdd.Click += new System.EventHandler(this.toolStripButtonAdd_Click);
             // 
             // toolStripButtonEdit
@@ -73,7 +73,7 @@
             this.toolStripButtonEdit.Name = "toolStripButtonEdit";
             this.toolStripButtonEdit.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonEdit.Text = "toolStripButton2";
-            this.toolStripButtonEdit.ToolTipText = "Edit";
+            this.toolStripButtonEdit.ToolTipText = "Edit (F2)";
             this.toolStripButtonEdit.Click += new System.EventHandler(this.toolStripButtonEdit_Click);
             // 
             // toolStripButtonRemove
@@ -84,6 +84,7 @@
             this.toolStripButtonRemove.Name = "toolStripButtonRemove";
             this.toolStripButtonRemove.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonRemove.Text = "Delete";
+            this.toolStripButtonRemove.ToolTipText = "Delete (DEL)";
             this.toolStripButtonRemove.Click += new System.EventHandler(this.toolStripButtonRemove_Click);
             // 
             // toolStripButtonRefresh
@@ -94,7 +95,7 @@
             this.toolStripButtonRefresh.Name = "toolStripButtonRefresh";
             this.toolStripButtonRefresh.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonRefresh.Text = "toolStripButton4";
-            this.toolStripButtonRefresh.ToolTipText = "Refresh";
+            this.toolStripButtonRefresh.ToolTipText = "Refresh (F5)";
             this.toolStripButtonRefresh.Click += new System.EventHandler(this.toolStripButtonRefresh_Click);
             // 
             // toolStripButtonClose
@@ -105,7 +106,7 @@
             this.toolStripButtonClose.Name = "toolStripButtonClose";
             this.toolStripButtonClose.Size = new System.Drawing.Size(36, 36);
             this.toolStripButtonClose.Text = "toolStripButtonClose";
-            this.toolStripButtonClose.ToolTipText = "Close";
+            this.toolStripButtonClose.ToolTipText = "Close (ESC)";
             this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
             // 
             // dgvMain

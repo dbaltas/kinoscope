@@ -34,6 +34,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.trialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subjectGroupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +48,6 @@
             this.bQuit = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
-            this.trialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -97,18 +97,25 @@
             this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.entitiesToolStripMenuItem.Text = "Entities";
             // 
+            // trialsToolStripMenuItem
+            // 
+            this.trialsToolStripMenuItem.Name = "trialsToolStripMenuItem";
+            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.trialsToolStripMenuItem.Text = "Trials (Ctrl+T)";
+            this.trialsToolStripMenuItem.Click += new System.EventHandler(this.trialsToolStripMenuItem_Click);
+            // 
             // subjectGroupsToolStripMenuItem
             // 
             this.subjectGroupsToolStripMenuItem.Name = "subjectGroupsToolStripMenuItem";
-            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.subjectGroupsToolStripMenuItem.Text = "Subject Groups";
+            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.subjectGroupsToolStripMenuItem.Text = "Subject Groups (Ctrl+G)";
             this.subjectGroupsToolStripMenuItem.Click += new System.EventHandler(this.subjectGroupsToolStripMenuItem_Click);
             // 
             // subjectsToolStripMenuItem
             // 
             this.subjectsToolStripMenuItem.Name = "subjectsToolStripMenuItem";
-            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.subjectsToolStripMenuItem.Text = "Subjects";
+            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.subjectsToolStripMenuItem.Text = "Subjects (Ctrl+S)";
             this.subjectsToolStripMenuItem.Click += new System.EventHandler(this.subjectsToolStripMenuItem_Click);
             // 
             // adminToolStripMenuItem
@@ -157,6 +164,7 @@
             this.bCreateDatabase.Text = "create database";
             this.bCreateDatabase.UseVisualStyleBackColor = true;
             this.bCreateDatabase.Click += new System.EventHandler(this.bCreateDatabase_Click);
+            this.bCreateDatabase.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashBoard_KeyDown);
             // 
             // label1
             // 
@@ -176,6 +184,7 @@
             this.bResearchers.Text = "researchers";
             this.bResearchers.UseVisualStyleBackColor = true;
             this.bResearchers.Click += new System.EventHandler(this.bResearchers_Click);
+            this.bResearchers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashBoard_KeyDown);
             // 
             // bQuit
             // 
@@ -186,6 +195,7 @@
             this.bQuit.Text = "Exit";
             this.bQuit.UseVisualStyleBackColor = true;
             this.bQuit.Click += new System.EventHandler(this.bQuit_Click);
+            this.bQuit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashBoard_KeyDown);
             // 
             // statusStrip1
             // 
@@ -202,13 +212,6 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
-            // trialsToolStripMenuItem
-            // 
-            this.trialsToolStripMenuItem.Name = "trialsToolStripMenuItem";
-            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.trialsToolStripMenuItem.Text = "Trials";
-            this.trialsToolStripMenuItem.Click += new System.EventHandler(this.trialsToolStripMenuItem_Click);
-            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,6 +226,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DashBoard";
             this.Load += new System.EventHandler(this.DashBoard_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashBoard_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

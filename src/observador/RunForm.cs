@@ -37,7 +37,7 @@ namespace observador
             InitializeComponent();
             Controls.Add(_eventVisualiser as Control);
             _eventVisualiser.SetDimensions(12, 41, 713, 253);
-            (_eventVisualiser as Control).KeyDown += RunForm_KeyDown;
+            //(_eventVisualiser as Control).KeyDown += RunForm_KeyDown;
         }
 
         private void bCancel_Click(object sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace observador
         {
             if (_running)
             {
-                Behavior behavior = GetBehaviorByKeyStroke(e.KeyCode.ToString());
+                Behavior behavior = GetBehaviorByKeyStroke(e.KeyCode);
 
                 if (behavior != null)
                 {
@@ -90,13 +90,12 @@ namespace observador
             }
         }
 
-        private Behavior GetBehaviorByKeyStroke(string keyCode)
+        private Behavior GetBehaviorByKeyStroke(Keys keyCode)
         {
-            // TODO: Capture keydown event from all controls.
-            // TODO: digit 1 keyCode is "D1" etc.
-
+            KeysConverter kc = new KeysConverter();
+            string keyChar = kc.ConvertToString(keyCode);
             // TODO: Check if keyValue is the KeyStroke of any current Researcher's ResearcherBehaviorKeyStroke.
-            return _allowedBehaviors.Find((behavior) => behavior.DefaultKeyStroke == keyCode);
+            return _allowedBehaviors.Find((behavior) => behavior.DefaultKeyStroke == keyChar);
         }
 
         private void RefreshTimerLabel()

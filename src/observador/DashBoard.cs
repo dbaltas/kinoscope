@@ -142,7 +142,7 @@ namespace observador
             myProjectsToolStripMenuItem.DropDownItems.Clear();
 
             ToolStripMenuItem manageProjectsToolStripMenuItem = new ToolStripMenuItem();
-            manageProjectsToolStripMenuItem.Text = "Manage Projects";
+            manageProjectsToolStripMenuItem.Text = "Manage Projects (Ctrl+P)";
             manageProjectsToolStripMenuItem.Click += manageProjectsToolStripMenuItem_Click;
 
 
@@ -183,5 +183,25 @@ namespace observador
         }
 
         #endregion
+
+        private void DashBoard_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == (Keys.Control | Keys.T))
+            {
+                trialsToolStripMenuItem_Click(sender, e);
+            }
+            if (e.KeyData == (Keys.Control | Keys.S))
+            {
+                subjectsToolStripMenuItem_Click(sender, e);
+            }
+            if (e.KeyData == (Keys.Control | Keys.G))
+            {
+                subjectGroupsToolStripMenuItem_Click(sender, e);
+            }
+            if (e.KeyData == (Keys.Control | Keys.P))
+            {
+                manageProjectsToolStripMenuItem_Click(sender, e);
+            }
+        }
     }
 }

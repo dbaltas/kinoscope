@@ -48,6 +48,7 @@
             this.bCancel.Text = "Discard";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
+            this.bCancel.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
             // 
             // bSave
             // 
@@ -59,6 +60,7 @@
             this.bSave.Text = "Save Run";
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
+            this.bSave.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
             // 
             // bStart
             // 
@@ -70,6 +72,7 @@
             this.bStart.Text = "Start!";
             this.bStart.UseVisualStyleBackColor = true;
             this.bStart.Click += new System.EventHandler(this.bStart_Click);
+            this.bStart.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
             // 
             // bClear
             // 
@@ -80,6 +83,7 @@
             this.bClear.Text = "Reset";
             this.bClear.UseVisualStyleBackColor = true;
             this.bClear.Click += new System.EventHandler(this.bClear_Click);
+            this.bClear.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
             // 
             // bStop
             // 
@@ -90,6 +94,7 @@
             this.bStop.Text = "Stop";
             this.bStop.UseVisualStyleBackColor = true;
             this.bStop.Click += new System.EventHandler(this.bStop_Click);
+            this.bStop.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
             // 
             // timer
             // 
