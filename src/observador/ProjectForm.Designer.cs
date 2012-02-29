@@ -37,7 +37,7 @@
             // bCancel
             // 
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(249, 32);
+            this.bCancel.Location = new System.Drawing.Point(202, 32);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 4;
@@ -47,7 +47,7 @@
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(62, 32);
+            this.bSave.Location = new System.Drawing.Point(84, 32);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 2;

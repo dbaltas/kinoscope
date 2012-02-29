@@ -29,30 +29,30 @@
         private void InitializeComponent()
         {
             this.bCancel = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // bCancel
             // 
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(299, 35);
+            this.bCancel.Location = new System.Drawing.Point(263, 57);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 4;
-            this.bCancel.Text = "cancel";
+            this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
-            // button1
+            // bSave
             // 
-            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.button1.Location = new System.Drawing.Point(158, 35);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "save run";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bSave.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.bSave.Location = new System.Drawing.Point(152, 57);
+            this.bSave.Name = "bSave";
+            this.bSave.Size = new System.Drawing.Size(75, 23);
+            this.bSave.TabIndex = 5;
+            this.bSave.Text = "Save Run";
+            this.bSave.UseVisualStyleBackColor = true;
+            this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
             // RunForm
             // 
@@ -60,7 +60,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(390, 92);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bSave);
             this.Controls.Add(this.bCancel);
             this.MinimumSize = new System.Drawing.Size(356, 101);
             this.Name = "RunForm";
@@ -72,7 +72,7 @@
         #endregion
 
         private System.Windows.Forms.Button bCancel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bSave;
 
     }
 }

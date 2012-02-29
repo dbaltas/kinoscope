@@ -11,6 +11,7 @@ using ObLib.Domain;
 
 namespace observador
 {
+    [Obsolete("Use ListForm<Run> instead.")]
     public partial class TrialForm : Form
     {
         Trial _trial;

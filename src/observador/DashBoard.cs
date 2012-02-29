@@ -15,6 +15,8 @@ namespace observador
 {
     public partial class DashBoard : ObWin.Form
     {
+        private ListFormCreator _listFormCreator = new ListFormCreator();
+
         public DashBoard()
         {
             InitializeComponent();
@@ -44,7 +46,8 @@ namespace observador
                     BehavioralTestType.Fst.Delete();
                 }
 
-            } catch(Exception exception)
+            }
+            catch (Exception exception)
             {
                 Logger.logError(exception.ToString());
             }
@@ -56,7 +59,7 @@ namespace observador
 
         private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowResearcherListForm();
+            _listFormCreator.CreateResearcherListForm().ShowDialog();
         }
 
         private void createDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,7 +76,7 @@ namespace observador
                 return;
             }
 
-            ShowTrialListForm();
+            _listFormCreator.CreateTrialListForm().ShowDialog();
         }
 
         private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -84,7 +87,7 @@ namespace observador
                 return;
             }
 
-            ShowSubjectGroupListForm();
+            _listFormCreator.CreateSubjectGroupListForm().ShowDialog();
         }
 
         private void subjectsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -95,12 +98,12 @@ namespace observador
                 return;
             }
 
-            ShowSubjectListForm();
+            _listFormCreator.CreateSubjectListForm().ShowDialog();
         }
 
         private void bResearchers_Click(object sender, EventArgs e)
         {
-            ShowResearcherListForm();
+            _listFormCreator.CreateResearcherListForm().ShowDialog();
         }
 
         private void DashBoard_Load(object sender, EventArgs e)
@@ -132,92 +135,6 @@ namespace observador
                 Program.GetTitle());
         }
 
-        #region List forms
-
-        private void ShowResearcherListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Username", HeaderText = "username" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "ProjectCount", HeaderText = "projects" }};
-
-            Form form = new ListForm<Researcher>(
-                columns,
-                Researcher.All,
-                (item) => new AdminResearcherForm(item)) { ItemTypeDescription = "researcher", Text = "Researchers" };
-
-            form.ShowDialog();
-        }
-
-        private void ShowProjectListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
-
-            Form form = new ListForm<Project>(
-                columns,
-                () => (IList)Researcher.Current.Projects,
-                (item) => new ProjectForm(item)) { ItemTypeDescription = "project", Text = "My Projects" };
-
-            form.ShowDialog();
-        }
-
-        private static void ShowSubjectGroupListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectCount", HeaderText = "subjects" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
-
-            Form form = new ListForm<SubjectGroup>(
-                columns,
-                () => (IList)Researcher.Current.ActiveProject.SubjectGroups,
-                (item) => new SubjectGroupForm(item)) { ItemTypeDescription = "subject group", Text = "Subject Groups" };
-
-            form.ShowDialog();
-        }
-
-        private static void ShowSubjectListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectGroup", HeaderText = "subject group" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Code", HeaderText = "code" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Strain", HeaderText = "strain" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Sex", HeaderText = "sex" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "DateOfBirth", HeaderText = "DOB" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
-
-            Form form = new ListForm<Subject>(
-                columns,
-                () => (IList)Researcher.Current.ActiveProject.Subjects,
-                (item) => new SubjectForm(item)) { ItemTypeDescription = "subject", Text = "Subjects", Width = 900 };
-
-            form.ShowDialog();
-        }
-
-        private static void ShowTrialListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "id" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "name" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "session" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "RunCount", HeaderText = "Runs" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
-
-            Form form = new ListForm<Trial>(
-                columns,
-                () => (IList)Researcher.Current.ActiveProject.Trials,
-                (item) => new TrialForm(item), false) { ItemTypeDescription = "trial", Text = "Trials", Width = 900};
-
-            form.ShowDialog();
-        }
-        #endregion
-
         #region Projects menu
 
         private void FillProjectsMenu()
@@ -248,7 +165,7 @@ namespace observador
 
         private void manageProjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowProjectListForm();
+            _listFormCreator.CreateProjectListForm().ShowDialog();
 
             FillProjectsMenu();
             DisplayActiveProject();

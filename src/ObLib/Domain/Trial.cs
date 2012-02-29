@@ -30,5 +30,20 @@ namespace ObLib.Domain
         {
             return Name;
         }
+
+        /// <summary>
+        /// Adds a run to this trial for every project's subject 
+        /// for which a run does not already exist for this trial.
+        /// </summary>
+        public virtual void PopulateWithRuns()
+        {
+            foreach (Subject subject in Researcher.Current.ActiveProject.Subjects)
+            {
+                if (!Runs.Any((run) => run.Subject.Code == subject.Code))
+                {
+                    AddRun(new Run() { Subject = subject });
+                }
+            }
+        }
     }
 }

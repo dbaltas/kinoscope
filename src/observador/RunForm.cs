@@ -26,8 +26,10 @@ namespace observador
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void bSave_Click(object sender, EventArgs e)
         {
+            _run.Tm = DateTime.Now;
+
             _run.Trial.Save();
             this.Close();
         }

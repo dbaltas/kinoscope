@@ -122,6 +122,14 @@ namespace ObLib
             };
             preTestSession.AddTrial(testTrial);
 
+            var testTrial2 = new Trial
+            {
+                Name = "Default trial 2",
+                Duration = 5 * 60,
+                Tm = DateTime.Now
+            };
+            testSession.AddTrial(testTrial2);
+
             Researcher.Current.Save();
         }
 
@@ -132,7 +140,7 @@ namespace ObLib
 
             var project = new Project { Name = "my project" + rnd.Next(1, 10000).ToString() };
             //var behavioralTestType = null;// NHibernateHelper.OpenSession().Get<BehavioralTestType>(1);
-            var behavioralTest = new BehavioralTest { Name = "first test", Project = project};
+            var behavioralTest = new BehavioralTest { Name = "first test", Project = project };
 
             project.AddBehavioralTest(behavioralTest);
             researcher.AddProject(project);

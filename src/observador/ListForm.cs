@@ -17,6 +17,10 @@ namespace observador
         public delegate IList DataSourceDelegate();
         public delegate Form CreateDetailFormDelegate(T item);
 
+        private bool _allowAdd;
+        private bool _allowEdit;
+        private bool _allowRemove;
+
         private DataSourceDelegate _createDataSource;
         private CreateDetailFormDelegate _createDetailForm;
         public string ItemTypeDescription { get; set; }
@@ -24,18 +28,17 @@ namespace observador
         public ListForm(
             DataGridViewColumn[] gridColumns,
             DataSourceDelegate createDataSource,
-            CreateDetailFormDelegate createDetailForm, 
-            bool ShowToolStrip = true
+            CreateDetailFormDelegate createDetailForm,
+            bool allowAdd = true, bool allowEdit = true, bool allowRemove = true
             )
         {
             ItemTypeDescription = "item";
 
             InitializeComponent();
 
-            if (!ShowToolStrip)
-            {
-                toolStrip1.Hide();
-            }
+            toolStripButtonAdd.Visible = allowAdd;
+            toolStripButtonEdit.Visible = allowEdit;
+            toolStripButtonRemove.Visible = allowRemove;
 
             dgvMain.AutoGenerateColumns = false;
 
@@ -45,11 +48,12 @@ namespace observador
             }
 
             dgvMain.Columns.AddRange(gridColumns);
-            dgvMain.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvMain.MultiSelect = false;
 
             _createDataSource = createDataSource;
             _createDetailForm = createDetailForm;
+            _allowAdd = allowAdd;
+            _allowEdit = allowEdit;
+            _allowRemove = allowRemove;
         }
 
         private void LoadForm()
@@ -97,6 +101,11 @@ namespace observador
 
         private void OrderNew()
         {
+            if (!_allowAdd)
+            {
+                return;
+            }
+
             Form form = _createDetailForm(null);
             form.ShowDialog();
             LoadForm();
@@ -104,6 +113,11 @@ namespace observador
 
         private void OrderEdit()
         {
+            if (!_allowEdit)
+            {
+                return;
+            }
+
             if (dgvMain.CurrentRow == null)
             {
                 MessageBox.Show(string.Format("No {0} to edit.", ItemTypeDescription));
@@ -117,6 +131,11 @@ namespace observador
 
         private void OrderRemove()
         {
+            if (!_allowRemove)
+            {
+                return;
+            }
+
             if (dgvMain.CurrentRow == null)
             {
                 MessageBox.Show(string.Format("No {0} to delete.", ItemTypeDescription));
