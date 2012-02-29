@@ -51,13 +51,20 @@ namespace ObLib.Domain
             return Name;
         }
 
-        
+
         public virtual IList<Trial> Trials
         {
             get
             {
-                /* TODO: should return all trials of all behavioral tests*/
-                return this.BehavioralTests[0].Sessions[0].Trials;
+                List<Trial> trials = new List<Trial>();
+                foreach (BehavioralTest behavioralTest in BehavioralTests)
+                {
+                    foreach (Session session in behavioralTest.Sessions)
+                    {
+                        trials.AddRange(session.Trials);
+                    }
+                }
+                return trials;
             }
         }
     }
