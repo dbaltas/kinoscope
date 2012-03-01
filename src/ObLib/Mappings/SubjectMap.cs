@@ -7,9 +7,9 @@ namespace ObLib.Domain
         public SubjectMap()
         {
             Id(x => x.Id);
-            References(x => x.Project);
+            References(x => x.Project).UniqueKey("UQ_Subject_Project_Code");
             References(x => x.SubjectGroup);
-            Map(x => x.Code);
+            Map(x => x.Code).UniqueKey("UQ_Subject_Project_Code");
             Map(x => x.Strain);
             Map(x => x.Sex);
             Map(x => x.DateOfBirth);

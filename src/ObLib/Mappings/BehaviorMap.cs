@@ -9,8 +9,8 @@ namespace ObLib.Domain
             Id(x => x.Id);
             Map(x => x.Name);
             Map(x => x.Type);
-            References(x => x.BehavioralTestType);
-            Map(x => x.DefaultKeyStroke);
+            References(x => x.BehavioralTestType).UniqueKey("UQ_Behavior_BehavioralTestType_DefaultKeyStroke");
+            Map(x => x.DefaultKeyStroke).UniqueKey("UQ_Behavior_BehavioralTestType_DefaultKeyStroke");
             Map(x => x.Tm);
         }
     }
