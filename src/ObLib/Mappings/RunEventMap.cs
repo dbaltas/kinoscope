@@ -7,9 +7,10 @@ namespace ObLib.Domain
         public RunEventMap()
         {
             Id(x => x.Id);
-            References(x => x.Run).Column("RunId");
-            References(x => x.Behavior).Column("BehaviorId");
+            References(x => x.Run);
+            References(x => x.Behavior);
             Map(x => x.Tm);
+            Map(x => x.TimeTracked);
         }
     }
 }

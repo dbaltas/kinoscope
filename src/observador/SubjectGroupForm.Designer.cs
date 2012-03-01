@@ -86,6 +86,7 @@
             this.Controls.Add(this.bCancel);
             this.MinimumSize = new System.Drawing.Size(348, 110);
             this.Name = "SubjectGroupForm";
+            this.ShowInTaskbar = false;
             this.Text = "Subject Group";
             this.ResumeLayout(false);
             this.PerformLayout();

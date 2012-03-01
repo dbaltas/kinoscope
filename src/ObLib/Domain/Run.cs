@@ -43,8 +43,10 @@ namespace ObLib.Domain
             RunEvents.Add(runEvent);
         }
 
-        public virtual void AddRunEvents(List<RunEvent> runEvents)
+        public virtual void SetRunEvents(List<RunEvent> runEvents)
         {
+            this.RunEvents.Clear();
+
             foreach (RunEvent runEvent in runEvents)
             {
                 AddRunEvent(runEvent);

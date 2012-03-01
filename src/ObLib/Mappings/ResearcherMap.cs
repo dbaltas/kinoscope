@@ -10,8 +10,7 @@ namespace ObLib.Domain
             Map(x => x.Username);
             Map(x => x.Password);
             Map(x => x.Tm);
-            HasMany(x => x.Projects).KeyColumn("ResearcherId")
-                .Cascade.AllDeleteOrphan();			
+            HasMany(x => x.Projects).Cascade.AllDeleteOrphan();			
         }
     }
 }

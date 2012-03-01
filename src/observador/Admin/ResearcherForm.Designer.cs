@@ -132,6 +132,7 @@
             this.Controls.Add(this.bCancel);
             this.MinimumSize = new System.Drawing.Size(280, 169);
             this.Name = "AdminResearcherForm";
+            this.ShowInTaskbar = false;
             this.Text = "AdminResearcher";
             this.ResumeLayout(false);
             this.PerformLayout();

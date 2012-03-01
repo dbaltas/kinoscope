@@ -16,7 +16,9 @@ namespace observador
     public partial class RunForm : Form
     {
         private Run _run;
+        private DateTime _startTm;
         private List<RunEvent> _runEvents = new List<RunEvent>();
+        // Could be useful if we decide to implement Pause functionality
         private Stopwatch _stopwatch = new Stopwatch();
         private bool _running = false;
         private IEventVisualiser _eventVisualiser = new TextEventVisualiser();
@@ -35,21 +37,46 @@ namespace observador
             }
 
             InitializeComponent();
-            Controls.Add(_eventVisualiser as Control);
-            _eventVisualiser.SetDimensions(12, 41, 713, 253);
-            //(_eventVisualiser as Control).KeyDown += RunForm_KeyDown;
+
+            Control eventVisualiserControl = _eventVisualiser as Control;
+
+            pnlEventVisualiser.Controls.Add(eventVisualiserControl);
+
+            eventVisualiserControl.Width = eventVisualiserControl.Parent.Width;
+            eventVisualiserControl.Height = eventVisualiserControl.Parent.Height;
+
+            eventVisualiserControl.Anchor =
+                AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
-            Stop();
             Close();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (_running)
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    "A run is currently in progress. Are you sure you want to cancel it and exit?",
+                    "Run in progress",
+                    MessageBoxButtons.YesNo);
+                if (dialogResult == System.Windows.Forms.DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            Stop();
+            base.OnFormClosing(e);
         }
 
         private void bSave_Click(object sender, EventArgs e)
         {
-            _run.Tm = DateTime.Now;
-            _run.AddRunEvents(_runEvents);
+            _run.Tm = _startTm;
+            _run.SetRunEvents(_runEvents);
             _run.Trial.Save();
             Close();
         }
@@ -83,7 +110,13 @@ namespace observador
 
                 if (behavior != null)
                 {
-                    RunEvent runEvent = new RunEvent() { Behavior = behavior, Run = _run, Tm = DateTime.Now };
+                    RunEvent runEvent = new RunEvent()
+                    {
+                        Behavior = behavior,
+                        Run = _run,
+                        Tm = DateTime.Now,
+                        TimeTracked = _stopwatch.ElapsedMilliseconds
+                    };
                     _runEvents.Add(runEvent);
                     _eventVisualiser.AddRunEvent(runEvent);
                 }
@@ -115,6 +148,8 @@ namespace observador
                 timer.Start();
                 _eventVisualiser.Start(DateTime.Now);
                 _running = true;
+
+                _startTm = DateTime.Now;
             }
         }
 
@@ -137,6 +172,7 @@ namespace observador
             Stop();
 
             _stopwatch.Reset();
+            _eventVisualiser.Clear();
             _runEvents.Clear();
             RefreshTimerLabel();
             bStart.Enabled = true;

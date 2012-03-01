@@ -186,21 +186,20 @@ namespace observador
 
         private void DashBoard_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyData == (Keys.Control | Keys.T))
+            switch (e.KeyData)
             {
-                trialsToolStripMenuItem_Click(sender, e);
-            }
-            if (e.KeyData == (Keys.Control | Keys.S))
-            {
-                subjectsToolStripMenuItem_Click(sender, e);
-            }
-            if (e.KeyData == (Keys.Control | Keys.G))
-            {
-                subjectGroupsToolStripMenuItem_Click(sender, e);
-            }
-            if (e.KeyData == (Keys.Control | Keys.P))
-            {
-                manageProjectsToolStripMenuItem_Click(sender, e);
+                case Keys.Control | Keys.T:
+                    trialsToolStripMenuItem_Click(sender, e);
+                    break;
+                case Keys.Control | Keys.S:
+                    subjectsToolStripMenuItem_Click(sender, e);
+                    break;
+                case Keys.Control | Keys.G:
+                    subjectGroupsToolStripMenuItem_Click(sender, e);
+                    break;
+                case Keys.Control | Keys.P:
+                    manageProjectsToolStripMenuItem_Click(sender, e);
+                    break;
             }
         }
     }

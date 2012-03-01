@@ -124,7 +124,6 @@
             this.dgvMain.Size = new System.Drawing.Size(447, 266);
             this.dgvMain.TabIndex = 2;
             this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellDoubleClick);
-            this.dgvMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListForm_KeyDown);
             // 
             // ListForm
             // 
@@ -133,7 +132,9 @@
             this.ClientSize = new System.Drawing.Size(471, 320);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dgvMain);
+            this.KeyPreview = true;
             this.Name = "ListForm";
+            this.ShowInTaskbar = false;
             this.Text = "ListForm";
             this.Load += new System.EventHandler(this.ListForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListForm_KeyDown);

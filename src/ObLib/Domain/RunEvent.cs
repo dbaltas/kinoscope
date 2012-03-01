@@ -11,6 +11,7 @@ namespace ObLib.Domain
         public virtual Run Run { get; set; }
         public virtual Behavior Behavior { get; set; }
         public virtual DateTime Tm { get; set; }
+        public virtual long TimeTracked { get; set; }
 
         public override string ToString()
         {

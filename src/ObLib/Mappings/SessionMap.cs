@@ -7,10 +7,10 @@ namespace ObLib.Domain
         public SessionMap()
         {
             Id(x => x.Id);
-            References(x => x.BehavioralTest).Column("BehavioralTestId");
+            References(x => x.BehavioralTest);
             Map(x => x.Name);
             Map(x => x.Tm);
-            HasMany(x => x.Trials).KeyColumn("SessionId").Cascade.AllDeleteOrphan();
+            HasMany(x => x.Trials).Cascade.AllDeleteOrphan();
         }
     }
 }

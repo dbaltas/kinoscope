@@ -9,7 +9,7 @@ namespace ObLib.Domain
             Id(x => x.Id);
             Map(x => x.Name);
             Map(x => x.Type);
-            References(x => x.BehavioralTestType).Column("BehavioralTestTypeId");
+            References(x => x.BehavioralTestType);
             Map(x => x.DefaultKeyStroke);
             Map(x => x.Tm);
         }

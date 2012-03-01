@@ -7,9 +7,8 @@ namespace ObLib.Domain
         public SubjectGroupMap()
         {
             Id(x => x.Id);
-            References(x => x.Project).Column("ProjectId");
-            HasMany(x => x.Subjects).KeyColumn("SubjectGroupId")
-                .Cascade.None();
+            References(x => x.Project);
+            HasMany(x => x.Subjects).Cascade.None();
             Map(x => x.Name);
             Map(x => x.Tm);
         }

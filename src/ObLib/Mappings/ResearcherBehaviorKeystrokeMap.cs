@@ -7,8 +7,8 @@ namespace ObLib.Domain
         public ResearcherBehaviorKeyStrokeMap()
         {
             Id(x => x.Id);
-            References(x => x.Researcher).Column("ResearcherId");
-            References(x => x.Behavior).Column("BehaviorId");
+            References(x => x.Researcher);
+            References(x => x.Behavior);
             Map(x => x.KeyStroke);
             Map(x => x.Tm);
         }

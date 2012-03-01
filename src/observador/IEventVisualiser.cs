@@ -9,7 +9,6 @@ namespace observador
 {
     public interface IEventVisualiser
     {
-        void SetDimensions(int left, int top, int width, int height);
         void Start(DateTime dateTime);
         void Stop(DateTime dateTime);
         void Clear();

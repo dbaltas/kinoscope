@@ -173,23 +173,13 @@ namespace observador
 
         private void ListForm_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            switch (e.KeyData)
             {
-                case Keys.N:
-                    if (Control.ModifierKeys == Keys.Control)
-                    {
-                        OrderNew();
-                    }
-                    break;
+                case Keys.Control | Keys.N:
                 case Keys.Insert:
                     OrderNew();
                     break;
-                case Keys.E:
-                    if (Control.ModifierKeys == Keys.Control)
-                    {
-                        OrderEdit();
-                    }
-                    break;
+                case Keys.Control | Keys.E:
                 case Keys.F2:
                 case Keys.Enter:
                     OrderEdit();

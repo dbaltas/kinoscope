@@ -7,11 +7,11 @@ namespace ObLib.Domain
         public BehavioralTestMap()
         {
             Id(x => x.Id);
-            References(x => x.Project).Column("ProjectId");
-            References(x => x.BehavioralTestType).Column("BehavioralTestTypeId");
+            References(x => x.Project);
+            References(x => x.BehavioralTestType);
             Map(x => x.Name);
             Map(x => x.Tm);
-            HasMany(x => x.Sessions).KeyColumn("BehavioralTestId").Cascade.AllDeleteOrphan();
+            HasMany(x => x.Sessions).Cascade.AllDeleteOrphan();
         }
     }
 }

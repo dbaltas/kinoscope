@@ -116,12 +116,6 @@
     <Compile Include="TextEventVisualiser.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="TrialForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TrialForm.Designer.cs">
-      <DependentUpon>TrialForm.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Admin\ResearcherForm.resx">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -156,9 +150,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="TrialForm.resx">
-      <DependentUpon>TrialForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

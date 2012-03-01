@@ -8,14 +8,11 @@ namespace ObLib.Domain
         {
             Id(x => x.Id);
             Map(x => x.Name);
-            References(x => x.Researcher).Column("ResearcherId");
+            References(x => x.Researcher);
             Map(x => x.Tm);
-            HasMany(x => x.BehavioralTests).KeyColumn("ProjectId")
-                            .Cascade.AllDeleteOrphan();
-            HasMany(x => x.SubjectGroups).KeyColumn("ProjectId")
-                            .Cascade.AllDeleteOrphan();
-            HasMany(x => x.Subjects).KeyColumn("ProjectId")
-                            .Cascade.AllDeleteOrphan();
+            HasMany(x => x.BehavioralTests).Cascade.AllDeleteOrphan();
+            HasMany(x => x.SubjectGroups).Cascade.AllDeleteOrphan();
+            HasMany(x => x.Subjects).Cascade.AllDeleteOrphan();
         }
     }
 }

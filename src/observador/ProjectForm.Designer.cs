@@ -86,6 +86,7 @@
             this.Controls.Add(this.bCancel);
             this.MinimumSize = new System.Drawing.Size(356, 101);
             this.Name = "ProjectForm";
+            this.ShowInTaskbar = false;
             this.Text = "Project";
             this.ResumeLayout(false);
             this.PerformLayout();

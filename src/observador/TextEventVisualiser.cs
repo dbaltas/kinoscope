@@ -14,6 +14,7 @@ namespace observador
         {
             ReadOnly = true;
             Multiline = true;
+            ScrollBars = ScrollBars.Both;
         }
 
         public void Start(DateTime dateTime)
@@ -28,17 +29,9 @@ namespace observador
 
         public void UpdateInterval(long milliseconds) { }
 
-        public void SetDimensions(int left, int top, int width, int height)
-        {
-            Left = left;
-            Top = top;
-            Width = width;
-            Height = height;
-        }
-
         public void AddRunEvent(RunEvent runEvent)
         {
-            AppendLine(string.Format("Behavior {0} at time {1}.", runEvent.Behavior, runEvent.Tm));
+            AppendLine(string.Format("Behavior {0} at time {1}.", runEvent.Behavior, runEvent.TimeTracked / 1000.0));
         }
 
         private void AppendLine(string line)

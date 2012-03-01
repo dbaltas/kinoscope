@@ -7,9 +7,10 @@ namespace ObLib.Domain
         public RunMap()
         {
             Id(x => x.Id);
-            References(x => x.Trial).Column("TrialId");
-            References(x => x.Subject).Column("SubjectId");
+            References(x => x.Trial);
+            References(x => x.Subject);
             Map(x => x.Tm);
+            HasMany(x => x.RunEvents).Cascade.AllDeleteOrphan();
         }
     }
 }

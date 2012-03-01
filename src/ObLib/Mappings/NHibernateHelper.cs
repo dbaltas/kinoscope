@@ -27,7 +27,8 @@ namespace ObLib.Domain
                             .UsingFile(DbFile))
                         .Mappings(m =>
                             m.FluentMappings.AddFromAssemblyOf<Researcher>()
-                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.PrimaryKey.Name.Is(x => "Id")));
+                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.PrimaryKey.Name.Is(x => "Id"))
+                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.ForeignKey.EndsWith("Id")));
 
 					_sessionFactory = configuration.BuildSessionFactory();
 				}
@@ -48,7 +49,8 @@ namespace ObLib.Domain
                             .UsingFile(DbFile))
                         .Mappings(m =>
                             m.FluentMappings.AddFromAssemblyOf<Researcher>()
-                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.PrimaryKey.Name.Is(x => "Id")));
+                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.PrimaryKey.Name.Is(x => "Id"))
+                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.ForeignKey.EndsWith("Id")));
             new SchemaExport(configuration.BuildConfiguration())
                 .Create(false, true);
         }

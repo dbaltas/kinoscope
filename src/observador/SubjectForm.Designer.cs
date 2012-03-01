@@ -220,6 +220,7 @@
             this.Controls.Add(this.bCancel);
             this.MinimumSize = new System.Drawing.Size(392, 274);
             this.Name = "SubjectForm";
+            this.ShowInTaskbar = false;
             this.Text = "Subject";
             this.ResumeLayout(false);
             this.PerformLayout();
