@@ -27,6 +27,13 @@ namespace ObLib.Domain
         }
 
         public virtual Project ActiveProject { get; set; }
+        public virtual bool IsAdmin
+        {
+            get
+            {
+                return Username == "admin";
+            }
+        }
 
         public virtual int ProjectCount { get { return Projects.Count; } }
 
@@ -75,6 +82,15 @@ namespace ObLib.Domain
         public override string ToString()
         {
             return Username;
+        }
+
+        public override void Delete()
+        {
+            if (IsAdmin)
+            {
+                return;
+            }
+            base.Delete();
         }
     }
 }

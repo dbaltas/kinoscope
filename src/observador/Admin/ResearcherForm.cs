@@ -29,6 +29,10 @@ namespace observador
                 txtUsername.Text = researcher.Username;
                 txtPassword.Text = researcher.Password;
                 txtConfirmPassword.Text = researcher.Password;
+                if (researcher.IsAdmin)
+                {
+                    txtUsername.Enabled = false;
+                }
             }
         }
 
@@ -41,6 +45,18 @@ namespace observador
         {
             try
             {
+                if (txtUsername.Text.Length < 4)
+                {
+                    MessageBox.Show("Username is not long enough");
+                    txtUsername.Focus();
+                    return;
+                }
+                if (txtPassword.Text != txtConfirmPassword.Text)
+                {
+                    MessageBox.Show("Passwords don't match");
+                    txtConfirmPassword.Focus();
+                    return;
+                }
                 Researcher researcher = _researcher ?? new Researcher();
                 researcher.Username = txtUsername.Text;
                 researcher.Password = txtPassword.Text;

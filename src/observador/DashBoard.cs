@@ -120,6 +120,10 @@ namespace observador
                 tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
 
                 FillProjectsMenu();
+                if (Researcher.Current.IsAdmin)
+                {
+                    adminToolStripMenuItem.Visible = true;
+                }
                 DisplayActiveProject();
             }
         }
