@@ -9,12 +9,30 @@ namespace ObLib.Domain
     {
         public enum BehaviorType { State, Instant }
 
+        private string _defaultKeyStroke;
+
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual BehaviorType Type { get; set; }
         public virtual BehavioralTestType BehavioralTestType { get; set; }
-        public virtual string DefaultKeyStroke { get; set; }
+        public virtual string DefaultKeyStroke
+        {
+            get
+            {
+                return _defaultKeyStroke;
+            }
+            set
+            {
+                _defaultKeyStroke = value;
+                if (KeyStroke == null)
+                {
+                    KeyStroke = value;
+                }
+            }
+        }
         public virtual DateTime Tm { get; set; }
+
+        public virtual string KeyStroke { get; set; }
 
         public override string ToString()
         {

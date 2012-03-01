@@ -31,19 +31,26 @@
             this.components = new System.ComponentModel.Container();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
-            this.bStart = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
             this.bStop = new System.Windows.Forms.Button();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblTimer = new System.Windows.Forms.Label();
             this.pnlEventVisualiser = new System.Windows.Forms.Panel();
+            this.dgvBehaviors = new System.Windows.Forms.DataGridView();
+            this.BehaviorKeyStroke = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BehaviorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BehaviorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBehaviors)).BeginInit();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // bCancel
             // 
             this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(672, 320);
+            this.bCancel.Location = new System.Drawing.Point(671, 333);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 5;
@@ -55,7 +62,8 @@
             // 
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bSave.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.bSave.Location = new System.Drawing.Point(561, 320);
+            this.bSave.Enabled = false;
+            this.bSave.Location = new System.Drawing.Point(560, 333);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 4;
@@ -63,22 +71,10 @@
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
-            // bStart
-            // 
-            this.bStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.bStart.Location = new System.Drawing.Point(55, 320);
-            this.bStart.Name = "bStart";
-            this.bStart.Size = new System.Drawing.Size(75, 23);
-            this.bStart.TabIndex = 1;
-            this.bStart.Text = "Start!";
-            this.bStart.UseVisualStyleBackColor = true;
-            this.bStart.Click += new System.EventHandler(this.bStart_Click);
-            // 
             // bClear
             // 
             this.bClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bClear.Location = new System.Drawing.Point(277, 320);
+            this.bClear.Location = new System.Drawing.Point(180, 333);
             this.bClear.Name = "bClear";
             this.bClear.Size = new System.Drawing.Size(75, 23);
             this.bClear.TabIndex = 3;
@@ -89,7 +85,7 @@
             // bStop
             // 
             this.bStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bStop.Location = new System.Drawing.Point(166, 320);
+            this.bStop.Location = new System.Drawing.Point(69, 333);
             this.bStop.Name = "bStop";
             this.bStop.Size = new System.Drawing.Size(75, 23);
             this.bStop.TabIndex = 2;
@@ -118,20 +114,83 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlEventVisualiser.Location = new System.Drawing.Point(12, 41);
             this.pnlEventVisualiser.Name = "pnlEventVisualiser";
-            this.pnlEventVisualiser.Size = new System.Drawing.Size(768, 273);
+            this.pnlEventVisualiser.Size = new System.Drawing.Size(435, 286);
             this.pnlEventVisualiser.TabIndex = 7;
+            // 
+            // dgvBehaviors
+            // 
+            this.dgvBehaviors.AllowUserToAddRows = false;
+            this.dgvBehaviors.AllowUserToDeleteRows = false;
+            this.dgvBehaviors.AllowUserToOrderColumns = true;
+            this.dgvBehaviors.AllowUserToResizeColumns = false;
+            this.dgvBehaviors.AllowUserToResizeRows = false;
+            this.dgvBehaviors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvBehaviors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvBehaviors.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.BehaviorKeyStroke,
+            this.BehaviorName,
+            this.BehaviorType});
+            this.dgvBehaviors.Location = new System.Drawing.Point(454, 41);
+            this.dgvBehaviors.Name = "dgvBehaviors";
+            this.dgvBehaviors.ReadOnly = true;
+            this.dgvBehaviors.RowHeadersVisible = false;
+            this.dgvBehaviors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvBehaviors.Size = new System.Drawing.Size(326, 286);
+            this.dgvBehaviors.TabIndex = 8;
+            // 
+            // BehaviorKeyStroke
+            // 
+            this.BehaviorKeyStroke.DataPropertyName = "KeyStroke";
+            this.BehaviorKeyStroke.HeaderText = "Key";
+            this.BehaviorKeyStroke.Name = "BehaviorKeyStroke";
+            this.BehaviorKeyStroke.ReadOnly = true;
+            this.BehaviorKeyStroke.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.BehaviorKeyStroke.Width = 40;
+            // 
+            // BehaviorName
+            // 
+            this.BehaviorName.DataPropertyName = "Name";
+            this.BehaviorName.HeaderText = "Name";
+            this.BehaviorName.Name = "BehaviorName";
+            this.BehaviorName.ReadOnly = true;
+            this.BehaviorName.Width = 175;
+            // 
+            // BehaviorType
+            // 
+            this.BehaviorType.DataPropertyName = "Type";
+            this.BehaviorType.HeaderText = "Type";
+            this.BehaviorType.Name = "BehaviorType";
+            this.BehaviorType.ReadOnly = true;
+            this.BehaviorType.Width = 108;
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tssStatus});
+            this.statusStrip.Location = new System.Drawing.Point(0, 359);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(792, 22);
+            this.statusStrip.TabIndex = 9;
+            this.statusStrip.Text = "Ready";
+            // 
+            // tssStatus
+            // 
+            this.tssStatus.Name = "tssStatus";
+            this.tssStatus.Size = new System.Drawing.Size(0, 17);
             // 
             // RunForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
-            this.ClientSize = new System.Drawing.Size(792, 366);
+            this.ClientSize = new System.Drawing.Size(792, 381);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.dgvBehaviors);
             this.Controls.Add(this.pnlEventVisualiser);
             this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.bStop);
             this.Controls.Add(this.bClear);
-            this.Controls.Add(this.bStart);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.bCancel);
             this.KeyPreview = true;
@@ -140,6 +199,9 @@
             this.ShowInTaskbar = false;
             this.Text = "Run";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBehaviors)).EndInit();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,12 +211,17 @@
 
         private System.Windows.Forms.Button bCancel;
         private System.Windows.Forms.Button bSave;
-        private System.Windows.Forms.Button bStart;
         private System.Windows.Forms.Button bClear;
         private System.Windows.Forms.Button bStop;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label lblTimer;
         private System.Windows.Forms.Panel pnlEventVisualiser;
+        private System.Windows.Forms.DataGridView dgvBehaviors;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorKeyStroke;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorType;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel tssStatus;
 
     }
 }

@@ -8,21 +8,11 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace ObLib.Domain
 {
-	public class NHibernateHelper
-	{
+    public class NHibernateHelper
+    {
         private const string DbFile = "ob.db";
 
-        private static ISession _openSession;
-
-        private static ISessionFactory _sessionFactory;
-
-		private static ISessionFactory SessionFactory
-		{
-			get
-			{
-				if (_sessionFactory == null)
-				{
-                    var configuration = Fluently.Configure()
+        private static FluentConfiguration _configuration = Fluently.Configure()
                         .Database(SQLiteConfiguration.Standard
                             .UsingFile(DbFile))
                         .Mappings(m =>
@@ -30,11 +20,21 @@ namespace ObLib.Domain
                         .Conventions.Add(FluentNHibernate.Conventions.Helpers.PrimaryKey.Name.Is(x => "Id"))
                         .Conventions.Add(FluentNHibernate.Conventions.Helpers.ForeignKey.EndsWith("Id")));
 
-					_sessionFactory = configuration.BuildSessionFactory();
-				}
-				return _sessionFactory;
-			}
-		}
+        private static ISession _openSession;
+
+        private static ISessionFactory _sessionFactory;
+
+        private static ISessionFactory SessionFactory
+        {
+            get
+            {
+                if (_sessionFactory == null)
+                {
+                    _sessionFactory = _configuration.BuildSessionFactory();
+                }
+                return _sessionFactory;
+            }
+        }
 
         public static void BuildSchema()
         {
@@ -44,26 +44,19 @@ namespace ObLib.Domain
 
             // this NHibernate tool takes a configuration (with mapping info in)
             // and exports a database schema from it
-            var configuration = Fluently.Configure()
-                        .Database(SQLiteConfiguration.Standard
-                            .UsingFile(DbFile))
-                        .Mappings(m =>
-                            m.FluentMappings.AddFromAssemblyOf<Researcher>()
-                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.PrimaryKey.Name.Is(x => "Id"))
-                        .Conventions.Add(FluentNHibernate.Conventions.Helpers.ForeignKey.EndsWith("Id")));
-            new SchemaExport(configuration.BuildConfiguration())
+            new SchemaExport(_configuration.BuildConfiguration())
                 .Create(false, true);
         }
 
-		public static ISession OpenSession()
-		{
+        public static ISession OpenSession()
+        {
             if (_openSession == null)
             {
                 _openSession = SessionFactory.OpenSession();
             }
             return _openSession;
-		}
-	}
+        }
+    }
 
 }
 

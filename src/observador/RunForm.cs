@@ -15,29 +15,49 @@ namespace observador
 {
     public partial class RunForm : Form
     {
+        private enum RunStatus { Ready, Running, Stopped, Saved }
+
         private Run _run;
         private DateTime _startTm;
         private List<RunEvent> _runEvents = new List<RunEvent>();
+        private RunStatus _runStatus = RunStatus.Ready;
         // Could be useful if we decide to implement Pause functionality
         private Stopwatch _stopwatch = new Stopwatch();
-        private bool _running = false;
         private IEventVisualiser _eventVisualiser = new TextEventVisualiser();
         private List<Behavior> _allowedBehaviors = new List<Behavior>();
 
         public RunForm(Run run)
         {
             _run = run;
+
+            InitializeAllowedBehaviors();
+
+            InitializeComponent();
+
+            InitializeEventVisualiser();
+
+            InitializeBehaviorList();
+
+            SetStatus(RunStatus.Ready);
+        }
+
+        #region Control initialization methods
+
+        private void InitializeAllowedBehaviors()
+        {
             BehavioralTestType behavioralTestType = _run.Trial.Session.BehavioralTest.BehavioralTestType;
             foreach (Behavior behavior in Behavior.All())
             {
                 if (behavior.BehavioralTestType == behavioralTestType)
                 {
+                    // TODO: Modify behavior.KeyStroke based on current Researcher's ResearcherBehaviorKeyStrokes.
                     _allowedBehaviors.Add(behavior);
                 }
             }
+        }
 
-            InitializeComponent();
-
+        private void InitializeEventVisualiser()
+        {
             Control eventVisualiserControl = _eventVisualiser as Control;
 
             pnlEventVisualiser.Controls.Add(eventVisualiserControl);
@@ -49,14 +69,19 @@ namespace observador
                 AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
-        private void bCancel_Click(object sender, EventArgs e)
+        private void InitializeBehaviorList()
         {
-            Close();
+            dgvBehaviors.AutoGenerateColumns = false;
+            dgvBehaviors.DataSource = _allowedBehaviors;
         }
+
+        #endregion
+
+        #region Events
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (_running)
+            if (_runStatus == RunStatus.Running)
             {
                 DialogResult dialogResult = MessageBox.Show(
                     "A run is currently in progress. Are you sure you want to cancel it and exit?",
@@ -69,21 +94,32 @@ namespace observador
                 }
             }
 
+            if (_runStatus == RunStatus.Stopped)
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    "The run has not been saved. Are you sure you want to discard it and exit?",
+                    "Run not saved",
+                    MessageBoxButtons.YesNo);
+                if (dialogResult == System.Windows.Forms.DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
             Stop();
             base.OnFormClosing(e);
         }
 
-        private void bSave_Click(object sender, EventArgs e)
+        private void bCancel_Click(object sender, EventArgs e)
         {
-            _run.Tm = _startTm;
-            _run.SetRunEvents(_runEvents);
-            _run.Trial.Save();
             Close();
         }
 
-        private void bStart_Click(object sender, EventArgs e)
+        private void bSave_Click(object sender, EventArgs e)
         {
-            Start();
+            Save();
+            Close();
         }
 
         private void bStop_Click(object sender, EventArgs e)
@@ -104,10 +140,73 @@ namespace observador
 
         private void RunForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (_running)
-            {
-                Behavior behavior = GetBehaviorByKeyStroke(e.KeyCode);
+            Key(e.KeyCode);
+        }
 
+        #endregion
+
+        #region Command methods
+
+        private void Start()
+        {
+            if (_runStatus == RunStatus.Ready)
+            {
+                _stopwatch.Start();
+                timer.Start();
+                _eventVisualiser.Start(DateTime.Now);
+                _startTm = DateTime.Now;
+                SetStatus(RunStatus.Running);
+            }
+        }
+
+        private void Stop()
+        {
+            if (_runStatus == RunStatus.Running)
+            {
+                _eventVisualiser.Stop(DateTime.Now);
+                timer.Stop();
+                _stopwatch.Stop();
+                bSave.Enabled = true;
+                RefreshTimerLabel();
+                SetStatus(RunStatus.Stopped);
+            }
+        }
+
+        private void Reset()
+        {
+            Stop();
+
+            bSave.Enabled = false;
+            _stopwatch.Reset();
+            _eventVisualiser.Clear();
+            _runEvents.Clear();
+            RefreshTimerLabel();
+            SetStatus(RunStatus.Ready);
+        }
+
+        private void Save()
+        {
+            _run.Tm = _startTm;
+            _run.SetRunEvents(_runEvents);
+            _run.Trial.Save();
+            SetStatus(RunStatus.Saved);
+        }
+
+        private void Key(Keys key)
+        {
+            bool firstKey = false;
+            Behavior behavior = GetBehaviorByKeyStroke(key);
+
+            if (_runStatus == RunStatus.Ready
+                && behavior != null
+                && behavior.Type == Behavior.BehaviorType.State)
+            {
+                Start();
+                firstKey = true;
+            }
+
+            if (_runStatus == RunStatus.Running)
+            {
                 if (behavior != null)
                 {
                     RunEvent runEvent = new RunEvent()
@@ -115,7 +214,7 @@ namespace observador
                         Behavior = behavior,
                         Run = _run,
                         Tm = DateTime.Now,
-                        TimeTracked = _stopwatch.ElapsedMilliseconds
+                        TimeTracked = firstKey ? 0 : _stopwatch.ElapsedMilliseconds
                     };
                     _runEvents.Add(runEvent);
                     _eventVisualiser.AddRunEvent(runEvent);
@@ -123,12 +222,15 @@ namespace observador
             }
         }
 
+        #endregion
+
+        #region Helper methods
+
         private Behavior GetBehaviorByKeyStroke(Keys keyCode)
         {
             KeysConverter kc = new KeysConverter();
             string keyChar = kc.ConvertToString(keyCode);
-            // TODO: Check if keyValue is the KeyStroke of any current Researcher's ResearcherBehaviorKeyStroke.
-            return _allowedBehaviors.Find((behavior) => behavior.DefaultKeyStroke == keyChar);
+            return _allowedBehaviors.Find((behavior) => behavior.KeyStroke == keyChar);
         }
 
         private void RefreshTimerLabel()
@@ -139,43 +241,24 @@ namespace observador
                 _stopwatch.Elapsed.Seconds);
         }
 
-        private void Start()
+        private void SetStatus(RunStatus status)
         {
-            if (!_running)
-            {
-                bSave.Enabled = false;
-                _stopwatch.Start();
-                timer.Start();
-                _eventVisualiser.Start(DateTime.Now);
-                _running = true;
+            _runStatus = status;
 
-                _startTm = DateTime.Now;
+            switch (status)
+            {
+                case RunStatus.Ready:
+                    tssStatus.Text = "Ready. Press any state behavior key to launch run.";
+                    break;
+                case RunStatus.Running:
+                    tssStatus.Text = "Run is in progress.";
+                    break;
+                case RunStatus.Stopped:
+                    tssStatus.Text = "Run is complete.";
+                    break;
             }
         }
 
-        private void Stop()
-        {
-            if (_running)
-            {
-                _running = false;
-                _eventVisualiser.Stop(DateTime.Now);
-                timer.Stop();
-                _stopwatch.Stop();
-                bSave.Enabled = true;
-                RefreshTimerLabel();
-                bStart.Enabled = false;
-            }
-        }
-
-        private void Reset()
-        {
-            Stop();
-
-            _stopwatch.Reset();
-            _eventVisualiser.Clear();
-            _runEvents.Clear();
-            RefreshTimerLabel();
-            bStart.Enabled = true;
-        }
+        #endregion
     }
 }
