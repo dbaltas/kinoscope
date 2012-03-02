@@ -13,7 +13,7 @@ using ObLib;
 
 namespace observador
 {
-    public partial class RunForm : Form
+    public partial class RunForm : ObWin.Form
     {
         private enum RunStatus { Ready, Running, Stopped, Saved }
 
@@ -23,18 +23,23 @@ namespace observador
         private RunStatus _runStatus = RunStatus.Ready;
         // Could be useful if we decide to implement Pause functionality
         private Stopwatch _stopwatch = new Stopwatch();
-        private IEventVisualiser _eventVisualiser = new TextEventVisualiser();
+        private List<IEventVisualiser> _eventVisualisers = new List<IEventVisualiser>();
         private List<Behavior> _allowedBehaviors = new List<Behavior>();
+        private Behavior _lastStateBehavior;
+        private int _durationMilliseconds;
 
         public RunForm(Run run)
         {
+            run.Trial.Duration = 9; //TODO: Remove after testing
+
             _run = run;
+            _durationMilliseconds = run.Trial.Duration * 1000;
 
             InitializeAllowedBehaviors();
 
             InitializeComponent();
 
-            InitializeEventVisualiser();
+            InitializeEventVisualisers();
 
             InitializeBehaviorList();
 
@@ -56,17 +61,31 @@ namespace observador
             }
         }
 
-        private void InitializeEventVisualiser()
+        private void InitializeEventVisualisers()
         {
-            Control eventVisualiserControl = _eventVisualiser as Control;
+            IEventVisualiser _eventVisualiserPrimary = new RectanglesEventVisualiser();
+            IEventVisualiser _eventVisualiserSecondary = new TextEventVisualiser();
 
-            pnlEventVisualiser.Controls.Add(eventVisualiserControl);
+            _eventVisualisers.Add(_eventVisualiserPrimary);
+            _eventVisualisers.Add(_eventVisualiserSecondary);
 
-            eventVisualiserControl.Width = eventVisualiserControl.Parent.Width;
-            eventVisualiserControl.Height = eventVisualiserControl.Parent.Height;
+            pnlEventVisualiser.Controls.Add(_eventVisualiserPrimary as Control);
+            pnlEventVisualiserSecondary.Controls.Add(_eventVisualiserSecondary as Control);
 
-            eventVisualiserControl.Anchor =
-                AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+            foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+            {
+                eventVisualiser.SetBehaviors(_allowedBehaviors);
+                eventVisualiser.SetDurationMilliseconds(_durationMilliseconds);
+
+
+                Control eventVisualiserControl = eventVisualiser as Control;
+
+                eventVisualiserControl.Width = eventVisualiserControl.Parent.Width;
+                eventVisualiserControl.Height = eventVisualiserControl.Parent.Height;
+
+                eventVisualiserControl.Anchor =
+                    AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
+            }
         }
 
         private void InitializeBehaviorList()
@@ -134,8 +153,17 @@ namespace observador
 
         private void timer_Tick(object sender, EventArgs e)
         {
+            if (_stopwatch.ElapsedMilliseconds > _durationMilliseconds)
+            {
+                Stop();
+                MessageBox.Show("The run has ended.");
+            }
+
             RefreshTimerLabel();
-            _eventVisualiser.UpdateInterval(_stopwatch.ElapsedMilliseconds);
+            foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+            {
+                eventVisualiser.UpdateInterval(_stopwatch.ElapsedMilliseconds);
+            }
         }
 
         private void RunForm_KeyDown(object sender, KeyEventArgs e)
@@ -153,7 +181,10 @@ namespace observador
             {
                 _stopwatch.Start();
                 timer.Start();
-                _eventVisualiser.Start(DateTime.Now);
+                foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+                {
+                    eventVisualiser.Start(DateTime.Now);
+                }
                 _startTm = DateTime.Now;
                 SetStatus(RunStatus.Running);
             }
@@ -163,9 +194,13 @@ namespace observador
         {
             if (_runStatus == RunStatus.Running)
             {
-                _eventVisualiser.Stop(DateTime.Now);
                 timer.Stop();
                 _stopwatch.Stop();
+                foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+                {
+                    eventVisualiser.UpdateInterval(_durationMilliseconds);
+                    eventVisualiser.Stop(DateTime.Now);
+                }
                 bSave.Enabled = true;
                 RefreshTimerLabel();
                 SetStatus(RunStatus.Stopped);
@@ -178,8 +213,13 @@ namespace observador
 
             bSave.Enabled = false;
             _stopwatch.Reset();
-            _eventVisualiser.Clear();
+            foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+            {
+
+                eventVisualiser.Clear();
+            }
             _runEvents.Clear();
+            _lastStateBehavior = null;
             RefreshTimerLabel();
             SetStatus(RunStatus.Ready);
         }
@@ -207,7 +247,7 @@ namespace observador
 
             if (_runStatus == RunStatus.Running)
             {
-                if (behavior != null)
+                if (behavior != null && behavior != _lastStateBehavior)
                 {
                     RunEvent runEvent = new RunEvent()
                     {
@@ -217,7 +257,15 @@ namespace observador
                         TimeTracked = firstKey ? 0 : _stopwatch.ElapsedMilliseconds
                     };
                     _runEvents.Add(runEvent);
-                    _eventVisualiser.AddRunEvent(runEvent);
+                    foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+                    {
+                        eventVisualiser.AddRunEvent(runEvent);
+                    }
+
+                    if (behavior.Type == Behavior.BehaviorType.State)
+                    {
+                        _lastStateBehavior = behavior;
+                    }
                 }
             }
         }
@@ -235,10 +283,15 @@ namespace observador
 
         private void RefreshTimerLabel()
         {
-            lblTimer.Text = string.Format("{0:00}:{1:00}:{2:00}",
+            // Don't show excess milliseconds after timeout (assumes that timer interval is faster than second).
+            int millisecondsToShow =
+                _stopwatch.ElapsedMilliseconds > _durationMilliseconds ? 0 : _stopwatch.Elapsed.Milliseconds;
+
+            lblTimer.Text = string.Format("{0:00}:{1:00}:{2:00}.{3:000}",
                 _stopwatch.Elapsed.Hours,
                 _stopwatch.Elapsed.Minutes,
-                _stopwatch.Elapsed.Seconds);
+                _stopwatch.Elapsed.Seconds,
+                millisecondsToShow);
         }
 
         private void SetStatus(RunStatus status)

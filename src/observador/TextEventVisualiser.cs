@@ -39,5 +39,9 @@ namespace observador
             AppendText(line);
             AppendText(Environment.NewLine);
         }
+
+        public void SetBehaviors(List<Behavior> behaviors) { }
+
+        public void SetDurationMilliseconds(int milliseconds) { }
     }
 }

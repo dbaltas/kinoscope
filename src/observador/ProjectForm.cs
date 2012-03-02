@@ -12,7 +12,7 @@ using ObLib;
 
 namespace observador
 {
-    public partial class ProjectForm : Form
+    public partial class ProjectForm : ObWin.Form
     {
         private Project _project = null;
 
@@ -58,7 +58,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error!");
+                ShowError(ex);
             }
         }
 

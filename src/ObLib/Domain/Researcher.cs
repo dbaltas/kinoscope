@@ -88,7 +88,7 @@ namespace ObLib.Domain
         {
             if (IsAdmin)
             {
-                return;
+                throw new InvalidOperationException("User admin cannot be deleted.");
             }
             base.Delete();
         }

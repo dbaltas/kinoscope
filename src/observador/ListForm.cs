@@ -101,60 +101,83 @@ namespace observador
 
         private void OrderNew()
         {
-            if (!_allowAdd)
+            try
             {
-                return;
+                if (!_allowAdd)
+                {
+                    return;
+                }
+
+                Form form = _createDetailForm(null);
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
             }
 
-            Form form = _createDetailForm(null);
-            form.ShowDialog();
             LoadForm();
         }
 
         private void OrderEdit()
         {
-            if (!_allowEdit)
+            try
             {
-                return;
+                if (!_allowEdit)
+                {
+                    return;
+                }
+
+                if (dgvMain.CurrentRow == null)
+                {
+                    MessageBox.Show(string.Format("No {0} to edit.", ItemTypeDescription));
+                    return;
+                }
+
+                Form form = _createDetailForm((T)dgvMain.CurrentRow.DataBoundItem);
+                form.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
             }
 
-            if (dgvMain.CurrentRow == null)
-            {
-                MessageBox.Show(string.Format("No {0} to edit.", ItemTypeDescription));
-                return;
-            }
-
-            Form form = _createDetailForm((T)dgvMain.CurrentRow.DataBoundItem);
-            form.ShowDialog();
             LoadForm();
         }
 
         private void OrderRemove()
         {
-            if (!_allowRemove)
+            try
             {
-                return;
-            }
+                if (!_allowRemove)
+                {
+                    return;
+                }
 
-            if (dgvMain.CurrentRow == null)
+                if (dgvMain.CurrentRow == null)
+                {
+                    MessageBox.Show(string.Format("No {0} to delete.", ItemTypeDescription));
+                    return;
+                }
+
+                T itemToDelete = (T)dgvMain.CurrentRow.DataBoundItem;
+
+                String deleteMsg = String.Format("Are you sure you want to delete {0} {1}?",
+                                                 ItemTypeDescription, itemToDelete);
+                DialogResult dialogResult = MessageBox.Show(deleteMsg,
+                                                            string.Format("Delete {0}", ItemTypeDescription),
+                                                            MessageBoxButtons.YesNo);
+                if (dialogResult == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+
+                itemToDelete.Delete();
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show(string.Format("No {0} to delete.", ItemTypeDescription));
-                return;
+                ShowError(ex);
             }
-
-            T itemToDelete = (T)dgvMain.CurrentRow.DataBoundItem;
-
-            String deleteMsg = String.Format("Are you sure you want to delete {0} {1}?",
-                                             ItemTypeDescription, itemToDelete);
-            DialogResult dialogResult = MessageBox.Show(deleteMsg,
-                                                        string.Format("Delete {0}", ItemTypeDescription),
-                                                        MessageBoxButtons.YesNo);
-            if (dialogResult == System.Windows.Forms.DialogResult.No)
-            {
-                return;
-            }
-
-            itemToDelete.Delete();
 
             LoadForm();
         }

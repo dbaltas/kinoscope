@@ -69,6 +69,9 @@
     </Compile>
     <Compile Include="IEventVisualiser.cs" />
     <Compile Include="ListFormCreator.cs" />
+    <Compile Include="RectanglesEventVisualiser.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="RunForm.cs">
       <SubType>Form</SubType>
     </Compile>

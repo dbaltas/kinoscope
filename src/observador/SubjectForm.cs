@@ -12,7 +12,7 @@ using ObLib;
 
 namespace observador
 {
-    public partial class SubjectForm : Form
+    public partial class SubjectForm : ObWin.Form
     {
         private Subject _subject = null;
 
@@ -89,7 +89,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error!");
+                ShowError(ex);
             }
         }
     }

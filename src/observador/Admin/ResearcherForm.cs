@@ -11,7 +11,7 @@ using ObLib.Domain;
 
 namespace observador
 {
-    public partial class AdminResearcherForm : Form
+    public partial class AdminResearcherForm : ObWin.Form
     {
         private Researcher _researcher = null;
 
@@ -65,7 +65,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error!");
+                ShowError(ex);
             }
         }
     }

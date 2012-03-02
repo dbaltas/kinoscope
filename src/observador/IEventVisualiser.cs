@@ -14,5 +14,7 @@ namespace observador
         void Clear();
         void UpdateInterval(long milliseconds);
         void AddRunEvent(RunEvent runEvent);
+        void SetBehaviors(List<Behavior> behaviors);
+        void SetDurationMilliseconds(int milliseconds);
     }
 }

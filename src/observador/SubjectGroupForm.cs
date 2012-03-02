@@ -12,7 +12,7 @@ using ObLib;
 
 namespace observador
 {
-    public partial class SubjectGroupForm : Form
+    public partial class SubjectGroupForm : ObWin.Form
     {
         private SubjectGroup _subjectGroup = null;
 
@@ -53,7 +53,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error!");
+                ShowError(ex);
             }
         }
     }

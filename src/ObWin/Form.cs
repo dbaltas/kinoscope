@@ -7,20 +7,17 @@ using System.Windows.Forms;
 
 namespace ObWin
 {
- 
+
     public partial class Form : System.Windows.Forms.Form
     {
-        private void InitializeComponent()
+        protected void ShowError(Exception ex)
         {
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form_KeyDown);
+            ShowError(ex.Message);
         }
 
-        private void Form_KeyDown(object sender, KeyEventArgs e)
+        protected void ShowError(string errorMessage)
         {
-            if (e.KeyCode == Keys.Escape)
-            {
-                this.Close();
-            }
+            MessageBox.Show(errorMessage, "Error!");
         }
     }
 }
