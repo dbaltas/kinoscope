@@ -38,15 +38,17 @@ namespace observador
 
             internal Rectangle MapToArea(Size area)
             {
+                // Adds one pixel to the left, to avoid weird spaces
                 return new Rectangle(
-                    (int)Math.Round(X * area.Width),
+                    (int)Math.Round(X * area.Width - 1),
                     (int)Math.Round(Y * area.Height),
-                    (int)Math.Round(Width * area.Width),
+                    (int)Math.Round(Width * area.Width + 1),
                     (int)Math.Round(Height * area.Height));
             }
         }
 
-        private List<ColoredRectangle> _oldRectangles = new List<ColoredRectangle>();
+        private List<ColoredRectangle> _oldStateRectangles = new List<ColoredRectangle>();
+        private List<ColoredRectangle> _instantRectangles = new List<ColoredRectangle>();
         private ColoredRectangle _lastStateRectangle = ColoredRectangle.Empty;
 
         private double _rowHeight;
@@ -71,7 +73,7 @@ namespace observador
             MarginHeightPercentage = 0.2f;
             BarHeightPercentage = 0.2f;
             NumberOfRows = 3;
-            InstantEventWidthPercentage = 0.01f;
+            InstantEventWidthPercentage = 0.005f;
             Colors = new Color[] { Color.Brown, Color.SandyBrown, Color.Tan, Color.Khaki, Color.Red };
             BarColor = Color.Silver;
 
@@ -109,7 +111,8 @@ namespace observador
         public void Clear()
         {
             _lastStateRectangle = ColoredRectangle.Empty;
-            _oldRectangles.Clear();
+            _oldStateRectangles.Clear();
+            _instantRectangles.Clear();
             _lastPositionInRow = 0.0;
             _lastRow = 0;
 
@@ -128,32 +131,7 @@ namespace observador
                     return;
                 }
 
-                if (_lastStateRectangle.IsEmpty)
-                {
-                    return;
-                }
-
-                int currentRow = (int)(milliseconds / _millisecondsPerRow);
-                double positionInRow = (milliseconds % _millisecondsPerRow) / (double)_millisecondsPerRow;
-                double rectangleTop = currentRow * _rowHeight + _marginInRow;
-
-                if (currentRow == _lastRow)
-                {
-                    _lastStateRectangle.Width = positionInRow - _lastStateRectangle.X;
-                    InvalidateRectangle(_lastStateRectangle);
-                }
-                else
-                {
-                    _lastStateRectangle.Width = 1.0 - _lastStateRectangle.X; // Spans to end of row
-                    InvalidateRectangle(_lastStateRectangle);
-                    _oldRectangles.Add(_lastStateRectangle);
-                    _lastStateRectangle = new ColoredRectangle(
-                        _lastStateRectangle.Color, 0.0, rectangleTop, 0.0, _rectangleHeight);
-                    InvalidateRectangle(_lastStateRectangle);
-                }
-
-                _lastRow = currentRow;
-                _lastPositionInRow = positionInRow;
+                UpdateLastStateRectangle(milliseconds);
             }
             finally
             {
@@ -167,6 +145,8 @@ namespace observador
         public void AddRunEvent(RunEvent runEvent)
         {
             Monitor.Enter(this);
+
+            UpdateLastStateRectangle(runEvent.TimeTracked);
 
             double rectangleTop = _lastStateRectangle.IsEmpty ? _marginInRow : _lastStateRectangle.Y;
 
@@ -182,24 +162,14 @@ namespace observador
 
                 newRectangle.X -= InstantEventWidthPercentage / 2.0;
                 newRectangle.Width += InstantEventWidthPercentage;
-                _lastStateRectangle.Width = newRectangle.X - _lastStateRectangle.X;
 
-                _oldRectangles.Add(_lastStateRectangle);
-                _oldRectangles.Add(newRectangle);
-
-                _lastStateRectangle = new ColoredRectangle(
-                    _lastStateRectangle.Color,
-                    newRectangle.X + newRectangle.Width,
-                    _lastStateRectangle.Y,
-                    0.0,
-                    _rectangleHeight);
-
+                _instantRectangles.Add(newRectangle);
             }
             else
             {
                 if (!_lastStateRectangle.IsEmpty)
                 {
-                    _oldRectangles.Add(_lastStateRectangle);
+                    _oldStateRectangles.Add(_lastStateRectangle);
                 }
 
                 _lastStateRectangle = newRectangle;
@@ -208,19 +178,52 @@ namespace observador
             InvalidateRectangle(newRectangle);
 
             Monitor.Exit(this);
+        }
 
-            UpdateInterval(runEvent.TimeTracked);
+        private void UpdateLastStateRectangle(long milliseconds)
+        {
+            if (_lastStateRectangle.IsEmpty)
+            {
+                return;
+            }
+
+            int currentRow = (int)(milliseconds / _millisecondsPerRow);
+            double positionInRow = (milliseconds % _millisecondsPerRow) / (double)_millisecondsPerRow;
+            double rectangleTop = currentRow * _rowHeight + _marginInRow;
+
+            if (currentRow == _lastRow)
+            {
+                _lastStateRectangle.Width = positionInRow - _lastStateRectangle.X;
+                InvalidateRectangle(_lastStateRectangle);
+            }
+            else
+            {
+                _lastStateRectangle.Width = 1.0 - _lastStateRectangle.X; // Spans to end of row
+                InvalidateRectangle(_lastStateRectangle);
+                _oldStateRectangles.Add(_lastStateRectangle);
+                _lastStateRectangle = new ColoredRectangle(
+                    _lastStateRectangle.Color, 0.0, rectangleTop, positionInRow, _rectangleHeight);
+                InvalidateRectangle(_lastStateRectangle);
+            }
+
+            _lastRow = currentRow;
+            _lastPositionInRow = positionInRow;
         }
 
         private void RectanglesEventVisualiser_Paint(object sender, PaintEventArgs e)
         {
-            foreach (ColoredRectangle rectangle in _oldRectangles)
+            foreach (ColoredRectangle rectangle in _oldStateRectangles)
             {
                 DrawColoredRectangle(rectangle, e);
             }
             if (!_lastStateRectangle.IsEmpty)
             {
                 DrawColoredRectangle(_lastStateRectangle, e);
+            }
+
+            foreach (ColoredRectangle rectangle in _instantRectangles)
+            {
+                DrawColoredRectangle(rectangle, e);
             }
         }
 
@@ -235,7 +238,7 @@ namespace observador
                     1.0,
                     _rowHeight * BarHeightPercentage);
 
-                _oldRectangles.Add(bar);
+                _oldStateRectangles.Add(bar);
             }
         }
 

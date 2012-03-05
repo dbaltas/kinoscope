@@ -30,8 +30,6 @@ namespace observador
 
         public RunForm(Run run)
         {
-            run.Trial.Duration = 9; //TODO: Remove after testing
-
             _run = run;
             _durationMilliseconds = run.Trial.Duration * 1000;
 
@@ -245,7 +243,8 @@ namespace observador
                 firstKey = true;
             }
 
-            if (_runStatus == RunStatus.Running)
+            long elapsedMilliseconds = _stopwatch.ElapsedMilliseconds;
+            if (_runStatus == RunStatus.Running && elapsedMilliseconds <= _durationMilliseconds)
             {
                 if (behavior != null && behavior != _lastStateBehavior)
                 {
@@ -254,7 +253,7 @@ namespace observador
                         Behavior = behavior,
                         Run = _run,
                         Tm = DateTime.Now,
-                        TimeTracked = firstKey ? 0 : _stopwatch.ElapsedMilliseconds
+                        TimeTracked = firstKey ? 0 : elapsedMilliseconds
                     };
                     _runEvents.Add(runEvent);
                     foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
