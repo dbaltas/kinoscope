@@ -32,40 +32,9 @@ namespace observador
             Application.Exit();
         }
 
-        private void bCreateDatabase_Click(object sender, EventArgs e)
-        {
-            Cursor.Current = Cursors.WaitCursor;
-            if (Researcher.Current != null)
-            {
-                Researcher.Current.Delete();
-            }
-            try
-            {
-                if (BehavioralTestType.Fst != null)
-                {
-                    BehavioralTestType.Fst.Delete();
-                }
-
-            }
-            catch (Exception exception)
-            {
-                Logger.logError(exception.ToString());
-            }
-            NHibernateHelper.BuildSchema();
-            SeedData.AddInitialData();
-            MessageBox.Show("Database Created. Application will now restart");
-            Application.Restart();
-        }
-
         private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _listFormCreator.CreateResearcherListForm().ShowDialog();
-        }
-
-        private void createDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NHibernateHelper.BuildSchema();
-            SeedData.AddInitialData();
         }
 
         private void trialsToolStripMenuItem_Click(object sender, EventArgs e)

@@ -39,7 +39,9 @@ namespace observador
             IsUserAuthenticated = true;
             if (Researcher.Current == null)
             {
-                MessageBox.Show("user was not authenticated, (re)create the database and login as username:admin password:123");
+                MessageBox.Show("Invalid username or password");
+                txtUsername.Focus();
+                return;
             }
             Close();
         }

@@ -36,14 +36,29 @@ namespace ObLib.Domain
             }
         }
 
+        public static void DropDatabase()
+        {
+            File.Delete(DbFile);
+        }
+
+        public static bool DatabaseExists()
+        {
+            return File.Exists(DbFile);
+        }
+
+        public static void CreateDatabaseWithSeedData()
+        {
+            BuildSchema();
+            SeedData.AddInitialData();
+        }
+
         public static void BuildSchema()
         {
-            // delete the existing db on each run
-            if (File.Exists(DbFile))
-                File.Delete(DbFile);
+            if (DatabaseExists())
+            {
+                DropDatabase();
+            }
 
-            // this NHibernate tool takes a configuration (with mapping info in)
-            // and exports a database schema from it
             new SchemaExport(_configuration.BuildConfiguration())
                 .Create(false, true);
         }
