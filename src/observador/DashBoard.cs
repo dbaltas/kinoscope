@@ -175,5 +175,10 @@ namespace observador
                     break;
             }
         }
+
+        private void behaviorKeyStrokesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _listFormCreator.CreateResearcherBehaviorKeyStrokeListForm().ShowDialog();
+        }
     }
 }

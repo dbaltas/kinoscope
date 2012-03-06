@@ -42,6 +42,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
+            this.behaviorKeyStrokesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -65,20 +66,20 @@
             this.homeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
-            this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.homeToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.homeToolStripMenuItem.Text = "Home";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // myProjectsToolStripMenuItem
             // 
             this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
-            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
+            this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.myProjectsToolStripMenuItem.Text = "My Projects";
             // 
             // entitiesToolStripMenuItem
@@ -88,43 +89,44 @@
             this.subjectGroupsToolStripMenuItem,
             this.subjectsToolStripMenuItem});
             this.entitiesToolStripMenuItem.Name = "entitiesToolStripMenuItem";
-            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.entitiesToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.entitiesToolStripMenuItem.Text = "Entities";
             // 
             // trialsToolStripMenuItem
             // 
             this.trialsToolStripMenuItem.Name = "trialsToolStripMenuItem";
-            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.trialsToolStripMenuItem.Text = "Trials (Ctrl+T)";
             this.trialsToolStripMenuItem.Click += new System.EventHandler(this.trialsToolStripMenuItem_Click);
             // 
             // subjectGroupsToolStripMenuItem
             // 
             this.subjectGroupsToolStripMenuItem.Name = "subjectGroupsToolStripMenuItem";
-            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.subjectGroupsToolStripMenuItem.Text = "Subject Groups (Ctrl+G)";
             this.subjectGroupsToolStripMenuItem.Click += new System.EventHandler(this.subjectGroupsToolStripMenuItem_Click);
             // 
             // subjectsToolStripMenuItem
             // 
             this.subjectsToolStripMenuItem.Name = "subjectsToolStripMenuItem";
-            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.subjectsToolStripMenuItem.Text = "Subjects (Ctrl+S)";
             this.subjectsToolStripMenuItem.Click += new System.EventHandler(this.subjectsToolStripMenuItem_Click);
             // 
             // adminToolStripMenuItem
             // 
             this.adminToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.researchersToolStripMenuItem});
+            this.researchersToolStripMenuItem,
+            this.behaviorKeyStrokesToolStripMenuItem});
             this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
-            this.adminToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.adminToolStripMenuItem.Text = "Admin";
             this.adminToolStripMenuItem.Visible = false;
             // 
             // researchersToolStripMenuItem
             // 
             this.researchersToolStripMenuItem.Name = "researchersToolStripMenuItem";
-            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
             // 
@@ -133,13 +135,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // statusStrip1
@@ -156,6 +158,13 @@
             // 
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
+            // 
+            // behaviorKeyStrokesToolStripMenuItem
+            // 
+            this.behaviorKeyStrokesToolStripMenuItem.Name = "behaviorKeyStrokesToolStripMenuItem";
+            this.behaviorKeyStrokesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.behaviorKeyStrokesToolStripMenuItem.Text = "Behavior Key Strokes";
+            this.behaviorKeyStrokesToolStripMenuItem.Click += new System.EventHandler(this.behaviorKeyStrokesToolStripMenuItem_Click);
             // 
             // DashBoard
             // 
@@ -193,5 +202,6 @@
         private System.Windows.Forms.ToolStripMenuItem subjectGroupsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem subjectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trialsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem behaviorKeyStrokesToolStripMenuItem;
     }
 }

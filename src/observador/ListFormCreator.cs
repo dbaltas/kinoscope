@@ -104,5 +104,22 @@ namespace observador
                 Text = string.Format("Trial: {0}, Session: {1}", trial, trial.Session)
             };
         }
+
+        public Form CreateResearcherBehaviorKeyStrokeListForm()
+        {
+            DataGridViewColumn[] columns = new DataGridViewColumn[] {
+                new DataGridViewTextBoxColumn() { DataPropertyName = "Behavior", HeaderText = "Behavior" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "BehavioralTestType", HeaderText = "Behavioral Test Type" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "KeyStroke", HeaderText = "Key Stroke" }};
+
+            return new ListForm<ResearcherBehaviorKeyStroke>(
+                columns,
+                () => (IList)Researcher.Current.ResearcherBehaviorKeyStrokes,
+                (item) => new ResearcherBehaviorKeyStrokeForm(item))
+                {
+                    ItemTypeDescription = "key stroke",
+                    Text = "Behavior Key Strokes"
+                };
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace ObLib.Domain
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
         public virtual DateTime Tm { get; set; }
+        public virtual IList<ResearcherBehaviorKeyStroke> ResearcherBehaviorKeyStrokes { get; set; }
 
         public virtual IList<Project> Projects
         {
@@ -53,6 +54,12 @@ namespace ObLib.Domain
             {
                 ActiveProject = project;
             }
+        }
+
+        public virtual void AddResearcherBehaviorKeyStroke(ResearcherBehaviorKeyStroke researcherBehaviorKeyStroke)
+        {
+            researcherBehaviorKeyStroke.Researcher = this;
+            ResearcherBehaviorKeyStrokes.Add(researcherBehaviorKeyStroke);
         }
 
         public virtual void RemoveProject(Project project)

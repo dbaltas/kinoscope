@@ -1,6 +1,6 @@
 ﻿namespace observador
 {
-    partial class RunEventForm
+    partial class ResearcherBehaviorKeyStrokeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,16 @@
         {
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
-            this.lblBehavior = new System.Windows.Forms.Label();
-            this.lblTimeTracked = new System.Windows.Forms.Label();
-            this.txtTimeTracked = new System.Windows.Forms.TextBox();
+            this.lblKeyStroke = new System.Windows.Forms.Label();
+            this.txtKeyStroke = new System.Windows.Forms.TextBox();
             this.cbBehavior = new System.Windows.Forms.ComboBox();
+            this.lblBehavior = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // bCancel
             // 
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(137, 65);
+            this.bCancel.Location = new System.Drawing.Point(159, 69);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 5;
@@ -49,7 +49,7 @@
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(19, 65);
+            this.bSave.Location = new System.Drawing.Point(43, 69);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 4;
@@ -57,32 +57,23 @@
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
-            // lblBehavior
+            // lblKeyStroke
             // 
-            this.lblBehavior.AutoSize = true;
-            this.lblBehavior.Location = new System.Drawing.Point(36, 15);
-            this.lblBehavior.Name = "lblBehavior";
-            this.lblBehavior.Size = new System.Drawing.Size(49, 13);
-            this.lblBehavior.TabIndex = 0;
-            this.lblBehavior.Text = "Behavior";
+            this.lblKeyStroke.AutoSize = true;
+            this.lblKeyStroke.Location = new System.Drawing.Point(7, 46);
+            this.lblKeyStroke.Name = "lblKeyStroke";
+            this.lblKeyStroke.Size = new System.Drawing.Size(59, 13);
+            this.lblKeyStroke.TabIndex = 2;
+            this.lblKeyStroke.Text = "Key Stroke";
             // 
-            // lblTimeTracked
+            // txtKeyStroke
             // 
-            this.lblTimeTracked.AutoSize = true;
-            this.lblTimeTracked.Location = new System.Drawing.Point(12, 42);
-            this.lblTimeTracked.Name = "lblTimeTracked";
-            this.lblTimeTracked.Size = new System.Drawing.Size(73, 13);
-            this.lblTimeTracked.TabIndex = 2;
-            this.lblTimeTracked.Text = "Time Tracked";
-            // 
-            // txtTimeTracked
-            // 
-            this.txtTimeTracked.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            this.txtKeyStroke.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtTimeTracked.Location = new System.Drawing.Point(91, 39);
-            this.txtTimeTracked.Name = "txtTimeTracked";
-            this.txtTimeTracked.Size = new System.Drawing.Size(140, 20);
-            this.txtTimeTracked.TabIndex = 3;
+            this.txtKeyStroke.Location = new System.Drawing.Point(72, 43);
+            this.txtKeyStroke.Name = "txtKeyStroke";
+            this.txtKeyStroke.Size = new System.Drawing.Size(193, 20);
+            this.txtKeyStroke.TabIndex = 3;
             // 
             // cbBehavior
             // 
@@ -90,28 +81,36 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.cbBehavior.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBehavior.FormattingEnabled = true;
-            this.cbBehavior.Location = new System.Drawing.Point(91, 12);
+            this.cbBehavior.Location = new System.Drawing.Point(72, 12);
             this.cbBehavior.Name = "cbBehavior";
-            this.cbBehavior.Size = new System.Drawing.Size(140, 21);
+            this.cbBehavior.Size = new System.Drawing.Size(193, 21);
             this.cbBehavior.TabIndex = 1;
             // 
-            // RunEventForm
+            // lblBehavior
+            // 
+            this.lblBehavior.AutoSize = true;
+            this.lblBehavior.Location = new System.Drawing.Point(17, 15);
+            this.lblBehavior.Name = "lblBehavior";
+            this.lblBehavior.Size = new System.Drawing.Size(49, 13);
+            this.lblBehavior.TabIndex = 0;
+            this.lblBehavior.Text = "Behavior";
+            // 
+            // ResearcherBehaviorKeyStrokeForm
             // 
             this.AcceptButton = this.bSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
-            this.ClientSize = new System.Drawing.Size(243, 99);
+            this.ClientSize = new System.Drawing.Size(277, 102);
             this.Controls.Add(this.cbBehavior);
-            this.Controls.Add(this.lblTimeTracked);
-            this.Controls.Add(this.txtTimeTracked);
             this.Controls.Add(this.lblBehavior);
+            this.Controls.Add(this.lblKeyStroke);
+            this.Controls.Add(this.txtKeyStroke);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.bCancel);
-            this.MinimumSize = new System.Drawing.Size(251, 133);
-            this.Name = "RunEventForm";
+            this.Name = "ResearcherBehaviorKeyStrokeForm";
             this.ShowInTaskbar = false;
-            this.Text = "Run Event";
+            this.Text = "Key Stroke";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,9 +120,9 @@
 
         private System.Windows.Forms.Button bCancel;
         private System.Windows.Forms.Button bSave;
-        private System.Windows.Forms.Label lblBehavior;
-        private System.Windows.Forms.Label lblTimeTracked;
-        private System.Windows.Forms.TextBox txtTimeTracked;
+        private System.Windows.Forms.Label lblKeyStroke;
+        private System.Windows.Forms.TextBox txtKeyStroke;
         private System.Windows.Forms.ComboBox cbBehavior;
+        private System.Windows.Forms.Label lblBehavior;
     }
 }

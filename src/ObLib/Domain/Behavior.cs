@@ -31,6 +31,7 @@ namespace ObLib.Domain
             }
         }
         public virtual DateTime Tm { get; set; }
+        public virtual IList<ResearcherBehaviorKeyStroke> ResearcherBehaviorKeyStrokes { get; set; }
 
         public virtual string KeyStroke { get; set; }
 
