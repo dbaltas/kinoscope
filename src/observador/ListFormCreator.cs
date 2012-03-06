@@ -87,8 +87,6 @@ namespace observador
 
         public Form CreateTrialForm(Trial trial)
         {
-            trial.PopulateWithRuns();
-
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Subject", HeaderText = "Subject" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "StatusDescription", HeaderText = "Status" },
@@ -96,9 +94,11 @@ namespace observador
 
             return new ListForm<Run>(
                 columns,
-                () => (IList)trial.Runs,
-                (item) => new RunForm(item),
-                allowAdd: false, allowRemove: false)
+                () => { trial.PopulateWithRuns(); return (IList)trial.Runs; },
+                (item) => item.Status == Run.RunStatus.NotRun
+                    ? (ObWin.Form)new RunForm(item)
+                    : (ObWin.Form)new RunEventListForm(item),
+                allowAdd: false)
             {
                 ItemTypeDescription = "run",
                 Text = string.Format("Trial: {0}, Session: {1}", trial, trial.Session)

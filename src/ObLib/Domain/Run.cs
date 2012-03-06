@@ -53,6 +53,12 @@ namespace ObLib.Domain
             }
         }
 
+        public override void Delete()
+        {
+            Trial.Runs.Remove(this);
+            Trial.Save();
+        }
+
         public override string ToString()
         {
             return String.Format("{0}, {1}", Trial, Subject);

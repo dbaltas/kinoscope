@@ -13,6 +13,12 @@ namespace ObLib.Domain
         public virtual DateTime Tm { get; set; }
         public virtual long TimeTracked { get; set; }
 
+        public override void Delete()
+        {
+            Run.RunEvents.Remove(this);
+            Run.Save();
+        }
+
         public override string ToString()
         {
             return String.Format("{0}, {1}", Run, Behavior);

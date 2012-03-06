@@ -48,15 +48,7 @@ namespace observador
 
         private void InitializeAllowedBehaviors()
         {
-            BehavioralTestType behavioralTestType = _run.Trial.Session.BehavioralTest.BehavioralTestType;
-            foreach (Behavior behavior in Behavior.All())
-            {
-                if (behavior.BehavioralTestType == behavioralTestType)
-                {
-                    // TODO: Modify behavior.KeyStroke based on current Researcher's ResearcherBehaviorKeyStrokes.
-                    _allowedBehaviors.Add(behavior);
-                }
-            }
+            _allowedBehaviors = _run.Trial.Session.BehavioralTest.GetBehaviors();
         }
 
         private void InitializeEventVisualisers()

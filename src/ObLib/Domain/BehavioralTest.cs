@@ -29,5 +29,22 @@ namespace ObLib.Domain
         {
             return Name;
         }
+
+        public virtual List<Behavior> GetBehaviors()
+        {
+            List<Behavior> behaviors = new List<Behavior>();
+
+            BehavioralTestType behavioralTestType = BehavioralTestType;
+            foreach (Behavior behavior in Behavior.All())
+            {
+                if (behavior.BehavioralTestType == behavioralTestType)
+                {
+                    // TODO: Modify behavior.KeyStroke based on current Researcher's ResearcherBehaviorKeyStrokes.
+                    behaviors.Add(behavior);
+                }
+            }
+
+            return behaviors;
+        }
     }
 }
