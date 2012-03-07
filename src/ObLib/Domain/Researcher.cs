@@ -11,10 +11,8 @@ namespace ObLib.Domain
     {
         private IList<Project> _projects;
 
-        public virtual int Id { get; set; }
         public virtual string Username { get; set; }
         public virtual string Password { get; set; }
-        public virtual DateTime Tm { get; set; }
         public virtual IList<ResearcherBehaviorKeyStroke> ResearcherBehaviorKeyStrokes { get; set; }
 
         public virtual IList<Project> Projects

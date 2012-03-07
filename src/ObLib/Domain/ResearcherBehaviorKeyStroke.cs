@@ -7,11 +7,9 @@ namespace ObLib.Domain
 {
     public class ResearcherBehaviorKeyStroke : ActiveRecordBase<ResearcherBehaviorKeyStroke>
     {
-        public virtual int Id { get; set; }
         public virtual Researcher Researcher { get; set; }
         public virtual Behavior Behavior { get; set; }
         public virtual string KeyStroke { get; set; }
-        public virtual DateTime Tm { get; set; }
 
         public virtual BehavioralTestType BehavioralTestType { get { return Behavior.BehavioralTestType; } }
 

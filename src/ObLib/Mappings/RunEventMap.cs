@@ -1,15 +1,11 @@
-using FluentNHibernate.Mapping;
-
 namespace ObLib.Domain
 {
-    public class RunEventMap : ClassMap<RunEvent>
+    public class RunEventMap : ActiveRecordBaseMap<RunEvent>
     {
         public RunEventMap()
         {
-            Id(x => x.Id);
             References(x => x.Run);
             References(x => x.Behavior);
-            Map(x => x.Tm);
             Map(x => x.TimeTracked);
         }
     }

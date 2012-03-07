@@ -13,6 +13,18 @@ namespace ObLib.Domain
     // use of generics here in order to pass the child class in the CreateCriteria<>. Passing just this class name resulted to a list unable to be casted
     public class ActiveRecordBase<T>
     {
+        public virtual int Id { get; set; }
+        public virtual DateTime TmCreated { get; set; }
+        public virtual DateTime TmModified { get; set; }
+
+
+        public ActiveRecordBase()
+        {
+            TmCreated = DateTime.Now;
+            TmModified = DateTime.Now;
+        }
+
+
         public static IList All()
         {
             return NHibernateHelper.OpenSession().CreateCriteria<ActiveRecordBase<T>>().List();
@@ -25,6 +37,12 @@ namespace ObLib.Domain
 
         public virtual void Save()
         {
+            TmModified = DateTime.Now;
+            if (TmCreated == DateTime.MinValue)
+            {
+                TmCreated = TmModified;
+            }
+
             ISession session = NHibernateHelper.OpenSession();
             using (ITransaction transaction = session.BeginTransaction())
             {

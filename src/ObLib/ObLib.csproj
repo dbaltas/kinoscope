@@ -63,6 +63,7 @@
     <Compile Include="Domain\BehavioralTest.cs" />
     <Compile Include="Domain\ActiveRecordBase.cs" />
     <Compile Include="Domain\IDomainRepository.cs" />
+    <Compile Include="Mappings\ActiveRecordBaseMap.cs" />
     <Compile Include="Mappings\BehavioralTestTypeMap.cs" />
     <Compile Include="Mappings\BehaviorMap.cs" />
     <Compile Include="Mappings\BehavioralTestMap.cs" />

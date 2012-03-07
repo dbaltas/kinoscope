@@ -7,11 +7,9 @@ namespace ObLib.Domain
 {
     public class Trial : ActiveRecordBase<Trial>
     {
-        public virtual int Id { get; set; }
         public virtual Session Session { get; set; }
         public virtual string Name { get; set; }
-        public virtual Int32 Duration { get; set; }
-        public virtual DateTime Tm { get; set; }
+        public virtual int Duration { get; set; }
         public virtual IList<Run> Runs { get; set; }
         public virtual int RunCount { get { return Runs.Count; } }
 

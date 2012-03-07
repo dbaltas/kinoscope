@@ -68,7 +68,6 @@ namespace observador
                 subject.DateOfBirth = dtDob.Value;
                 subject.Origin = txtOrigin.Text;
                 subject.Weight = txtWeight.Text == "" ? (Decimal?)null : Decimal.Parse(txtWeight.Text);
-                subject.Tm = DateTime.Now;
 
                 subject.SubjectGroup = (SubjectGroup)cbSubjectGroup.SelectedItem;
                 if (subject.SubjectGroup.Id == -1)

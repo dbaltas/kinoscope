@@ -43,7 +43,6 @@ namespace observador
                 SubjectGroup subjectGroup = _subjectGroup ?? new SubjectGroup();
 
                 subjectGroup.Name = txtName.Text;
-                subjectGroup.Tm = DateTime.Now;
                 if (_subjectGroup == null)
                 {
                     Researcher.Current.ActiveProject.AddSubjectGroup(subjectGroup);

@@ -51,7 +51,6 @@ namespace observador
 
                 runEvent.Behavior = (Behavior)cbBehavior.SelectedItem;
                 runEvent.TimeTracked = int.Parse(txtTimeTracked.Text);
-                runEvent.Tm = DateTime.Now;
 
                 if (_runEvent == null)
                 {

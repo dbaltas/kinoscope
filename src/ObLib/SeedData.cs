@@ -72,13 +72,12 @@ namespace ObLib
                 return;
             }
 
-            var project = new Project { Name = name, Tm = DateTime.Now };
+            var project = new Project { Name = name };
 
             var preTest = new BehavioralTest
             {
                 Name = "preTest",
                 BehavioralTestType = BehavioralTestType.Fst,
-                Tm = DateTime.Now
             };
             project.AddBehavioralTest(preTest);
 
@@ -86,7 +85,6 @@ namespace ObLib
             {
                 Name = "test",
                 BehavioralTestType = BehavioralTestType.Fst,
-                Tm = DateTime.Now
             };
             project.AddBehavioralTest(test);
 
@@ -95,7 +93,6 @@ namespace ObLib
             var preTestSession = new Session
             {
                 Name = "default",
-                Tm = DateTime.Now
             };
             preTest.AddSession(preTestSession);
 
@@ -103,14 +100,12 @@ namespace ObLib
             {
                 Name = "Default trial",
                 Duration = 15 * 60,
-                Tm = DateTime.Now
             };
             preTestSession.AddTrial(preTestTrial);
 
             var testSession = new Session
             {
                 Name = "default",
-                Tm = DateTime.Now
             };
             test.AddSession(testSession);
 
@@ -118,7 +113,6 @@ namespace ObLib
             {
                 Name = "Default trial",
                 Duration = 5 * 60,
-                Tm = DateTime.Now
             };
             preTestSession.AddTrial(testTrial);
 
@@ -126,7 +120,6 @@ namespace ObLib
             {
                 Name = "Default trial 2",
                 Duration = 5 * 60,
-                Tm = DateTime.Now
             };
             testSession.AddTrial(testTrial2);
 

@@ -92,7 +92,6 @@ namespace observador
                 researcherBehaviorKeyStroke.Behavior = ((VerboseBehavior)cbBehavior.SelectedItem).Behavior;
                 // TODO: Validation non-empty
                 researcherBehaviorKeyStroke.KeyStroke = txtKeyStroke.Text;
-                researcherBehaviorKeyStroke.Tm = DateTime.Now;
 
                 if (_researcherBehaviorKeyStroke == null)
                 {

@@ -17,7 +17,7 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Behavior", HeaderText = "Behavior" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TimeTracked", HeaderText = "Time Tracked (ms)" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Modified" }},
+                new DataGridViewTextBoxColumn() { DataPropertyName = "TmModified", HeaderText = "Date Modified" }},
 
                 () => (IList)run.RunEvents.OrderBy((item) => item.TimeTracked).ToList(),
 

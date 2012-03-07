@@ -7,10 +7,8 @@ namespace ObLib.Domain
 {
     public class SubjectGroup : ActiveRecordBase<SubjectGroup>
     {
-        public virtual int Id { get; set; }
         public virtual Project Project { get; set; }
         public virtual string Name { get; set; }
-        public virtual DateTime Tm { get; set; }
         public virtual IList<Subject> Subjects { get; set; }
         public virtual int SubjectCount { get { return Subjects.Count; } }
 

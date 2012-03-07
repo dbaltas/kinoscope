@@ -9,10 +9,8 @@ namespace ObLib.Domain
 {
     public class BehavioralTestType : ActiveRecordBase<BehavioralTestType>
 	{
-        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
-        public virtual DateTime Tm { get; set; }
         private static BehavioralTestType _fst;
 
         public static BehavioralTestType Fst

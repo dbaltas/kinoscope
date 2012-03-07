@@ -7,7 +7,6 @@ namespace ObLib.Domain
 {
     public class Subject : ActiveRecordBase<Subject>
     {
-        public virtual int Id { get; set; }
         public virtual Project Project { get; set; }
         public virtual SubjectGroup SubjectGroup { get; set; }
         public virtual string Code { get; set; }
@@ -16,7 +15,6 @@ namespace ObLib.Domain
         public virtual DateTime DateOfBirth { get; set; }
         public virtual string Origin { get; set; }
         public virtual Decimal? Weight { get; set; }
-        public virtual DateTime Tm { get; set; }
 
         public override void Delete()
         {

@@ -7,10 +7,8 @@ namespace ObLib.Domain
 {
     public class Project : ActiveRecordBase<Project>
     {
-        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual Researcher Researcher { get; set; }
-        public virtual DateTime Tm { get; set; }
         public virtual IList<BehavioralTest> BehavioralTests { get; set; }
         public virtual IList<Subject> Subjects { get; set; }
         public virtual IList<SubjectGroup> SubjectGroups { get; set; }

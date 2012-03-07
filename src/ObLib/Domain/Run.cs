@@ -10,17 +10,16 @@ namespace ObLib.Domain
     {
         public enum RunStatus { NotRun, Complete }
 
-        public virtual int Id { get; set; }
+        public virtual DateTime TmRun { get; set; }
         public virtual Trial Trial { get; set; }
         public virtual Subject Subject { get; set; }
-        public virtual DateTime Tm { get; set; }
         public virtual IList<RunEvent> RunEvents { get; set; }
 
         public virtual RunStatus Status
         {
             get
             {
-                return Tm > DateTime.MinValue ? RunStatus.Complete : RunStatus.NotRun;
+                return TmRun > DateTime.MinValue ? RunStatus.Complete : RunStatus.NotRun;
             }
         }
         public virtual string StatusDescription
@@ -34,7 +33,7 @@ namespace ObLib.Domain
         public Run()
         {
             RunEvents = new List<RunEvent>();
-            Tm = DateTime.MinValue;
+            TmRun = DateTime.MinValue;
         }
 
         public virtual void AddRunEvent(RunEvent runEvent)

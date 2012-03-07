@@ -11,7 +11,6 @@ namespace ObLib.Domain
 
         private string _defaultKeyStroke;
 
-        public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual BehaviorType Type { get; set; }
         public virtual BehavioralTestType BehavioralTestType { get; set; }
@@ -30,7 +29,6 @@ namespace ObLib.Domain
                 }
             }
         }
-        public virtual DateTime Tm { get; set; }
         public virtual IList<ResearcherBehaviorKeyStroke> ResearcherBehaviorKeyStrokes { get; set; }
 
         public virtual string KeyStroke { get; set; }

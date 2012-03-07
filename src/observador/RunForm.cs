@@ -201,7 +201,7 @@ namespace observador
 
         private void Save()
         {
-            _run.Tm = _startTm;
+            _run.TmRun = _startTm;
             _run.SetRunEvents(_runEvents);
             _run.Trial.Save();
             SetStatus(RunStatus.Saved);
@@ -229,7 +229,6 @@ namespace observador
                     {
                         Behavior = behavior,
                         Run = _run,
-                        Tm = DateTime.Now,
                         TimeTracked = firstKey ? 0 : elapsedMilliseconds
                     };
                     _runEvents.Add(runEvent);

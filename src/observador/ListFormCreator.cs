@@ -29,7 +29,7 @@ namespace observador
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+                new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
 
             return new ListForm<Project>(
                 columns,
@@ -43,7 +43,7 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectCount", HeaderText = "Subjects" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+                new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
 
             return new ListForm<SubjectGroup>(
                 columns,
@@ -60,7 +60,7 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Strain", HeaderText = "Strain" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Sex", HeaderText = "Sex" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "DateOfBirth", HeaderText = "DOB" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+                new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
 
             return new ListForm<Subject>(
                 columns,
@@ -76,7 +76,7 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "Session" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "RunCount", HeaderText = "Runs" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Created" }};
+                new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
 
             return new ListForm<Trial>(
                 columns,
@@ -90,7 +90,7 @@ namespace observador
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Subject", HeaderText = "Subject" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "StatusDescription", HeaderText = "Status" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Tm", HeaderText = "Date Run" }};
+                new DataGridViewTextBoxColumn() { DataPropertyName = "TmRun", HeaderText = "Date Run" }};
 
             return new ListForm<Run>(
                 columns,
