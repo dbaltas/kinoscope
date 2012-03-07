@@ -60,6 +60,12 @@ namespace observador
         {
             try
             {
+                if (!ValidateChildren())
+                {
+                    ShowInputError();
+                    return;
+                }
+
                 Subject subject = _subject ?? new Subject();
 
                 subject.Code = txtCode.Text;
@@ -89,6 +95,39 @@ namespace observador
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private void txtWeight_Validating(object sender, CancelEventArgs e)
+        {
+            Decimal weight;
+            if (txtWeight.Text != ""
+                && (!Decimal.TryParse(txtWeight.Text, out weight)
+                    || weight < 0
+                    // The following condition is to prevent parser sweeping-off separators
+                    // e.g. in greek locale 3,5 is parsed correctly as three and a half
+                    // but 3.5 is parsed as thirty five.
+                    || weight.ToString() != txtWeight.Text))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtWeight, "Invalid weight. Must be a non-negative number.");
+            }
+            else
+            {
+                errorProvider.SetError(txtWeight, "");
+            }
+        }
+
+        private void txtCode_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtCode.Text == "")
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtCode, "Subject code is required.");
+            }
+            else
+            {
+                errorProvider.SetError(txtCode, "");
             }
         }
     }

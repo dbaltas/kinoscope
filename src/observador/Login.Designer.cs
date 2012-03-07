@@ -82,6 +82,7 @@
             // 
             // bCancel
             // 
+            this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancel.Location = new System.Drawing.Point(158, 71);
             this.bCancel.Name = "bCancel";

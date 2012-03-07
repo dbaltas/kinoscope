@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
             this.lPassword = new System.Windows.Forms.Label();
@@ -36,16 +37,19 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtConfirmPassword = new System.Windows.Forms.TextBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // bCancel
             // 
+            this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancel.Location = new System.Drawing.Point(154, 100);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 7;
-            this.bCancel.Text = "cancel";
+            this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
@@ -83,8 +87,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsername.Location = new System.Drawing.Point(109, 11);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(151, 20);
+            this.txtUsername.Size = new System.Drawing.Size(137, 20);
             this.txtUsername.TabIndex = 1;
+            this.txtUsername.Validating += new System.ComponentModel.CancelEventHandler(this.txtUsername_Validating);
             // 
             // txtPassword
             // 
@@ -93,7 +98,7 @@
             this.txtPassword.Location = new System.Drawing.Point(109, 37);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(151, 20);
+            this.txtPassword.Size = new System.Drawing.Size(137, 20);
             this.txtPassword.TabIndex = 3;
             // 
             // label1
@@ -112,14 +117,20 @@
             this.txtConfirmPassword.Location = new System.Drawing.Point(109, 63);
             this.txtConfirmPassword.Name = "txtConfirmPassword";
             this.txtConfirmPassword.PasswordChar = '*';
-            this.txtConfirmPassword.Size = new System.Drawing.Size(151, 20);
+            this.txtConfirmPassword.Size = new System.Drawing.Size(137, 20);
             this.txtConfirmPassword.TabIndex = 5;
+            this.txtConfirmPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtConfirmPassword_Validating);
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // AdminResearcherForm
             // 
             this.AcceptButton = this.bSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(272, 135);
             this.Controls.Add(this.label1);
@@ -134,6 +145,7 @@
             this.Name = "AdminResearcherForm";
             this.ShowInTaskbar = false;
             this.Text = "AdminResearcher";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,5 +161,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtConfirmPassword;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

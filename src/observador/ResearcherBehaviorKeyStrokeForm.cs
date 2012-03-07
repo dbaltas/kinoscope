@@ -86,11 +86,16 @@ namespace observador
         {
             try
             {
+                if (!ValidateChildren())
+                {
+                    ShowInputError();
+                    return;
+                }
+
                 ResearcherBehaviorKeyStroke researcherBehaviorKeyStroke =
                     _researcherBehaviorKeyStroke ?? new ResearcherBehaviorKeyStroke();
 
                 researcherBehaviorKeyStroke.Behavior = ((VerboseBehavior)cbBehavior.SelectedItem).Behavior;
-                // TODO: Validation non-empty
                 researcherBehaviorKeyStroke.KeyStroke = txtKeyStroke.Text;
 
                 if (_researcherBehaviorKeyStroke == null)
@@ -111,6 +116,19 @@ namespace observador
         private void txtKeyStroke_KeyDown(object sender, KeyEventArgs e)
         {
             txtKeyStroke.Text = _keysConverter.ConvertToString(e.KeyCode);
+        }
+
+        private void txtKeyStroke_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtKeyStroke.Text == "")
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtKeyStroke, "Key stroke is required.");
+            }
+            else
+            {
+                errorProvider.SetError(txtKeyStroke, "");
+            }
         }
     }
 }

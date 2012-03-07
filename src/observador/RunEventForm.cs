@@ -32,6 +32,7 @@ namespace observador
             if (runEvent != null)
             {
                 _runEvent = runEvent;
+                _run = runEvent.Run;
 
                 cbBehavior.SelectedItem = runEvent.Behavior;
                 txtTimeTracked.Text = runEvent.TimeTracked.ToString();
@@ -47,6 +48,12 @@ namespace observador
         {
             try
             {
+                if (!ValidateChildren())
+                {
+                    ShowInputError();
+                    return;
+                }
+
                 RunEvent runEvent = _runEvent ?? new RunEvent();
 
                 runEvent.Behavior = (Behavior)cbBehavior.SelectedItem;
@@ -64,6 +71,27 @@ namespace observador
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private void txtTimeTracked_Validating(object sender, CancelEventArgs e)
+        {
+            int durationMilliseconds = _run.Trial.Duration * 1000;
+
+            int timeTracked;
+            if (!int.TryParse(txtTimeTracked.Text, out timeTracked)
+                || timeTracked < 0
+                || timeTracked > durationMilliseconds)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtTimeTracked,
+                    string.Format(
+                        "Invalid time tracked. Must be a non-negative number not exceeding the trial's duration ({0}).",
+                        durationMilliseconds));
+            }
+            else
+            {
+                errorProvider.SetError(txtTimeTracked, "");
             }
         }
     }

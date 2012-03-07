@@ -28,22 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
             this.lblKeyStroke = new System.Windows.Forms.Label();
             this.txtKeyStroke = new System.Windows.Forms.TextBox();
             this.cbBehavior = new System.Windows.Forms.ComboBox();
             this.lblBehavior = new System.Windows.Forms.Label();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // bCancel
             // 
+            this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancel.Location = new System.Drawing.Point(159, 69);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 5;
-            this.bCancel.Text = "cancel";
+            this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
@@ -73,9 +77,10 @@
             this.txtKeyStroke.Location = new System.Drawing.Point(72, 43);
             this.txtKeyStroke.Name = "txtKeyStroke";
             this.txtKeyStroke.ReadOnly = true;
-            this.txtKeyStroke.Size = new System.Drawing.Size(193, 20);
+            this.txtKeyStroke.Size = new System.Drawing.Size(180, 20);
             this.txtKeyStroke.TabIndex = 3;
             this.txtKeyStroke.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtKeyStroke_KeyDown);
+            this.txtKeyStroke.Validating += new System.ComponentModel.CancelEventHandler(this.txtKeyStroke_Validating);
             // 
             // cbBehavior
             // 
@@ -85,7 +90,7 @@
             this.cbBehavior.FormattingEnabled = true;
             this.cbBehavior.Location = new System.Drawing.Point(72, 12);
             this.cbBehavior.Name = "cbBehavior";
-            this.cbBehavior.Size = new System.Drawing.Size(193, 21);
+            this.cbBehavior.Size = new System.Drawing.Size(180, 21);
             this.cbBehavior.TabIndex = 1;
             // 
             // lblBehavior
@@ -97,11 +102,16 @@
             this.lblBehavior.TabIndex = 0;
             this.lblBehavior.Text = "Behavior";
             // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
+            // 
             // ResearcherBehaviorKeyStrokeForm
             // 
             this.AcceptButton = this.bSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(277, 102);
             this.Controls.Add(this.cbBehavior);
@@ -115,6 +125,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Key Stroke";
             this.Load += new System.EventHandler(this.ResearcherBehaviorKeyStrokeForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,5 +139,6 @@
         private System.Windows.Forms.TextBox txtKeyStroke;
         private System.Windows.Forms.ComboBox cbBehavior;
         private System.Windows.Forms.Label lblBehavior;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

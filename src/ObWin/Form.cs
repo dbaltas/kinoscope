@@ -19,5 +19,10 @@ namespace ObWin
         {
             MessageBox.Show(errorMessage, "Error!");
         }
+
+        protected void ShowInputError()
+        {
+            MessageBox.Show("Please review the errors and correct the input.", "Incorrect input");
+        }
     }
 }

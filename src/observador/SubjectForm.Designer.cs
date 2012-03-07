@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,16 +45,19 @@
             this.cbSex = new System.Windows.Forms.ComboBox();
             this.dtDob = new System.Windows.Forms.DateTimePicker();
             this.txtOrigin = new System.Windows.Forms.TextBox();
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // bCancel
             // 
+            this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.bCancel.Location = new System.Drawing.Point(228, 199);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 9;
-            this.bCancel.Text = "cancel";
+            this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
@@ -91,7 +95,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtStrain.Location = new System.Drawing.Point(95, 59);
             this.txtStrain.Name = "txtStrain";
-            this.txtStrain.Size = new System.Drawing.Size(277, 20);
+            this.txtStrain.Size = new System.Drawing.Size(264, 20);
             this.txtStrain.TabIndex = 3;
             // 
             // lSex
@@ -118,8 +122,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCode.Location = new System.Drawing.Point(95, 6);
             this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(277, 20);
+            this.txtCode.Size = new System.Drawing.Size(264, 20);
             this.txtCode.TabIndex = 1;
+            this.txtCode.Validating += new System.ComponentModel.CancelEventHandler(this.txtCode_Validating);
             // 
             // label2
             // 
@@ -145,8 +150,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtWeight.Location = new System.Drawing.Point(95, 164);
             this.txtWeight.Name = "txtWeight";
-            this.txtWeight.Size = new System.Drawing.Size(277, 20);
+            this.txtWeight.Size = new System.Drawing.Size(264, 20);
             this.txtWeight.TabIndex = 7;
+            this.txtWeight.Validating += new System.ComponentModel.CancelEventHandler(this.txtWeight_Validating);
             // 
             // label6
             // 
@@ -192,14 +198,19 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOrigin.Location = new System.Drawing.Point(95, 138);
             this.txtOrigin.Name = "txtOrigin";
-            this.txtOrigin.Size = new System.Drawing.Size(277, 20);
+            this.txtOrigin.Size = new System.Drawing.Size(264, 20);
             this.txtOrigin.TabIndex = 6;
+            // 
+            // errorProvider
+            // 
+            this.errorProvider.ContainerControl = this;
             // 
             // SubjectForm
             // 
             this.AcceptButton = this.bSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(384, 240);
             this.Controls.Add(this.txtOrigin);
@@ -222,6 +233,7 @@
             this.Name = "SubjectForm";
             this.ShowInTaskbar = false;
             this.Text = "Subject";
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -245,5 +257,6 @@
         private System.Windows.Forms.ComboBox cbSex;
         private System.Windows.Forms.DateTimePicker dtDob;
         private System.Windows.Forms.TextBox txtOrigin;
+        private System.Windows.Forms.ErrorProvider errorProvider;
     }
 }

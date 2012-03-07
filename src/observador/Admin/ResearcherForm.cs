@@ -45,18 +45,12 @@ namespace observador
         {
             try
             {
-                if (txtUsername.Text.Length < 4)
+                if (!ValidateChildren())
                 {
-                    MessageBox.Show("Username is not long enough");
-                    txtUsername.Focus();
+                    ShowInputError();
                     return;
                 }
-                if (txtPassword.Text != txtConfirmPassword.Text)
-                {
-                    MessageBox.Show("Passwords don't match");
-                    txtConfirmPassword.Focus();
-                    return;
-                }
+
                 Researcher researcher = _researcher ?? new Researcher();
                 researcher.Username = txtUsername.Text;
                 researcher.Password = txtPassword.Text;
@@ -66,6 +60,32 @@ namespace observador
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private void txtUsername_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtUsername.Text.Length < 4)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtUsername, "Username is not long enough.");
+            }
+            else
+            {
+                errorProvider.SetError(txtUsername, "");
+            }
+        }
+
+        private void txtConfirmPassword_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtPassword.Text != txtConfirmPassword.Text)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtConfirmPassword, "Passwords don't match.");
+            }
+            else
+            {
+                errorProvider.SetError(txtConfirmPassword, "");
             }
         }
     }

@@ -44,6 +44,12 @@ namespace observador
         {
             try
             {
+                if (!ValidateChildren())
+                {
+                    ShowInputError();
+                    return;
+                }
+
                 if (_project == null)
                 {
                     SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
@@ -66,6 +72,19 @@ namespace observador
         {
             SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
             this.Close();
+        }
+
+        private void txtName_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtName.Text == "")
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtName, "Project name is required.");
+            }
+            else
+            {
+                errorProvider.SetError(txtName, "");
+            }
         }
     }
 }

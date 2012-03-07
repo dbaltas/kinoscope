@@ -40,6 +40,12 @@ namespace observador
         {
             try
             {
+                if (!ValidateChildren())
+                {
+                    ShowInputError();
+                    return;
+                }
+
                 SubjectGroup subjectGroup = _subjectGroup ?? new SubjectGroup();
 
                 subjectGroup.Name = txtName.Text;
@@ -53,6 +59,19 @@ namespace observador
             catch (Exception ex)
             {
                 ShowError(ex);
+            }
+        }
+
+        private void txtName_Validating(object sender, CancelEventArgs e)
+        {
+            if (txtName.Text == "")
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtName, "Subject group name is required.");
+            }
+            else
+            {
+                errorProvider.SetError(txtName, "");
             }
         }
     }
