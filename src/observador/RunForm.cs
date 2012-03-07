@@ -53,28 +53,13 @@ namespace observador
 
         private void InitializeEventVisualisers()
         {
-            IEventVisualiser _eventVisualiserPrimary = new RectanglesEventVisualiser();
-            IEventVisualiser _eventVisualiserSecondary = new TextEventVisualiser();
-
-            _eventVisualisers.Add(_eventVisualiserPrimary);
-            _eventVisualisers.Add(_eventVisualiserSecondary);
-
-            pnlEventVisualiser.Controls.Add(_eventVisualiserPrimary as Control);
-            pnlEventVisualiserSecondary.Controls.Add(_eventVisualiserSecondary as Control);
+            _eventVisualisers.Add(eventVisualiserPrimary);
+            _eventVisualisers.Add(eventVisualiserSecondary);
 
             foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
             {
                 eventVisualiser.SetBehaviors(_allowedBehaviors);
                 eventVisualiser.SetDurationMilliseconds(_durationMilliseconds);
-
-
-                Control eventVisualiserControl = eventVisualiser as Control;
-
-                eventVisualiserControl.Width = eventVisualiserControl.Parent.Width;
-                eventVisualiserControl.Height = eventVisualiserControl.Parent.Height;
-
-                eventVisualiserControl.Anchor =
-                    AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
             }
         }
 

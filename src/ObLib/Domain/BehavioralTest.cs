@@ -39,7 +39,16 @@ namespace ObLib.Domain
             {
                 if (behavior.BehavioralTestType == behavioralTestType)
                 {
-                    // TODO: Modify behavior.KeyStroke based on current Researcher's ResearcherBehaviorKeyStrokes.
+                    ResearcherBehaviorKeyStroke researcherBehaviorKeyStroke
+                        = Researcher.Current.ResearcherBehaviorKeyStrokes.FirstOrDefault(
+                            (item) => item.Behavior.Id == behavior.Id
+                        );
+
+                    if (researcherBehaviorKeyStroke != null)
+                    {
+                        behavior.KeyStroke = researcherBehaviorKeyStroke.KeyStroke;
+                    }
+
                     behaviors.Add(behavior);
                 }
             }

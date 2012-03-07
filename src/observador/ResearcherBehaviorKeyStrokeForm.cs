@@ -12,10 +12,10 @@ using ObLib;
 
 namespace observador
 {
-    //TODO: Not tested: Test! (Delete crashes)
-    //TODO: Use KeyDown event to detect key stroke.
     public partial class ResearcherBehaviorKeyStrokeForm : ObWin.Form
     {
+        private KeysConverter _keysConverter = new KeysConverter();
+
         private class VerboseBehavior
         {
             public Behavior Behavior { get; set; }
@@ -31,14 +31,6 @@ namespace observador
         public ResearcherBehaviorKeyStrokeForm()
         {
             InitializeComponent();
-
-            List<VerboseBehavior> verboseBehaviors = new List<VerboseBehavior>();
-            foreach (Behavior behavior in Behavior.All())
-            {
-                verboseBehaviors.Add(new VerboseBehavior() { Behavior = behavior });
-            }
-
-            cbBehavior.DataSource = verboseBehaviors;
         }
 
         public ResearcherBehaviorKeyStrokeForm(ResearcherBehaviorKeyStroke researcherBehaviorKeyStroke)
@@ -47,16 +39,41 @@ namespace observador
             if (researcherBehaviorKeyStroke != null)
             {
                 _researcherBehaviorKeyStroke = researcherBehaviorKeyStroke;
+            }
+        }
 
+        private void ResearcherBehaviorKeyStrokeForm_Load(object sender, EventArgs e)
+        {
+            List<VerboseBehavior> verboseBehaviors = new List<VerboseBehavior>();
+            foreach (Behavior behavior in Behavior.All())
+            {
+                // Show only behaviors that the user hasn't assigned yet, except for the edited behavior, if any.
+                if ((_researcherBehaviorKeyStroke != null && _researcherBehaviorKeyStroke.Behavior.Id == behavior.Id)
+                    || !Researcher.Current.ResearcherBehaviorKeyStrokes.Any((item) => item.Behavior.Id == behavior.Id))
+                {
+                    verboseBehaviors.Add(new VerboseBehavior() { Behavior = behavior });
+                }
+            }
+
+            cbBehavior.DataSource = verboseBehaviors;
+
+            if (_researcherBehaviorKeyStroke != null)
+            {
                 foreach (object cbBehaviorItem in cbBehavior.Items)
                 {
-                    if (((VerboseBehavior)cbBehaviorItem).Behavior == researcherBehaviorKeyStroke.Behavior)
+                    if (((VerboseBehavior)cbBehaviorItem).Behavior.Id == _researcherBehaviorKeyStroke.Behavior.Id)
                     {
-                        cbBehavior.SelectedItem = researcherBehaviorKeyStroke.Behavior;
+                        cbBehavior.SelectedItem = cbBehaviorItem;
                         break;
                     }
                 }
-                txtKeyStroke.Text = researcherBehaviorKeyStroke.KeyStroke;
+                txtKeyStroke.Text = _researcherBehaviorKeyStroke.KeyStroke;
+            }
+
+            if (cbBehavior.Items.Count == 0)
+            {
+                MessageBox.Show("All behaviors have been assigned custom key strokes.", "No more behaviors");
+                Close();
             }
         }
 
@@ -73,7 +90,9 @@ namespace observador
                     _researcherBehaviorKeyStroke ?? new ResearcherBehaviorKeyStroke();
 
                 researcherBehaviorKeyStroke.Behavior = ((VerboseBehavior)cbBehavior.SelectedItem).Behavior;
+                // TODO: Validation non-empty
                 researcherBehaviorKeyStroke.KeyStroke = txtKeyStroke.Text;
+                researcherBehaviorKeyStroke.Tm = DateTime.Now;
 
                 if (_researcherBehaviorKeyStroke == null)
                 {
@@ -88,6 +107,11 @@ namespace observador
             {
                 ShowError(ex);
             }
+        }
+
+        private void txtKeyStroke_KeyDown(object sender, KeyEventArgs e)
+        {
+            txtKeyStroke.Text = _keysConverter.ConvertToString(e.KeyCode);
         }
     }
 }

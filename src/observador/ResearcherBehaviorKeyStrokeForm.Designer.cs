@@ -72,8 +72,10 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtKeyStroke.Location = new System.Drawing.Point(72, 43);
             this.txtKeyStroke.Name = "txtKeyStroke";
+            this.txtKeyStroke.ReadOnly = true;
             this.txtKeyStroke.Size = new System.Drawing.Size(193, 20);
             this.txtKeyStroke.TabIndex = 3;
+            this.txtKeyStroke.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtKeyStroke_KeyDown);
             // 
             // cbBehavior
             // 
@@ -108,9 +110,11 @@
             this.Controls.Add(this.txtKeyStroke);
             this.Controls.Add(this.bSave);
             this.Controls.Add(this.bCancel);
+            this.MinimumSize = new System.Drawing.Size(285, 136);
             this.Name = "ResearcherBehaviorKeyStrokeForm";
             this.ShowInTaskbar = false;
             this.Text = "Key Stroke";
+            this.Load += new System.EventHandler(this.ResearcherBehaviorKeyStrokeForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

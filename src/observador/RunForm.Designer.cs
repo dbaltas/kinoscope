@@ -34,14 +34,14 @@
             this.bClear = new System.Windows.Forms.Button();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblTimer = new System.Windows.Forms.Label();
-            this.pnlEventVisualiser = new System.Windows.Forms.Panel();
             this.dgvBehaviors = new System.Windows.Forms.DataGridView();
             this.BehaviorKeyStroke = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BehaviorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BehaviorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.pnlEventVisualiserSecondary = new System.Windows.Forms.Panel();
+            this.eventVisualiserPrimary = new observador.RectanglesEventVisualiser();
+            this.eventVisualiserSecondary = new observador.TextEventVisualiser();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBehaviors)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.bCancel.Location = new System.Drawing.Point(779, 444);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
-            this.bCancel.TabIndex = 5;
+            this.bCancel.TabIndex = 6;
             this.bCancel.Text = "Discard";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
@@ -77,7 +77,7 @@
             this.bClear.Location = new System.Drawing.Point(673, 444);
             this.bClear.Name = "bClear";
             this.bClear.Size = new System.Drawing.Size(75, 23);
-            this.bClear.TabIndex = 3;
+            this.bClear.TabIndex = 5;
             this.bClear.Text = "Reset";
             this.bClear.UseVisualStyleBackColor = true;
             this.bClear.Click += new System.EventHandler(this.bClear_Click);
@@ -93,18 +93,8 @@
             this.lblTimer.Location = new System.Drawing.Point(12, 9);
             this.lblTimer.Name = "lblTimer";
             this.lblTimer.Size = new System.Drawing.Size(133, 29);
-            this.lblTimer.TabIndex = 6;
+            this.lblTimer.TabIndex = 0;
             this.lblTimer.Text = "00:00:00";
-            // 
-            // pnlEventVisualiser
-            // 
-            this.pnlEventVisualiser.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlEventVisualiser.Location = new System.Drawing.Point(12, 41);
-            this.pnlEventVisualiser.Name = "pnlEventVisualiser";
-            this.pnlEventVisualiser.Size = new System.Drawing.Size(527, 205);
-            this.pnlEventVisualiser.TabIndex = 7;
             // 
             // dgvBehaviors
             // 
@@ -126,7 +116,7 @@
             this.dgvBehaviors.RowHeadersVisible = false;
             this.dgvBehaviors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvBehaviors.Size = new System.Drawing.Size(326, 397);
-            this.dgvBehaviors.TabIndex = 8;
+            this.dgvBehaviors.TabIndex = 3;
             // 
             // BehaviorKeyStroke
             // 
@@ -135,7 +125,7 @@
             this.BehaviorKeyStroke.Name = "BehaviorKeyStroke";
             this.BehaviorKeyStroke.ReadOnly = true;
             this.BehaviorKeyStroke.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.BehaviorKeyStroke.Width = 40;
+            this.BehaviorKeyStroke.Width = 70;
             // 
             // BehaviorName
             // 
@@ -143,7 +133,7 @@
             this.BehaviorName.HeaderText = "Name";
             this.BehaviorName.Name = "BehaviorName";
             this.BehaviorName.ReadOnly = true;
-            this.BehaviorName.Width = 175;
+            this.BehaviorName.Width = 145;
             // 
             // BehaviorType
             // 
@@ -168,14 +158,40 @@
             this.tssStatus.Name = "tssStatus";
             this.tssStatus.Size = new System.Drawing.Size(0, 17);
             // 
-            // pnlEventVisualiserSecondary
+            // eventVisualiserPrimary
             // 
-            this.pnlEventVisualiserSecondary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.eventVisualiserPrimary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlEventVisualiserSecondary.Location = new System.Drawing.Point(12, 252);
-            this.pnlEventVisualiserSecondary.Name = "pnlEventVisualiserSecondary";
-            this.pnlEventVisualiserSecondary.Size = new System.Drawing.Size(527, 215);
-            this.pnlEventVisualiserSecondary.TabIndex = 8;
+            this.eventVisualiserPrimary.BackColor = System.Drawing.Color.LightYellow;
+            this.eventVisualiserPrimary.BarColor = System.Drawing.Color.Silver;
+            this.eventVisualiserPrimary.BarHeightPercentage = 0.2F;
+            this.eventVisualiserPrimary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.eventVisualiserPrimary.Colors = new System.Drawing.Color[] {
+        System.Drawing.Color.Brown,
+        System.Drawing.Color.SandyBrown,
+        System.Drawing.Color.Tan,
+        System.Drawing.Color.Khaki,
+        System.Drawing.Color.Red};
+            this.eventVisualiserPrimary.InstantEventWidthPercentage = 0.005F;
+            this.eventVisualiserPrimary.Location = new System.Drawing.Point(12, 41);
+            this.eventVisualiserPrimary.MarginHeightPercentage = 0.2F;
+            this.eventVisualiserPrimary.Name = "eventVisualiserPrimary";
+            this.eventVisualiserPrimary.NumberOfRows = 3;
+            this.eventVisualiserPrimary.Size = new System.Drawing.Size(528, 193);
+            this.eventVisualiserPrimary.TabIndex = 1;
+            // 
+            // eventVisualiserSecondary
+            // 
+            this.eventVisualiserSecondary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventVisualiserSecondary.Location = new System.Drawing.Point(13, 240);
+            this.eventVisualiserSecondary.Multiline = true;
+            this.eventVisualiserSecondary.Name = "eventVisualiserSecondary";
+            this.eventVisualiserSecondary.ReadOnly = true;
+            this.eventVisualiserSecondary.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.eventVisualiserSecondary.Size = new System.Drawing.Size(527, 198);
+            this.eventVisualiserSecondary.TabIndex = 2;
             // 
             // RunForm
             // 
@@ -183,10 +199,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(884, 492);
-            this.Controls.Add(this.pnlEventVisualiserSecondary);
+            this.Controls.Add(this.eventVisualiserSecondary);
+            this.Controls.Add(this.eventVisualiserPrimary);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.dgvBehaviors);
-            this.Controls.Add(this.pnlEventVisualiser);
             this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.bClear);
             this.Controls.Add(this.bSave);
@@ -212,14 +228,14 @@
         private System.Windows.Forms.Button bClear;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label lblTimer;
-        private System.Windows.Forms.Panel pnlEventVisualiser;
         private System.Windows.Forms.DataGridView dgvBehaviors;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel tssStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorKeyStroke;
         private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorName;
         private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorType;
-        private System.Windows.Forms.StatusStrip statusStrip;
-        private System.Windows.Forms.ToolStripStatusLabel tssStatus;
-        private System.Windows.Forms.Panel pnlEventVisualiserSecondary;
+        private RectanglesEventVisualiser eventVisualiserPrimary;
+        private TextEventVisualiser eventVisualiserSecondary;
 
     }
 }

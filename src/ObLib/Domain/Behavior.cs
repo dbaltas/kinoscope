@@ -35,6 +35,11 @@ namespace ObLib.Domain
 
         public virtual string KeyStroke { get; set; }
 
+        public Behavior()
+        {
+            ResearcherBehaviorKeyStrokes = new List<ResearcherBehaviorKeyStroke>();
+        }
+
         public override string ToString()
         {
             return Name;

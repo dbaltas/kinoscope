@@ -7,7 +7,7 @@ namespace ObLib.Domain
         public RunMap()
         {
             Id(x => x.Id);
-            References(x => x.Trial).UniqueKey("UQ_Run_Trial_Subject"); ;
+            References(x => x.Trial).UniqueKey("UQ_Run_Trial_Subject");
             References(x => x.Subject).UniqueKey("UQ_Run_Trial_Subject");
             Map(x => x.Tm);
             HasMany(x => x.RunEvents).Cascade.AllDeleteOrphan();

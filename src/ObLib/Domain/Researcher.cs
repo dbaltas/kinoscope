@@ -43,6 +43,7 @@ namespace ObLib.Domain
         public Researcher()
         {
             Projects = new List<Project>();
+            ResearcherBehaviorKeyStrokes = new List<ResearcherBehaviorKeyStroke>();
         }
 
         public virtual void AddProject(Project project)

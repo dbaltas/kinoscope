@@ -24,7 +24,6 @@ namespace ObLib.Domain
             Behavior.Save();
 
             base.Delete();
-            Save();
         }
 
         public override string ToString()

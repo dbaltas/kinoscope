@@ -12,7 +12,7 @@ namespace ObLib.Domain
             References(x => x.BehavioralTestType).UniqueKey("UQ_Behavior_BehavioralTestType_DefaultKeyStroke");
             Map(x => x.DefaultKeyStroke).UniqueKey("UQ_Behavior_BehavioralTestType_DefaultKeyStroke");
             Map(x => x.Tm);
-            HasMany(x => x.ResearcherBehaviorKeyStrokes).Cascade.AllDeleteOrphan();
+            HasMany(x => x.ResearcherBehaviorKeyStrokes).Cascade.All();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ObLib.Domain
             Map(x => x.Password);
             Map(x => x.Tm);
             HasMany(x => x.Projects).Cascade.AllDeleteOrphan();
-            HasMany(x => x.ResearcherBehaviorKeyStrokes).Cascade.AllDeleteOrphan();
+            HasMany(x => x.ResearcherBehaviorKeyStrokes).Cascade.All();
         }
     }
 }
