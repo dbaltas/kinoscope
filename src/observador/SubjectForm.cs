@@ -75,26 +75,56 @@ namespace observador
                 subject.Origin = txtOrigin.Text;
                 subject.Weight = txtWeight.Text == "" ? (Decimal?)null : Decimal.Parse(txtWeight.Text);
 
-                subject.SubjectGroup = (SubjectGroup)cbSubjectGroup.SelectedItem;
-                if (subject.SubjectGroup.Id == -1)
-                {
-                    subject.SubjectGroup = null;
-                }
-                else
-                {
-                    subject.SubjectGroup.AddSubject(subject);
-                }
-
                 if (_subject == null)
                 {
                     Researcher.Current.ActiveProject.AddSubject(subject);
+                    Researcher.Current.ActiveProject.Save();
                 }
-                subject.Project.Save();
+                else
+                {
+                    _subject.Save();
+                }
+
+                UpdateSubjectGroupMemberships(subject);
+
                 this.Close();
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
+            }
+        }
+
+        private void UpdateSubjectGroupMemberships(Subject subject)
+        {
+            SubjectGroup oldSubjectGroup = subject.SubjectGroup;
+            SubjectGroup newSubjectGroup = (SubjectGroup)cbSubjectGroup.SelectedItem;
+            if (newSubjectGroup.Id == -1)
+            {
+                newSubjectGroup = null;
+            }
+
+            if (subject.SubjectGroup == null)
+            {
+                if (newSubjectGroup != null)
+                {
+                    newSubjectGroup.AddSubject(subject);
+                    newSubjectGroup.Save();
+                }
+            }
+            else if (newSubjectGroup == null)
+            {
+                subject.SubjectGroup = null;
+                oldSubjectGroup.Subjects.Remove(subject);
+                oldSubjectGroup.Save();
+            }
+            else if (subject.SubjectGroup.Id != newSubjectGroup.Id)
+            {
+                oldSubjectGroup.Subjects.Remove(subject);
+                newSubjectGroup.AddSubject(subject);
+
+                oldSubjectGroup.Save();
+                newSubjectGroup.Save();
             }
         }
 
@@ -104,9 +134,9 @@ namespace observador
             if (txtWeight.Text != ""
                 && (!Decimal.TryParse(txtWeight.Text, out weight)
                     || weight < 0
-                    // The following condition is to prevent parser sweeping-off separators
-                    // e.g. in greek locale 3,5 is parsed correctly as three and a half
-                    // but 3.5 is parsed as thirty five.
+                // The following condition is to prevent parser sweeping-off separators
+                // e.g. in greek locale 3,5 is parsed correctly as three and a half
+                // but 3.5 is parsed as thirty five.
                     || weight.ToString() != txtWeight.Text))
             {
                 e.Cancel = true;
@@ -124,6 +154,13 @@ namespace observador
             {
                 e.Cancel = true;
                 errorProvider.SetError(txtCode, "Subject code is required.");
+            }
+            else if (Researcher.Current.ActiveProject.Subjects.FirstOrDefault(
+                (item) => item.Code == txtCode.Text && (_subject == null || item.Id != _subject.Id)
+                ) != null)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtCode, "A subject with the same code already exists in the active project.");
             }
             else
             {

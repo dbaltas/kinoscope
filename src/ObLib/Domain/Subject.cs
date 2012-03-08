@@ -16,13 +16,22 @@ namespace ObLib.Domain
         public virtual string Origin { get; set; }
         public virtual Decimal? Weight { get; set; }
 
+        public virtual IList<Run> Runs { get; set; }
+
+        public Subject()
+        {
+            Runs = new List<Run>();
+        }
+
         public override void Delete()
         {
-            Project.Subjects.Remove(this);
             if (SubjectGroup != null)
             {
                 SubjectGroup.Subjects.Remove(this);
+                SubjectGroup.Save();
             }
+
+            Project.Subjects.Remove(this);
             Project.Save();
         }
 

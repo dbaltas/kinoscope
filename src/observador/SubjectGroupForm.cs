@@ -52,13 +52,18 @@ namespace observador
                 if (_subjectGroup == null)
                 {
                     Researcher.Current.ActiveProject.AddSubjectGroup(subjectGroup);
+                    Researcher.Current.ActiveProject.Save();
                 }
-                subjectGroup.Project.Save();
+                else
+                {
+                    _subjectGroup.Save();
+                }
+
                 this.Close();
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
         }
 

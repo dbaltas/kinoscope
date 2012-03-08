@@ -113,7 +113,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
 
             LoadForm();
@@ -139,7 +139,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
 
             LoadForm();
@@ -176,7 +176,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
 
             LoadForm();

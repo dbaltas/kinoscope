@@ -62,15 +62,19 @@ namespace observador
                 if (_runEvent == null)
                 {
                     _run.AddRunEvent(runEvent);
+                    _run.Save();
+                }
+                else
+                {
+                    _runEvent.Save();
                 }
 
-                _run.Save();
 
                 this.Close();
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
         }
 

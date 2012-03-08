@@ -59,16 +59,24 @@ namespace observador
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
         }
 
         private void txtUsername_Validating(object sender, CancelEventArgs e)
         {
+            Researcher researcher;
+
             if (txtUsername.Text.Length < 4)
             {
                 e.Cancel = true;
                 errorProvider.SetError(txtUsername, "Username is not long enough.");
+            }
+            else if ((researcher = Researcher.Find(txtUsername.Text)) != null
+                && (_researcher == null || researcher.Id != _researcher.Id))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(txtUsername, "A researcher with the same user name already exists.");
             }
             else
             {

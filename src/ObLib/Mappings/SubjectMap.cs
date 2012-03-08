@@ -12,6 +12,7 @@ namespace ObLib.Domain
             Map(x => x.DateOfBirth);
             Map(x => x.Origin);
             Map(x => x.Weight);
+            HasMany(x => x.Runs).Cascade.AllDeleteOrphan();
         }
     }
 }

@@ -85,6 +85,14 @@ namespace ObLib.Domain
             return researcher;
         }
 
+        public static Researcher Find(string username)
+        {
+            return NHibernateHelper.OpenSession()
+                                   .CreateCriteria(typeof(Researcher))
+                                   .Add(Restrictions.Eq("Username", username))
+                                   .UniqueResult<Researcher>();
+        }
+
         public override string ToString()
         {
             return Username;

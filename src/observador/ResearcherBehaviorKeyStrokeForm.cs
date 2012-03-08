@@ -101,15 +101,19 @@ namespace observador
                 if (_researcherBehaviorKeyStroke == null)
                 {
                     Researcher.Current.AddResearcherBehaviorKeyStroke(researcherBehaviorKeyStroke);
+                    Researcher.Current.Save();
+                }
+                else
+                {
+                    _researcherBehaviorKeyStroke.Save();
                 }
 
-                Researcher.Current.Save();
 
                 this.Close();
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
         }
 

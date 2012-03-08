@@ -64,7 +64,7 @@ namespace observador
             }
             catch (Exception ex)
             {
-                ShowError(ex);
+                FailWithError(ex);
             }
         }
 
