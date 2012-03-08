@@ -32,5 +32,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.*")]
+// NOTE: had to remove the * from the assembly version to solve issue http://stackoverflow.com/questions/2895898/visual-studio-build-fails-unable-to-copy-exe-file-from-obj-debug-to-bin-debug
+[assembly: AssemblyVersion("0.1.0")]
 [assembly: AssemblyFileVersion("0.1.0.0")]

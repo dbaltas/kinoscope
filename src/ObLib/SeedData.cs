@@ -92,33 +92,33 @@ namespace ObLib
 
             var preTestSession = new Session
             {
-                Name = "default",
+                Name = "",
             };
             preTest.AddSession(preTestSession);
 
             var preTestTrial = new Trial
             {
-                Name = "Default trial",
+                Name = "",
                 Duration = 15 * 60,
             };
             preTestSession.AddTrial(preTestTrial);
 
             var testSession = new Session
             {
-                Name = "default",
+                Name = "",
             };
             test.AddSession(testSession);
 
             var testTrial = new Trial
             {
-                Name = "Default trial",
-                Duration = 5 * 60,
+                Name = "for demo purposes",
+                Duration = 10,
             };
             preTestSession.AddTrial(testTrial);
 
             var testTrial2 = new Trial
             {
-                Name = "Default trial 2",
+                Name = "",
                 Duration = 5 * 60,
             };
             testSession.AddTrial(testTrial2);

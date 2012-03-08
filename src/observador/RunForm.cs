@@ -123,7 +123,14 @@ namespace observador
 
         private void bClear_Click(object sender, EventArgs e)
         {
-            Reset();
+            DialogResult dialogResult = MessageBox.Show(
+                "The run data will be deleted. Are you sure you want to discard it and start again?",
+                "Reset Run",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                Reset();
+            }
         }
 
         private void timer_Tick(object sender, EventArgs e)

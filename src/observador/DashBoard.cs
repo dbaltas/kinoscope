@@ -104,7 +104,7 @@ namespace observador
             // Set text in main window's Title Bar
             Text = string.Format(
                 "{0} - {1}",
-                activeProject == null ? "No project selected" : activeProject.Name,
+                activeProject == null ? "No project selected" : "Active Project: " + activeProject.Name,
                 Program.GetTitle());
         }
 
