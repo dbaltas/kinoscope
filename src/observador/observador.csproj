@@ -70,6 +70,9 @@
     <Compile Include="Admin\ResearcherForm.Designer.cs">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TrialListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ResearcherBehaviorKeyStrokeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +98,9 @@
     </Compile>
     <Compile Include="RunForm.Designer.cs">
       <DependentUpon>RunForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RunListForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="SubjectForm.cs">
       <SubType>Form</SubType>
@@ -202,8 +208,10 @@
     <Content Include="images\add.png" />
     <Content Include="images\close.png" />
     <Content Include="images\edit.png" />
+    <Content Include="images\export.png" />
     <Content Include="images\refresh.png" />
     <Content Include="images\remove.png" />
+    <Content Include="images\run.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">

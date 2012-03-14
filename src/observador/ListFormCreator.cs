@@ -70,39 +70,12 @@ namespace observador
 
         public Form CreateTrialListForm()
         {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "Session" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "RunCount", HeaderText = "Runs" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
-
-            return new ListForm<Trial>(
-                columns,
-                () => (IList)Researcher.Current.ActiveProject.Trials,
-                CreateTrialForm,
-                allowAdd: false, allowRemove: false) { ItemTypeDescription = "trial", Text = "Trials", Width = 900 };
+            return new TrialListForm();
         }
 
         public Form CreateTrialForm(Trial trial)
         {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Subject", HeaderText = "Subject" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "StatusDescription", HeaderText = "Status" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "TmRun", HeaderText = "Date Run" }};
-
-            return new ListForm<Run>(
-                columns,
-                () => { trial.PopulateWithRuns(); return (IList)trial.Runs; },
-                (item) => item.Status == Run.RunStatus.NotRun
-                    ? (ObWin.Form)new RunForm(item)
-                    : (ObWin.Form)new RunEventListForm(item),
-                allowAdd: false)
-            {
-                ItemTypeDescription = "run",
-                Text = string.Format("Trial: {0}, Session: {1}", trial, trial.Session)
-            };
+            return new RunListForm(trial);
         }
 
         public Form CreateResearcherBehaviorKeyStrokeListForm()

@@ -17,9 +17,11 @@ namespace observador
         public delegate IList DataSourceDelegate();
         public delegate Form CreateDetailFormDelegate(T item);
 
-        private bool _allowAdd;
-        private bool _allowEdit;
-        private bool _allowRemove;
+        protected bool _allowAdd = true;
+        protected bool _allowEdit = true;
+        protected bool _allowRemove = true;
+        protected bool _allowRun = false;
+        protected bool _allowExport = false;
 
         private DataSourceDelegate _createDataSource;
         private CreateDetailFormDelegate _createDetailForm;
@@ -28,17 +30,11 @@ namespace observador
         public ListForm(
             DataGridViewColumn[] gridColumns,
             DataSourceDelegate createDataSource,
-            CreateDetailFormDelegate createDetailForm,
-            bool allowAdd = true, bool allowEdit = true, bool allowRemove = true
-            )
+            CreateDetailFormDelegate createDetailForm)
         {
             ItemTypeDescription = "item";
 
             InitializeComponent();
-
-            toolStripButtonAdd.Visible = allowAdd;
-            toolStripButtonEdit.Visible = allowEdit;
-            toolStripButtonRemove.Visible = allowRemove;
 
             dgvMain.AutoGenerateColumns = false;
 
@@ -51,9 +47,6 @@ namespace observador
 
             _createDataSource = createDataSource;
             _createDetailForm = createDetailForm;
-            _allowAdd = allowAdd;
-            _allowEdit = allowEdit;
-            _allowRemove = allowRemove;
         }
 
         private void LoadForm()
@@ -61,6 +54,17 @@ namespace observador
             BindingSource bindingSource = new BindingSource() { AllowNew = false };
             bindingSource.DataSource = _createDataSource();
             dgvMain.DataSource = bindingSource;
+
+            RefreshToolbar();
+        }
+
+        protected void RefreshToolbar()
+        {
+            toolStripButtonAdd.Visible = _allowAdd;
+            toolStripButtonEdit.Visible = _allowEdit;
+            toolStripButtonRemove.Visible = _allowRemove;
+            toolStripButtonRun.Visible = _allowRun;
+            toolStripButtonExport.Visible = _allowExport;
         }
 
         private void ListForm_Load(object sender, EventArgs e)
