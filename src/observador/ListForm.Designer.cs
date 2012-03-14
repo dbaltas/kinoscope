@@ -29,12 +29,14 @@
         private void InitializeComponent()
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRefresh = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
-            this.dgvMain = new System.Windows.Forms.DataGridView();
+            this.toolStripButtonRun = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonExport = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
@@ -47,12 +49,30 @@
             this.toolStripButtonEdit,
             this.toolStripButtonRemove,
             this.toolStripButtonRefresh,
-            this.toolStripButtonClose});
+            this.toolStripButtonClose,
+            this.toolStripButtonRun,
+            this.toolStripButtonExport});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(471, 39);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // dgvMain
+            // 
+            this.dgvMain.AllowUserToDeleteRows = false;
+            this.dgvMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMain.Location = new System.Drawing.Point(12, 42);
+            this.dgvMain.MultiSelect = false;
+            this.dgvMain.Name = "dgvMain";
+            this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMain.Size = new System.Drawing.Size(447, 266);
+            this.dgvMain.TabIndex = 2;
+            this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellDoubleClick);
             // 
             // toolStripButtonAdd
             // 
@@ -109,21 +129,27 @@
             this.toolStripButtonClose.ToolTipText = "Close (ESC)";
             this.toolStripButtonClose.Click += new System.EventHandler(this.toolStripButtonClose_Click);
             // 
-            // dgvMain
+            // toolStripButtonRun
             // 
-            this.dgvMain.AllowUserToDeleteRows = false;
-            this.dgvMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMain.Location = new System.Drawing.Point(12, 42);
-            this.dgvMain.MultiSelect = false;
-            this.dgvMain.Name = "dgvMain";
-            this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(447, 266);
-            this.dgvMain.TabIndex = 2;
-            this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellDoubleClick);
+            this.toolStripButtonRun.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRun.Image = global::observador.Properties.Resources.run;
+            this.toolStripButtonRun.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRun.Name = "toolStripButtonRun";
+            this.toolStripButtonRun.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonRun.Text = "toolStripButtonRun";
+            this.toolStripButtonRun.ToolTipText = "Run (F8)";
+            this.toolStripButtonRun.Visible = false;
+            // 
+            // toolStripButtonExport
+            // 
+            this.toolStripButtonExport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonExport.Image = global::observador.Properties.Resources.export;
+            this.toolStripButtonExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonExport.Name = "toolStripButtonExport";
+            this.toolStripButtonExport.Size = new System.Drawing.Size(36, 36);
+            this.toolStripButtonExport.Text = "toolStripButtonExport";
+            this.toolStripButtonExport.ToolTipText = "Export (F6)";
+            this.toolStripButtonExport.Visible = false;
             // 
             // ListForm
             // 
@@ -155,5 +181,7 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButtonClose;
         private System.Windows.Forms.DataGridView dgvMain;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRun;
+        private System.Windows.Forms.ToolStripButton toolStripButtonExport;
     }
 }
