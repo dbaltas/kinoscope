@@ -28,6 +28,31 @@ namespace observador
             Text = string.Format("Trial: {0}, Session: {1}", trial, trial.Session);
             Width = 600;
             _allowAdd = false;
+            _allowExport = true;
+            _allowRun = true;
+        }
+
+        protected override void ItemExport(DataGridViewRow dgvRow)
+        {
+            Run run = (Run)dgvRow.DataBoundItem;
+            if (run.Status == Run.RunStatus.NotRun)
+            {
+                MessageBox.Show("Run Is not complete. Click 'Run' to complete");
+                return;
+            }
+            run.Export();
+            MessageBox.Show("Export Successful at application directory.");
+        }
+
+        protected override void ItemRun(DataGridViewRow dgvRow)
+        {
+            Run run = (Run)dgvRow.DataBoundItem;
+            if (run.Status == Run.RunStatus.Complete)
+            {
+                MessageBox.Show("Run Is already complete. Delete first if you want to run again");
+                return;
+            }
+            (new RunForm(run)).ShowDialog();
         }
     }
 }

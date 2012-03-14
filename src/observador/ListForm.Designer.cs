@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.toolStripButtonAdd = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRemove = new System.Windows.Forms.ToolStripButton();
@@ -37,6 +36,7 @@
             this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRun = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExport = new System.Windows.Forms.ToolStripButton();
+            this.dgvMain = new System.Windows.Forms.DataGridView();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             this.SuspendLayout();
@@ -57,22 +57,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(471, 39);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // dgvMain
-            // 
-            this.dgvMain.AllowUserToDeleteRows = false;
-            this.dgvMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvMain.Location = new System.Drawing.Point(12, 42);
-            this.dgvMain.MultiSelect = false;
-            this.dgvMain.Name = "dgvMain";
-            this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(447, 266);
-            this.dgvMain.TabIndex = 2;
-            this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellDoubleClick);
             // 
             // toolStripButtonAdd
             // 
@@ -139,6 +123,7 @@
             this.toolStripButtonRun.Text = "toolStripButtonRun";
             this.toolStripButtonRun.ToolTipText = "Run (F8)";
             this.toolStripButtonRun.Visible = false;
+            this.toolStripButtonRun.Click += new System.EventHandler(this.toolStripButtonRun_Click);
             // 
             // toolStripButtonExport
             // 
@@ -150,6 +135,23 @@
             this.toolStripButtonExport.Text = "toolStripButtonExport";
             this.toolStripButtonExport.ToolTipText = "Export (F6)";
             this.toolStripButtonExport.Visible = false;
+            this.toolStripButtonExport.Click += new System.EventHandler(this.toolStripButtonExport_Click);
+            // 
+            // dgvMain
+            // 
+            this.dgvMain.AllowUserToDeleteRows = false;
+            this.dgvMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvMain.Location = new System.Drawing.Point(12, 42);
+            this.dgvMain.MultiSelect = false;
+            this.dgvMain.Name = "dgvMain";
+            this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvMain.Size = new System.Drawing.Size(447, 266);
+            this.dgvMain.TabIndex = 2;
+            this.dgvMain.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMain_CellDoubleClick);
             // 
             // ListForm
             // 

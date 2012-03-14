@@ -45,7 +45,7 @@ namespace observador
                 return;
             }
 
-            _listFormCreator.CreateTrialListForm().ShowDialog();
+            (new TrialListForm()).ShowDialog();
         }
 
         private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)

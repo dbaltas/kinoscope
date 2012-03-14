@@ -99,6 +99,16 @@ namespace observador
             OrderClose();
         }
 
+        private void toolStripButtonRun_Click(object sender, EventArgs e)
+        {
+            OrderRun();
+        }
+
+        private void toolStripButtonExport_Click(object sender, EventArgs e)
+        {
+            OrderExport();
+        }
+
         #endregion
 
         #region Order implementations
@@ -112,8 +122,7 @@ namespace observador
                     return;
                 }
 
-                Form form = _createDetailForm(null);
-                form.ShowDialog();
+                ItemNew();
             }
             catch (Exception ex)
             {
@@ -123,7 +132,7 @@ namespace observador
             LoadForm();
         }
 
-        private void OrderEdit()
+        protected void OrderEdit()
         {
             try
             {
@@ -138,8 +147,7 @@ namespace observador
                     return;
                 }
 
-                Form form = _createDetailForm((T)dgvMain.CurrentRow.DataBoundItem);
-                form.ShowDialog();
+                ItemEdit(dgvMain.CurrentRow);
             }
             catch (Exception ex)
             {
@@ -164,19 +172,7 @@ namespace observador
                     return;
                 }
 
-                T itemToDelete = (T)dgvMain.CurrentRow.DataBoundItem;
-
-                String deleteMsg = String.Format("Are you sure you want to delete {0} {1}?",
-                                                 ItemTypeDescription, itemToDelete);
-                DialogResult dialogResult = MessageBox.Show(deleteMsg,
-                                                            string.Format("Delete {0}", ItemTypeDescription),
-                                                            MessageBoxButtons.YesNo);
-                if (dialogResult == System.Windows.Forms.DialogResult.No)
-                {
-                    return;
-                }
-
-                itemToDelete.Delete();
+                ItemDelete(dgvMain.CurrentRow);
             }
             catch (Exception ex)
             {
@@ -196,6 +192,76 @@ namespace observador
             Close();
         }
 
+        private void OrderRun()
+        {
+            if (!_allowRun)
+            {
+                return;
+            }
+
+            if (dgvMain.CurrentRow == null)
+            {
+                MessageBox.Show(string.Format("No {0} to run.", ItemTypeDescription));
+                return;
+            }
+
+            ItemRun(dgvMain.CurrentRow);
+        }
+
+        private void OrderExport()
+        {
+            if (!_allowExport)
+            {
+                return;
+            }
+
+            if (dgvMain.CurrentRow == null)
+            {
+                MessageBox.Show(string.Format("No {0} to run.", ItemTypeDescription));
+                return;
+            }
+
+            ItemExport(dgvMain.CurrentRow);
+        }
+        #endregion
+
+        #region item commands overridable
+        protected virtual void ItemNew()
+        {
+            Form form = _createDetailForm(null);
+            form.ShowDialog();
+        }
+
+        protected virtual void ItemEdit(DataGridViewRow dgvRow)
+        {
+                Form form = _createDetailForm((T)dgvMain.CurrentRow.DataBoundItem);
+                form.ShowDialog();
+        }
+
+        protected virtual void ItemDelete(DataGridViewRow dgvRow)
+        {
+            T itemToDelete = (T)dgvRow.DataBoundItem;
+
+            String deleteMsg = String.Format("Are you sure you want to delete {0} {1}?",
+                                             ItemTypeDescription, itemToDelete);
+            DialogResult dialogResult = MessageBox.Show(deleteMsg,
+                                                        string.Format("Delete {0}", ItemTypeDescription),
+                                                        MessageBoxButtons.YesNo);
+            if (dialogResult == System.Windows.Forms.DialogResult.No)
+            {
+                return;
+            }
+
+            itemToDelete.Delete();
+        }
+
+        protected virtual void ItemRun(DataGridViewRow dgvRow)
+        {
+        }
+
+        protected virtual void ItemExport(DataGridViewRow dgvRow)
+        {
+            }
         #endregion
 
         private void ListForm_KeyDown(object sender, KeyEventArgs e)
@@ -211,6 +277,12 @@ namespace observador
                 case Keys.Enter:
                     OrderEdit();
                     break;
+                case Keys.F6:
+                    OrderExport();
+                    break;
+                case Keys.F8:
+                    OrderRun();
+                    break;
                 case Keys.Delete:
                     OrderRemove();
                     break;
@@ -218,7 +290,7 @@ namespace observador
                     OrderRefresh();
                     break;
                 case Keys.Escape:
-                    Close();
+                    OrderClose();
                     break;
             }
         }

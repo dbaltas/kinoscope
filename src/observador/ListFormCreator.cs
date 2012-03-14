@@ -68,16 +68,6 @@ namespace observador
                 (item) => new SubjectForm(item)) { ItemTypeDescription = "subject", Text = "Subjects", Width = 900 };
         }
 
-        public Form CreateTrialListForm()
-        {
-            return new TrialListForm();
-        }
-
-        public Form CreateTrialForm(Trial trial)
-        {
-            return new RunListForm(trial);
-        }
-
         public Form CreateResearcherBehaviorKeyStrokeListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
