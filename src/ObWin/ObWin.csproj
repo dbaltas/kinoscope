@@ -52,6 +52,12 @@
       <DependentUpon>Form.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ObLib\ObLib.csproj">
+      <Project>{0F19FEDA-F26C-402A-A02C-8434FB011F73}</Project>
+      <Name>ObLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using System.Windows.Forms;
+
+using ObLib;
 
 namespace ObWin
 {
@@ -12,7 +13,7 @@ namespace ObWin
     {
         protected void FailWithError(Exception ex)
         {
-            // TODO: Log exception
+            Logger.logError(ex);
 
             ShowError(string.Format(
                 "A non-recoverable error has occurred. The application will now terminate. " +

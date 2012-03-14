@@ -41,7 +41,7 @@ namespace observador
         {
             if (Researcher.Current.ActiveProject == null)
             {
-                MessageBox.Show("Please create a project first.");
+                MessageBox.Show("Please create a project first.", "Cannot display trials");
                 return;
             }
 
@@ -52,7 +52,7 @@ namespace observador
         {
             if (Researcher.Current.ActiveProject == null)
             {
-                MessageBox.Show("Please create a project first.");
+                MessageBox.Show("Please create a project first.", "Cannot display subject groups");
                 return;
             }
 
@@ -63,7 +63,7 @@ namespace observador
         {
             if (Researcher.Current.ActiveProject == null)
             {
-                MessageBox.Show("Please create a project first.");
+                MessageBox.Show("Please create a project first.", "Cannot display subjects");
                 return;
             }
 

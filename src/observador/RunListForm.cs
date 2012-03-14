@@ -32,24 +32,35 @@ namespace observador
             _allowRun = true;
         }
 
-        protected override void ItemExport(DataGridViewRow dgvRow)
+        protected override void ItemExport(Run run)
         {
-            Run run = (Run)dgvRow.DataBoundItem;
             if (run.Status == Run.RunStatus.NotRun)
             {
-                MessageBox.Show("Run Is not complete. Click 'Run' to complete");
+                MessageBox.Show("Run Is not complete. Click 'Run' to complete", "Cannot export");
                 return;
             }
+
+            Run.ValidationResult runValidationResult = run.Validate();
+            if (!runValidationResult.IsValid)
+            {
+                MessageBox.Show(
+                    string.Format(
+                        "Run data not valid. Please correct them and try again. {0}{0}Details: {0}{1}",
+                        Environment.NewLine,
+                        runValidationResult.Error),
+                    "Cannot export");
+                return;
+            }
+
             run.Export();
-            MessageBox.Show("Export Successful at application directory.");
+            MessageBox.Show("Export Successful at application directory.", "Info");
         }
 
-        protected override void ItemRun(DataGridViewRow dgvRow)
+        protected override void ItemRun(Run run)
         {
-            Run run = (Run)dgvRow.DataBoundItem;
             if (run.Status == Run.RunStatus.Complete)
             {
-                MessageBox.Show("Run Is already complete. Delete first if you want to run again");
+                MessageBox.Show("Run Is already complete. Delete first if you want to run again", "Cannot run");
                 return;
             }
             (new RunForm(run)).ShowDialog();

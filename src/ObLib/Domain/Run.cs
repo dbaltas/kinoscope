@@ -8,6 +8,12 @@ namespace ObLib.Domain
 {
     public class Run : ActiveRecordBase<Run>
     {
+        public class ValidationResult
+        {
+            public bool IsValid { get; set; }
+            public string Error { get; set; }
+        }
+
         public enum RunStatus { NotRun, Complete }
 
         public virtual DateTime TmRun { get; set; }
@@ -63,31 +69,21 @@ namespace ObLib.Domain
             List<Behavior> allStateBehaviorsOnThisBehavioralType = new List<Behavior>();
             List<Behavior> allInstantBehaviorsOnThisBehavioralType = new List<Behavior>();
 
-            foreach (Behavior behavior in Behavior.All())
+            foreach (Behavior behavior in this.Trial.Session.BehavioralTest.GetBehaviors())
             {
-                if (behavior.BehavioralTestType == this.Trial.Session.BehavioralTest.BehavioralTestType)
+                switch (behavior.Type)
                 {
-                    if (behavior.Type == Behavior.BehaviorType.State)
-                    {
-                        if (!allStateBehaviorsOnThisBehavioralType.Contains(behavior))
-                        {
-                            allStateBehaviorsOnThisBehavioralType.Add(behavior);
-                        }
-                        continue;
-                    }
-                    if (behavior.Type == Behavior.BehaviorType.Instant)
-                    {
-                        if (!allInstantBehaviorsOnThisBehavioralType.Contains(behavior))
-                        {
-                            allInstantBehaviorsOnThisBehavioralType.Add(behavior);
-                        }
-                        continue;
-                    }
+                    case Behavior.BehaviorType.State:
+                        allStateBehaviorsOnThisBehavioralType.Add(behavior);
+                        break;
+                    case Behavior.BehaviorType.Instant:
+                        allInstantBehaviorsOnThisBehavioralType.Add(behavior);
+                        break;
                 }
             }
 
             Dictionary<Behavior, int> instantBehaviorCount = new Dictionary<Behavior, int>();
-            Dictionary<Behavior, long> stateBehaviorAverage = new Dictionary<Behavior, long>();
+            Dictionary<Behavior, long> stateBehaviorTotal = new Dictionary<Behavior, long>();
 
             foreach (Behavior behavior in allInstantBehaviorsOnThisBehavioralType)
             {
@@ -95,37 +91,28 @@ namespace ObLib.Domain
             }
             foreach (Behavior behavior in allStateBehaviorsOnThisBehavioralType)
             {
-                stateBehaviorAverage.Add(behavior, 0);
+                stateBehaviorTotal.Add(behavior, 0);
             }
 
-            RunEvent lastStateRunEvent = null;
-            // TODO Order by timeTracked
-            foreach (RunEvent runEvent in RunEvents)
-            {
-                if (runEvent.TimeTracked == 0)
-                {
-                    lastStateRunEvent = runEvent;
-                    continue;
-                }
+            List<RunEvent> sortedRunEvents = new List<RunEvent>(RunEvents);
+            sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
 
+            RunEvent lastStateRunEvent = sortedRunEvents[0];
+            foreach (RunEvent runEvent in sortedRunEvents.Skip(1))
+            {
                 if (runEvent.Behavior.Type == Behavior.BehaviorType.Instant)
                 {
-                    instantBehaviorCount[runEvent.Behavior] += 1;
-                    continue;
+                    instantBehaviorCount[runEvent.Behavior]++;
                 }
-
-                if (lastStateRunEvent == null)
+                else
                 {
-                    Logger.logError(String.Format("no state behavior at time 0 found before this one {0}, {1}",
-                        this.Trial.Session.BehavioralTest.Project, this));
+                    // State Behaviors tracked other than the first.
+                    stateBehaviorTotal[lastStateRunEvent.Behavior] += runEvent.TimeTracked - lastStateRunEvent.TimeTracked;
+                    lastStateRunEvent = runEvent;
                 }
-
-                // State Behaviors tracked other than the first.
-                stateBehaviorAverage[lastStateRunEvent.Behavior] += runEvent.TimeTracked - lastStateRunEvent.TimeTracked;
-                lastStateRunEvent = runEvent;
             }
             // add the time left till the end of the run
-            stateBehaviorAverage[lastStateRunEvent.Behavior] += this.Trial.Duration * 1000 - lastStateRunEvent.TimeTracked;
+            stateBehaviorTotal[lastStateRunEvent.Behavior] += this.Trial.Duration * 1000 - lastStateRunEvent.TimeTracked;
 
             // EXPORTING
             List<string> headers = new List<string>();
@@ -156,10 +143,10 @@ namespace ObLib.Domain
             data.Add(this.TmCreated.ToString("dd/MM/yyyy"));
             data.Add(this.TmCreated.ToString("HH:mm:ss"));
 
-            foreach (var behaviorAverage in stateBehaviorAverage)
+            foreach (var behaviorTotal in stateBehaviorTotal)
             {
-                headers.Add(behaviorAverage.Key.Name);
-                data.Add(behaviorAverage.Value.ToString());
+                headers.Add(behaviorTotal.Key.Name);
+                data.Add(behaviorTotal.Value.ToString());
             }
 
             foreach (var behaviorCount in instantBehaviorCount)
@@ -182,6 +169,20 @@ namespace ObLib.Domain
                 file.WriteLine(headerRow);
                 file.WriteLine(dataRow);
             }
+        }
+
+        public virtual ValidationResult Validate()
+        {
+            if (!RunEvents.Any((re) => re.TimeTracked == 0 && re.Behavior.Type == Behavior.BehaviorType.State))
+            {
+                return new ValidationResult()
+                {
+                    IsValid = false,
+                    Error = "This run contains no state behavior starting at the beginning of the run."
+                };
+            }
+
+            return new ValidationResult() { IsValid = true };
         }
 
         public override string ToString()

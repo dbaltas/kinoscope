@@ -143,11 +143,11 @@ namespace observador
 
                 if (dgvMain.CurrentRow == null)
                 {
-                    MessageBox.Show(string.Format("No {0} to edit.", ItemTypeDescription));
+                    MessageBox.Show(string.Format("No {0} to edit.", ItemTypeDescription), "Cannot edit");
                     return;
                 }
 
-                ItemEdit(dgvMain.CurrentRow);
+                ItemEdit(dgvMain.CurrentRow.DataBoundItem as T);
             }
             catch (Exception ex)
             {
@@ -168,11 +168,11 @@ namespace observador
 
                 if (dgvMain.CurrentRow == null)
                 {
-                    MessageBox.Show(string.Format("No {0} to delete.", ItemTypeDescription));
+                    MessageBox.Show(string.Format("No {0} to delete.", ItemTypeDescription), "Cannot delete");
                     return;
                 }
 
-                ItemDelete(dgvMain.CurrentRow);
+                ItemDelete(dgvMain.CurrentRow.DataBoundItem as T);
             }
             catch (Exception ex)
             {
@@ -201,11 +201,11 @@ namespace observador
 
             if (dgvMain.CurrentRow == null)
             {
-                MessageBox.Show(string.Format("No {0} to run.", ItemTypeDescription));
+                MessageBox.Show(string.Format("No {0} to run.", ItemTypeDescription), "Cannot run");
                 return;
             }
 
-            ItemRun(dgvMain.CurrentRow);
+            ItemRun(dgvMain.CurrentRow.DataBoundItem as T);
         }
 
         private void OrderExport()
@@ -217,11 +217,11 @@ namespace observador
 
             if (dgvMain.CurrentRow == null)
             {
-                MessageBox.Show(string.Format("No {0} to run.", ItemTypeDescription));
+                MessageBox.Show(string.Format("No {0} to export.", ItemTypeDescription), "Cannot export");
                 return;
             }
 
-            ItemExport(dgvMain.CurrentRow);
+            ItemExport(dgvMain.CurrentRow.DataBoundItem as T);
         }
         #endregion
 
@@ -232,18 +232,16 @@ namespace observador
             form.ShowDialog();
         }
 
-        protected virtual void ItemEdit(DataGridViewRow dgvRow)
+        protected virtual void ItemEdit(T item)
         {
-                Form form = _createDetailForm((T)dgvMain.CurrentRow.DataBoundItem);
-                form.ShowDialog();
+            Form form = _createDetailForm(item);
+            form.ShowDialog();
         }
 
-        protected virtual void ItemDelete(DataGridViewRow dgvRow)
+        protected virtual void ItemDelete(T item)
         {
-            T itemToDelete = (T)dgvRow.DataBoundItem;
-
             String deleteMsg = String.Format("Are you sure you want to delete {0} {1}?",
-                                             ItemTypeDescription, itemToDelete);
+                                             ItemTypeDescription, item);
             DialogResult dialogResult = MessageBox.Show(deleteMsg,
                                                         string.Format("Delete {0}", ItemTypeDescription),
                                                         MessageBoxButtons.YesNo);
@@ -252,16 +250,13 @@ namespace observador
                 return;
             }
 
-            itemToDelete.Delete();
+            item.Delete();
         }
 
-        protected virtual void ItemRun(DataGridViewRow dgvRow)
-        {
-        }
+        protected virtual void ItemRun(T item) { }
 
-        protected virtual void ItemExport(DataGridViewRow dgvRow)
-        {
-            }
+        protected virtual void ItemExport(T item) { }
+
         #endregion
 
         private void ListForm_KeyDown(object sender, KeyEventArgs e)

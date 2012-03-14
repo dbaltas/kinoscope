@@ -138,7 +138,7 @@ namespace observador
             if (_stopwatch.ElapsedMilliseconds > _durationMilliseconds)
             {
                 Stop();
-                MessageBox.Show("The run has ended.");
+                MessageBox.Show("The run has ended.", "Info");
             }
 
             RefreshTimerLabel();

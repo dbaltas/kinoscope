@@ -39,7 +39,7 @@ namespace observador
             IsUserAuthenticated = true;
             if (Researcher.Current == null)
             {
-                MessageBox.Show("Invalid username or password");
+                MessageBox.Show("Invalid username or password.", "Login failed");
                 txtUsername.Focus();
                 return;
             }
