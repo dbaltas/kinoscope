@@ -14,7 +14,6 @@ namespace observador
         public TrialListForm()
             : base(
             new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "Session" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },

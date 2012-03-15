@@ -14,7 +14,6 @@ namespace observador
         public RunEventListForm(Run run)
             : base(
                 new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Behavior", HeaderText = "Behavior" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TimeTracked", HeaderText = "Time Tracked (ms)" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TmModified", HeaderText = "Date Modified" }},

@@ -14,7 +14,6 @@ namespace observador
         public Form CreateResearcherListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Username", HeaderText = "User Name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "ProjectCount", HeaderText = "Projects" }};
 
@@ -27,7 +26,6 @@ namespace observador
         public Form CreateProjectListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
 
@@ -40,7 +38,6 @@ namespace observador
         public Form CreateSubjectGroupListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectCount", HeaderText = "Subjects" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
@@ -54,7 +51,6 @@ namespace observador
         public Form CreateSubjectListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Id", HeaderText = "Id" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectGroup", HeaderText = "Subject Group" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Code", HeaderText = "Code" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Strain", HeaderText = "Strain" },
