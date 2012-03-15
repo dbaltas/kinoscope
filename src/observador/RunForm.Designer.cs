@@ -35,13 +35,15 @@
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblTimer = new System.Windows.Forms.Label();
             this.dgvBehaviors = new System.Windows.Forms.DataGridView();
-            this.BehaviorKeyStroke = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BehaviorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BehaviorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.eventVisualiserPrimary = new observador.RectanglesEventVisualiser();
+            this.lblStateBehavior = new System.Windows.Forms.Label();
             this.eventVisualiserSecondary = new observador.TextEventVisualiser();
+            this.eventVisualiserPrimary = new observador.RectanglesEventVisualiser();
+            this.BehaviorKeyStroke = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BehaviorColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BehaviorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BehaviorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBehaviors)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -110,6 +112,7 @@
             this.dgvBehaviors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvBehaviors.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.BehaviorKeyStroke,
+            this.BehaviorColor,
             this.BehaviorName,
             this.BehaviorType});
             this.dgvBehaviors.Location = new System.Drawing.Point(546, 41);
@@ -119,31 +122,7 @@
             this.dgvBehaviors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvBehaviors.Size = new System.Drawing.Size(326, 397);
             this.dgvBehaviors.TabIndex = 3;
-            // 
-            // BehaviorKeyStroke
-            // 
-            this.BehaviorKeyStroke.DataPropertyName = "KeyStroke";
-            this.BehaviorKeyStroke.HeaderText = "Key";
-            this.BehaviorKeyStroke.Name = "BehaviorKeyStroke";
-            this.BehaviorKeyStroke.ReadOnly = true;
-            this.BehaviorKeyStroke.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.BehaviorKeyStroke.Width = 70;
-            // 
-            // BehaviorName
-            // 
-            this.BehaviorName.DataPropertyName = "Name";
-            this.BehaviorName.HeaderText = "Name";
-            this.BehaviorName.Name = "BehaviorName";
-            this.BehaviorName.ReadOnly = true;
-            this.BehaviorName.Width = 145;
-            // 
-            // BehaviorType
-            // 
-            this.BehaviorType.DataPropertyName = "Type";
-            this.BehaviorType.HeaderText = "Type";
-            this.BehaviorType.Name = "BehaviorType";
-            this.BehaviorType.ReadOnly = true;
-            this.BehaviorType.Width = 108;
+            this.dgvBehaviors.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvBehaviors_CellFormatting);
             // 
             // statusStrip
             // 
@@ -160,28 +139,14 @@
             this.tssStatus.Name = "tssStatus";
             this.tssStatus.Size = new System.Drawing.Size(0, 17);
             // 
-            // eventVisualiserPrimary
+            // lblStateBehavior
             // 
-            this.eventVisualiserPrimary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventVisualiserPrimary.BackColor = System.Drawing.Color.LightYellow;
-            this.eventVisualiserPrimary.BarColor = System.Drawing.Color.Silver;
-            this.eventVisualiserPrimary.BarHeightPercentage = 0.2F;
-            this.eventVisualiserPrimary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventVisualiserPrimary.Colors = new System.Drawing.Color[] {
-        System.Drawing.Color.Brown,
-        System.Drawing.Color.SandyBrown,
-        System.Drawing.Color.Tan,
-        System.Drawing.Color.Khaki,
-        System.Drawing.Color.Red};
-            this.eventVisualiserPrimary.InstantEventWidthPercentage = 0.005F;
-            this.eventVisualiserPrimary.Location = new System.Drawing.Point(12, 41);
-            this.eventVisualiserPrimary.MarginHeightPercentage = 0.2F;
-            this.eventVisualiserPrimary.Name = "eventVisualiserPrimary";
-            this.eventVisualiserPrimary.NumberOfRows = 3;
-            this.eventVisualiserPrimary.Size = new System.Drawing.Size(528, 193);
-            this.eventVisualiserPrimary.TabIndex = 1;
+            this.lblStateBehavior.AutoSize = true;
+            this.lblStateBehavior.Font = new System.Drawing.Font("Courier New", 18.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.lblStateBehavior.Location = new System.Drawing.Point(228, 9);
+            this.lblStateBehavior.Name = "lblStateBehavior";
+            this.lblStateBehavior.Size = new System.Drawing.Size(0, 29);
+            this.lblStateBehavior.TabIndex = 10;
             // 
             // eventVisualiserSecondary
             // 
@@ -195,12 +160,62 @@
             this.eventVisualiserSecondary.Size = new System.Drawing.Size(527, 198);
             this.eventVisualiserSecondary.TabIndex = 2;
             // 
+            // eventVisualiserPrimary
+            // 
+            this.eventVisualiserPrimary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventVisualiserPrimary.BackColor = System.Drawing.Color.LightYellow;
+            this.eventVisualiserPrimary.BarColor = System.Drawing.Color.Silver;
+            this.eventVisualiserPrimary.BarHeightPercentage = 0.2F;
+            this.eventVisualiserPrimary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.eventVisualiserPrimary.InstantEventWidthPercentage = 0.005F;
+            this.eventVisualiserPrimary.Location = new System.Drawing.Point(12, 41);
+            this.eventVisualiserPrimary.MarginHeightPercentage = 0.2F;
+            this.eventVisualiserPrimary.Name = "eventVisualiserPrimary";
+            this.eventVisualiserPrimary.NumberOfRows = 3;
+            this.eventVisualiserPrimary.Size = new System.Drawing.Size(528, 193);
+            this.eventVisualiserPrimary.TabIndex = 1;
+            // 
+            // BehaviorKeyStroke
+            // 
+            this.BehaviorKeyStroke.DataPropertyName = "KeyStroke";
+            this.BehaviorKeyStroke.HeaderText = "Key";
+            this.BehaviorKeyStroke.Name = "BehaviorKeyStroke";
+            this.BehaviorKeyStroke.ReadOnly = true;
+            this.BehaviorKeyStroke.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.BehaviorKeyStroke.Width = 70;
+            // 
+            // BehaviorColor
+            // 
+            this.BehaviorColor.HeaderText = "";
+            this.BehaviorColor.Name = "BehaviorColor";
+            this.BehaviorColor.ReadOnly = true;
+            this.BehaviorColor.Width = 20;
+            // 
+            // BehaviorName
+            // 
+            this.BehaviorName.DataPropertyName = "Name";
+            this.BehaviorName.HeaderText = "Name";
+            this.BehaviorName.Name = "BehaviorName";
+            this.BehaviorName.ReadOnly = true;
+            this.BehaviorName.Width = 145;
+            // 
+            // BehaviorType
+            // 
+            this.BehaviorType.DataPropertyName = "Type";
+            this.BehaviorType.HeaderText = "Type";
+            this.BehaviorType.Name = "BehaviorType";
+            this.BehaviorType.ReadOnly = true;
+            this.BehaviorType.Width = 88;
+            // 
             // RunForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(884, 492);
+            this.Controls.Add(this.lblStateBehavior);
             this.Controls.Add(this.eventVisualiserSecondary);
             this.Controls.Add(this.eventVisualiserPrimary);
             this.Controls.Add(this.statusStrip);
@@ -233,11 +248,13 @@
         private System.Windows.Forms.DataGridView dgvBehaviors;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tssStatus;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorKeyStroke;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorType;
         private RectanglesEventVisualiser eventVisualiserPrimary;
         private TextEventVisualiser eventVisualiserSecondary;
+        private System.Windows.Forms.Label lblStateBehavior;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorKeyStroke;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorColor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorType;
 
     }
 }

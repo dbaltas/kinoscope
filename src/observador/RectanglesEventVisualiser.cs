@@ -59,12 +59,12 @@ namespace observador
         private int _lastRow = 0;
         private double _lastPositionInRow = 0.0;
         private List<Behavior> _behaviors;
+        BehaviorColorAssigner _behaviorColorAssigner;
 
         public float MarginHeightPercentage { get; set; }
         public float BarHeightPercentage { get; set; }
         public float InstantEventWidthPercentage { get; set; }
         public int NumberOfRows { get; set; }
-        public Color[] Colors { get; set; }
         public Color BarColor { get; set; }
 
         public RectanglesEventVisualiser()
@@ -74,7 +74,6 @@ namespace observador
             BarHeightPercentage = 0.2f;
             NumberOfRows = 3;
             InstantEventWidthPercentage = 0.005f;
-            Colors = new Color[] { Color.Brown, Color.SandyBrown, Color.Tan, Color.Khaki, Color.Red };
             BarColor = Color.Silver;
 
             Paint += RectanglesEventVisualiser_Paint;
@@ -90,6 +89,11 @@ namespace observador
         public void SetBehaviors(List<Behavior> behaviors)
         {
             _behaviors = behaviors;
+        }
+
+        public void SetBehaviorColorAssigner(BehaviorColorAssigner behaviorColorAssigner)
+        {
+            _behaviorColorAssigner = behaviorColorAssigner;
         }
 
         private void CalculateDerivedFields()
@@ -151,7 +155,7 @@ namespace observador
             double rectangleTop = _lastStateRectangle.IsEmpty ? _marginInRow : _lastStateRectangle.Y;
 
             ColoredRectangle newRectangle = new ColoredRectangle(
-                Colors[_behaviors.IndexOf(runEvent.Behavior) % Colors.Length],
+                _behaviorColorAssigner.GetBehaviorColor(runEvent.Behavior),
                 _lastPositionInRow, rectangleTop, 0, _rectangleHeight);
 
             if (runEvent.Behavior.Type == Behavior.BehaviorType.Instant)

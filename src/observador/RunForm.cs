@@ -26,6 +26,7 @@ namespace observador
         private List<Behavior> _allowedBehaviors = new List<Behavior>();
         private Behavior _lastStateBehavior;
         private int _durationMilliseconds;
+        private BehaviorColorAssigner _behaviorColorAssigner;
 
         public RunForm(Run run)
         {
@@ -33,6 +34,9 @@ namespace observador
             _durationMilliseconds = run.Trial.Duration * 1000;
 
             InitializeAllowedBehaviors();
+
+            _behaviorColorAssigner = new BehaviorColorAssigner(_allowedBehaviors,
+                new Color[] { Color.Brown, Color.SandyBrown, Color.Tan, Color.Khaki, Color.Red });
 
             InitializeComponent();
 
@@ -59,6 +63,7 @@ namespace observador
             {
                 eventVisualiser.SetBehaviors(_allowedBehaviors);
                 eventVisualiser.SetDurationMilliseconds(_durationMilliseconds);
+                eventVisualiser.SetBehaviorColorAssigner(_behaviorColorAssigner);
             }
         }
 
@@ -156,6 +161,16 @@ namespace observador
             Key(e.KeyCode);
         }
 
+        private void dgvBehaviors_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            DataGridViewRow row = dgvBehaviors.Rows[e.RowIndex];
+            if (dgvBehaviors.Columns[e.ColumnIndex].Name == "BehaviorColor")
+            {
+                e.CellStyle.BackColor =
+                    _behaviorColorAssigner.GetBehaviorColor(row.DataBoundItem as Behavior);
+            }
+        }
+
         #endregion
 
         #region Command methods
@@ -188,6 +203,7 @@ namespace observador
                 }
                 bSave.Enabled = true;
                 RefreshTimerLabel();
+                RefreshStateBehaviorLabel(null);
                 SetStatus(RunStatus.Stopped);
             }
         }
@@ -271,6 +287,7 @@ namespace observador
                     if (behavior.Type == Behavior.BehaviorType.State)
                     {
                         _lastStateBehavior = behavior;
+                        RefreshStateBehaviorLabel(behavior);
                     }
                 }
             }
@@ -298,6 +315,19 @@ namespace observador
                 _stopwatch.Elapsed.Minutes,
                 _stopwatch.Elapsed.Seconds,
                 millisecondsToShow);
+        }
+
+        private void RefreshStateBehaviorLabel(Behavior behavior)
+        {
+            if (behavior == null)
+            {
+                lblStateBehavior.Text = "";
+            }
+            else
+            {
+                lblStateBehavior.Text = behavior.ToString();
+                //lblStateBehavior.ForeColor = _behaviorColorAssigner.GetBehaviorColor(behavior);
+            }
         }
 
         private void SetStatus(RunStatus status)

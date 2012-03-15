@@ -10,6 +10,8 @@ namespace observador
 {
     public class TextEventVisualiser : TextBox, IEventVisualiser
     {
+        BehaviorColorAssigner _behaviorColorAssigner;
+
         public TextEventVisualiser()
         {
             ReadOnly = true;
@@ -43,5 +45,10 @@ namespace observador
         public void SetBehaviors(List<Behavior> behaviors) { }
 
         public void SetDurationMilliseconds(int milliseconds) { }
+
+        public void SetBehaviorColorAssigner(BehaviorColorAssigner behaviorColorAssigner)
+        {
+            _behaviorColorAssigner = behaviorColorAssigner;
+        }
     }
 }
