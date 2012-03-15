@@ -24,6 +24,15 @@ namespace ObLib.Domain
             TmModified = DateTime.Now;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is ActiveRecordBase<T> && (obj as ActiveRecordBase<T>).Id == Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
 
         public static IList All()
         {

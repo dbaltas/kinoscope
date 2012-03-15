@@ -46,6 +46,7 @@
             this.dtDob = new System.Windows.Forms.DateTimePicker();
             this.txtOrigin = new System.Windows.Forms.TextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.bSaveAndClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,21 +54,21 @@
             // 
             this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(228, 199);
+            this.bCancel.Location = new System.Drawing.Point(284, 199);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
-            this.bCancel.TabIndex = 9;
+            this.bCancel.TabIndex = 10;
             this.bCancel.Text = "Cancel";
             this.bCancel.UseVisualStyleBackColor = true;
             this.bCancel.Click += new System.EventHandler(this.bCancel_Click);
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(95, 199);
+            this.bSave.Location = new System.Drawing.Point(8, 199);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(75, 23);
+            this.bSave.Size = new System.Drawing.Size(135, 23);
             this.bSave.TabIndex = 8;
-            this.bSave.Text = "Save";
+            this.bSave.Text = "Save and Keep Open";
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
             // 
@@ -205,6 +206,16 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // bSaveAndClose
+            // 
+            this.bSaveAndClose.Location = new System.Drawing.Point(162, 199);
+            this.bSaveAndClose.Name = "bSaveAndClose";
+            this.bSaveAndClose.Size = new System.Drawing.Size(103, 23);
+            this.bSaveAndClose.TabIndex = 9;
+            this.bSaveAndClose.Text = "Save and Close";
+            this.bSaveAndClose.UseVisualStyleBackColor = true;
+            this.bSaveAndClose.Click += new System.EventHandler(this.bSaveAndClose_Click);
+            // 
             // SubjectForm
             // 
             this.AcceptButton = this.bSave;
@@ -213,6 +224,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(384, 240);
+            this.Controls.Add(this.bSaveAndClose);
             this.Controls.Add(this.txtOrigin);
             this.Controls.Add(this.dtDob);
             this.Controls.Add(this.cbSex);
@@ -258,5 +270,6 @@
         private System.Windows.Forms.DateTimePicker dtDob;
         private System.Windows.Forms.TextBox txtOrigin;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.Button bSaveAndClose;
     }
 }

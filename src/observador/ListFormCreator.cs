@@ -51,8 +51,8 @@ namespace observador
         public Form CreateSubjectListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectGroup", HeaderText = "Subject Group" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Code", HeaderText = "Code" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "SubjectGroup", HeaderText = "Subject Group" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Strain", HeaderText = "Strain" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Sex", HeaderText = "Sex" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "DateOfBirth", HeaderText = "DOB" },

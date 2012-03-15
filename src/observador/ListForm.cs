@@ -182,7 +182,7 @@ namespace observador
             LoadForm();
         }
 
-        private void OrderRefresh()
+        public void OrderRefresh()
         {
             LoadForm();
         }
@@ -229,13 +229,13 @@ namespace observador
         protected virtual void ItemNew()
         {
             Form form = _createDetailForm(null);
-            form.ShowDialog();
+            form.ShowDialog(this);
         }
 
         protected virtual void ItemEdit(T item)
         {
             Form form = _createDetailForm(item);
-            form.ShowDialog();
+            form.ShowDialog(this);
         }
 
         protected virtual void ItemDelete(T item)

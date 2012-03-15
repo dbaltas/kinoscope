@@ -48,6 +48,9 @@ namespace observador
                 dtDob.Value = subject.DateOfBirth;
                 txtOrigin.Text = subject.Origin;
                 txtWeight.Text = subject.Weight.ToString();
+
+                bSave.Enabled = false;
+                AcceptButton = bSaveAndClose;
             }
         }
 
@@ -58,12 +61,32 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
+            if (Save())
+            {
+                if (Owner is ListForm<Subject>)
+                {
+                    (Owner as ListForm<Subject>).OrderRefresh();
+                }
+                txtCode.Focus();
+            }
+        }
+
+        private void bSaveAndClose_Click(object sender, EventArgs e)
+        {
+            if (Save())
+            {
+                Close();
+            }
+        }
+
+        private bool Save()
+        {
             try
             {
                 if (!ValidateChildren())
                 {
                     ShowInputError();
-                    return;
+                    return false;
                 }
 
                 Subject subject = _subject ?? new Subject();
@@ -87,11 +110,12 @@ namespace observador
 
                 UpdateSubjectGroupMemberships(subject);
 
-                this.Close();
+                return true;
             }
             catch (Exception ex)
             {
                 FailWithError(ex);
+                return false;
             }
         }
 
