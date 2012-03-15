@@ -15,13 +15,12 @@ namespace observador
 {
     public partial class RunForm : ObWin.Form
     {
-        private enum RunStatus { Ready, Running, Stopped, Saved }
+        private enum RunStatus { Ready, Running, Paused, Stopped, Saved }
 
         private Run _run;
         private DateTime _startTm;
         private List<RunEvent> _runEvents = new List<RunEvent>();
         private RunStatus _runStatus = RunStatus.Ready;
-        // Could be useful if we decide to implement Pause functionality
         private Stopwatch _stopwatch = new Stopwatch();
         private List<IEventVisualiser> _eventVisualisers = new List<IEventVisualiser>();
         private List<Behavior> _allowedBehaviors = new List<Behavior>();
@@ -77,13 +76,16 @@ namespace observador
         {
             if (_runStatus == RunStatus.Running)
             {
+                Pause();
+
                 DialogResult dialogResult = MessageBox.Show(
                     "A run is currently in progress. Are you sure you want to cancel it and exit?",
                     "Run in progress",
-                    MessageBoxButtons.YesNo);
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                 if (dialogResult == System.Windows.Forms.DialogResult.No)
                 {
                     e.Cancel = true;
+                    Resume();
                     return;
                 }
             }
@@ -93,7 +95,7 @@ namespace observador
                 DialogResult dialogResult = MessageBox.Show(
                     "The run has not been saved. Are you sure you want to discard it and exit?",
                     "Run not saved",
-                    MessageBoxButtons.YesNo);
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
                 if (dialogResult == System.Windows.Forms.DialogResult.No)
                 {
                     e.Cancel = true;
@@ -116,13 +118,10 @@ namespace observador
             Close();
         }
 
-        private void bStop_Click(object sender, EventArgs e)
-        {
-            Stop();
-        }
-
         private void bClear_Click(object sender, EventArgs e)
         {
+            Pause();
+
             DialogResult dialogResult = MessageBox.Show(
                 "The run data will be deleted. Are you sure you want to discard it and start again?",
                 "Reset Run",
@@ -130,6 +129,10 @@ namespace observador
             if (dialogResult == System.Windows.Forms.DialogResult.Yes)
             {
                 Reset();
+            }
+            else
+            {
+                Resume();
             }
         }
 
@@ -186,6 +189,27 @@ namespace observador
                 bSave.Enabled = true;
                 RefreshTimerLabel();
                 SetStatus(RunStatus.Stopped);
+            }
+        }
+
+        private void Pause()
+        {
+            if (_runStatus == RunStatus.Running)
+            {
+                timer.Stop();
+                _stopwatch.Stop();
+                RefreshTimerLabel();
+                SetStatus(RunStatus.Paused);
+            }
+        }
+
+        private void Resume()
+        {
+            if (_runStatus == RunStatus.Paused)
+            {
+                _stopwatch.Start();
+                timer.Start();
+                SetStatus(RunStatus.Running);
             }
         }
 
