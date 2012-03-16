@@ -42,7 +42,7 @@ namespace observador
 
             InitializeEventVisualisers();
 
-            InitializeBehaviorList();
+            RefreshStateBehaviorLabel(null);
 
             SetStatus(RunStatus.Ready);
         }
@@ -56,8 +56,9 @@ namespace observador
 
         private void InitializeEventVisualisers()
         {
-            _eventVisualisers.Add(eventVisualiserPrimary);
-            _eventVisualisers.Add(eventVisualiserSecondary);
+            _eventVisualisers.Add(eventVisualiserRectangles);
+            _eventVisualisers.Add(eventVisualiserText);
+            _eventVisualisers.Add(eventVisualiserBehaviorList);
 
             foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
             {
@@ -65,12 +66,6 @@ namespace observador
                 eventVisualiser.SetDurationMilliseconds(_durationMilliseconds);
                 eventVisualiser.SetBehaviorColorAssigner(_behaviorColorAssigner);
             }
-        }
-
-        private void InitializeBehaviorList()
-        {
-            dgvBehaviors.AutoGenerateColumns = false;
-            dgvBehaviors.DataSource = _allowedBehaviors;
         }
 
         #endregion
@@ -148,27 +143,19 @@ namespace observador
                 Stop();
                 MessageBox.Show("The run has ended.", "Info");
             }
-
-            RefreshTimerLabel();
-            foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+            else
             {
-                eventVisualiser.UpdateInterval(_stopwatch.ElapsedMilliseconds);
+                RefreshTimerLabel();
+                foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
+                {
+                    eventVisualiser.UpdateInterval(_stopwatch.ElapsedMilliseconds);
+                }
             }
         }
 
         private void RunForm_KeyDown(object sender, KeyEventArgs e)
         {
             Key(e.KeyCode);
-        }
-
-        private void dgvBehaviors_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        {
-            DataGridViewRow row = dgvBehaviors.Rows[e.RowIndex];
-            if (dgvBehaviors.Columns[e.ColumnIndex].Name == "BehaviorColor")
-            {
-                e.CellStyle.BackColor =
-                    _behaviorColorAssigner.GetBehaviorColor(row.DataBoundItem as Behavior);
-            }
         }
 
         #endregion

@@ -31,7 +31,7 @@ namespace ObLib.Domain
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return Id.GetHashCode();
         }
 
         public static IList All()

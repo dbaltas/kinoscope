@@ -29,22 +29,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.bCancel = new System.Windows.Forms.Button();
             this.bSave = new System.Windows.Forms.Button();
             this.bClear = new System.Windows.Forms.Button();
             this.timer = new System.Windows.Forms.Timer(this.components);
             this.lblTimer = new System.Windows.Forms.Label();
-            this.dgvBehaviors = new System.Windows.Forms.DataGridView();
+            this.eventVisualiserBehaviorList = new observador.BehaviorListEventVisualiser();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tssStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStateBehavior = new System.Windows.Forms.Label();
-            this.eventVisualiserSecondary = new observador.TextEventVisualiser();
-            this.eventVisualiserPrimary = new observador.RectanglesEventVisualiser();
-            this.BehaviorKeyStroke = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BehaviorColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BehaviorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BehaviorType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBehaviors)).BeginInit();
+            this.eventVisualiserText = new observador.TextEventVisualiser();
+            this.eventVisualiserRectangles = new observador.RectanglesEventVisualiser();
+            ((System.ComponentModel.ISupportInitialize)(this.eventVisualiserBehaviorList)).BeginInit();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,9 +50,9 @@
             this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(779, 444);
+            this.bCancel.Location = new System.Drawing.Point(745, 444);
             this.bCancel.Name = "bCancel";
-            this.bCancel.Size = new System.Drawing.Size(75, 23);
+            this.bCancel.Size = new System.Drawing.Size(110, 23);
             this.bCancel.TabIndex = 6;
             this.bCancel.Text = "Discard";
             this.bCancel.UseVisualStyleBackColor = true;
@@ -66,9 +63,9 @@
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bSave.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.bSave.Enabled = false;
-            this.bSave.Location = new System.Drawing.Point(568, 444);
+            this.bSave.Location = new System.Drawing.Point(473, 444);
             this.bSave.Name = "bSave";
-            this.bSave.Size = new System.Drawing.Size(75, 23);
+            this.bSave.Size = new System.Drawing.Size(110, 23);
             this.bSave.TabIndex = 4;
             this.bSave.Text = "Save Run";
             this.bSave.UseVisualStyleBackColor = true;
@@ -78,9 +75,9 @@
             // 
             this.bClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bClear.CausesValidation = false;
-            this.bClear.Location = new System.Drawing.Point(673, 444);
+            this.bClear.Location = new System.Drawing.Point(608, 444);
             this.bClear.Name = "bClear";
-            this.bClear.Size = new System.Drawing.Size(75, 23);
+            this.bClear.Size = new System.Drawing.Size(110, 23);
             this.bClear.TabIndex = 5;
             this.bClear.Text = "Reset";
             this.bClear.UseVisualStyleBackColor = true;
@@ -100,29 +97,23 @@
             this.lblTimer.TabIndex = 0;
             this.lblTimer.Text = "00:00:00";
             // 
-            // dgvBehaviors
+            // eventVisualiserBehaviorList
             // 
-            this.dgvBehaviors.AllowUserToAddRows = false;
-            this.dgvBehaviors.AllowUserToDeleteRows = false;
-            this.dgvBehaviors.AllowUserToOrderColumns = true;
-            this.dgvBehaviors.AllowUserToResizeColumns = false;
-            this.dgvBehaviors.AllowUserToResizeRows = false;
-            this.dgvBehaviors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.eventVisualiserBehaviorList.AllowUserToAddRows = false;
+            this.eventVisualiserBehaviorList.AllowUserToDeleteRows = false;
+            this.eventVisualiserBehaviorList.AllowUserToOrderColumns = true;
+            this.eventVisualiserBehaviorList.AllowUserToResizeColumns = false;
+            this.eventVisualiserBehaviorList.AllowUserToResizeRows = false;
+            this.eventVisualiserBehaviorList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgvBehaviors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvBehaviors.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.BehaviorKeyStroke,
-            this.BehaviorColor,
-            this.BehaviorName,
-            this.BehaviorType});
-            this.dgvBehaviors.Location = new System.Drawing.Point(546, 41);
-            this.dgvBehaviors.Name = "dgvBehaviors";
-            this.dgvBehaviors.ReadOnly = true;
-            this.dgvBehaviors.RowHeadersVisible = false;
-            this.dgvBehaviors.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvBehaviors.Size = new System.Drawing.Size(326, 397);
-            this.dgvBehaviors.TabIndex = 3;
-            this.dgvBehaviors.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvBehaviors_CellFormatting);
+            this.eventVisualiserBehaviorList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.eventVisualiserBehaviorList.Location = new System.Drawing.Point(453, 41);
+            this.eventVisualiserBehaviorList.Name = "eventVisualiserBehaviorList";
+            this.eventVisualiserBehaviorList.ReadOnly = true;
+            this.eventVisualiserBehaviorList.RowHeadersVisible = false;
+            this.eventVisualiserBehaviorList.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.eventVisualiserBehaviorList.Size = new System.Drawing.Size(419, 397);
+            this.eventVisualiserBehaviorList.TabIndex = 3;
             // 
             // statusStrip
             // 
@@ -145,69 +136,38 @@
             this.lblStateBehavior.Font = new System.Drawing.Font("Courier New", 18.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.lblStateBehavior.Location = new System.Drawing.Point(228, 9);
             this.lblStateBehavior.Name = "lblStateBehavior";
-            this.lblStateBehavior.Size = new System.Drawing.Size(0, 29);
+            this.lblStateBehavior.Size = new System.Drawing.Size(253, 29);
             this.lblStateBehavior.TabIndex = 10;
+            this.lblStateBehavior.Text = "lblStateBehavior";
             // 
-            // eventVisualiserSecondary
+            // eventVisualiserText
             // 
-            this.eventVisualiserSecondary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            this.eventVisualiserText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventVisualiserSecondary.Location = new System.Drawing.Point(13, 240);
-            this.eventVisualiserSecondary.Multiline = true;
-            this.eventVisualiserSecondary.Name = "eventVisualiserSecondary";
-            this.eventVisualiserSecondary.ReadOnly = true;
-            this.eventVisualiserSecondary.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.eventVisualiserSecondary.Size = new System.Drawing.Size(527, 198);
-            this.eventVisualiserSecondary.TabIndex = 2;
+            this.eventVisualiserText.Location = new System.Drawing.Point(13, 269);
+            this.eventVisualiserText.Multiline = true;
+            this.eventVisualiserText.Name = "eventVisualiserText";
+            this.eventVisualiserText.ReadOnly = true;
+            this.eventVisualiserText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.eventVisualiserText.Size = new System.Drawing.Size(434, 198);
+            this.eventVisualiserText.TabIndex = 2;
             // 
-            // eventVisualiserPrimary
+            // eventVisualiserRectangles
             // 
-            this.eventVisualiserPrimary.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.eventVisualiserRectangles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventVisualiserPrimary.BackColor = System.Drawing.Color.LightYellow;
-            this.eventVisualiserPrimary.BarColor = System.Drawing.Color.Silver;
-            this.eventVisualiserPrimary.BarHeightPercentage = 0.2F;
-            this.eventVisualiserPrimary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.eventVisualiserPrimary.InstantEventWidthPercentage = 0.005F;
-            this.eventVisualiserPrimary.Location = new System.Drawing.Point(12, 41);
-            this.eventVisualiserPrimary.MarginHeightPercentage = 0.2F;
-            this.eventVisualiserPrimary.Name = "eventVisualiserPrimary";
-            this.eventVisualiserPrimary.NumberOfRows = 3;
-            this.eventVisualiserPrimary.Size = new System.Drawing.Size(528, 193);
-            this.eventVisualiserPrimary.TabIndex = 1;
-            // 
-            // BehaviorKeyStroke
-            // 
-            this.BehaviorKeyStroke.DataPropertyName = "KeyStroke";
-            this.BehaviorKeyStroke.HeaderText = "Key";
-            this.BehaviorKeyStroke.Name = "BehaviorKeyStroke";
-            this.BehaviorKeyStroke.ReadOnly = true;
-            this.BehaviorKeyStroke.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.BehaviorKeyStroke.Width = 70;
-            // 
-            // BehaviorColor
-            // 
-            this.BehaviorColor.HeaderText = "";
-            this.BehaviorColor.Name = "BehaviorColor";
-            this.BehaviorColor.ReadOnly = true;
-            this.BehaviorColor.Width = 20;
-            // 
-            // BehaviorName
-            // 
-            this.BehaviorName.DataPropertyName = "Name";
-            this.BehaviorName.HeaderText = "Name";
-            this.BehaviorName.Name = "BehaviorName";
-            this.BehaviorName.ReadOnly = true;
-            this.BehaviorName.Width = 145;
-            // 
-            // BehaviorType
-            // 
-            this.BehaviorType.DataPropertyName = "Type";
-            this.BehaviorType.HeaderText = "Type";
-            this.BehaviorType.Name = "BehaviorType";
-            this.BehaviorType.ReadOnly = true;
-            this.BehaviorType.Width = 88;
+            this.eventVisualiserRectangles.BackColor = System.Drawing.Color.LightYellow;
+            this.eventVisualiserRectangles.BarColor = System.Drawing.Color.Silver;
+            this.eventVisualiserRectangles.BarHeightPercentage = 0.2F;
+            this.eventVisualiserRectangles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.eventVisualiserRectangles.InstantEventWidthPercentage = 0.005F;
+            this.eventVisualiserRectangles.Location = new System.Drawing.Point(12, 41);
+            this.eventVisualiserRectangles.MarginHeightPercentage = 0.2F;
+            this.eventVisualiserRectangles.Name = "eventVisualiserRectangles";
+            this.eventVisualiserRectangles.NumberOfRows = 3;
+            this.eventVisualiserRectangles.Size = new System.Drawing.Size(435, 222);
+            this.eventVisualiserRectangles.TabIndex = 1;
             // 
             // RunForm
             // 
@@ -216,10 +176,10 @@
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(884, 492);
             this.Controls.Add(this.lblStateBehavior);
-            this.Controls.Add(this.eventVisualiserSecondary);
-            this.Controls.Add(this.eventVisualiserPrimary);
+            this.Controls.Add(this.eventVisualiserText);
+            this.Controls.Add(this.eventVisualiserRectangles);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.dgvBehaviors);
+            this.Controls.Add(this.eventVisualiserBehaviorList);
             this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.bClear);
             this.Controls.Add(this.bSave);
@@ -230,7 +190,7 @@
             this.ShowInTaskbar = false;
             this.Text = "Run";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RunForm_KeyDown);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBehaviors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.eventVisualiserBehaviorList)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
@@ -245,16 +205,11 @@
         private System.Windows.Forms.Button bClear;
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.Label lblTimer;
-        private System.Windows.Forms.DataGridView dgvBehaviors;
+        private BehaviorListEventVisualiser eventVisualiserBehaviorList;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tssStatus;
-        private RectanglesEventVisualiser eventVisualiserPrimary;
-        private TextEventVisualiser eventVisualiserSecondary;
+        private RectanglesEventVisualiser eventVisualiserRectangles;
+        private TextEventVisualiser eventVisualiserText;
         private System.Windows.Forms.Label lblStateBehavior;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorKeyStroke;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorColor;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn BehaviorType;
-
     }
 }
