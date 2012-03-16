@@ -65,5 +65,19 @@ namespace ObLib.Domain
                 return trials;
             }
         }
+
+        public virtual IList<Run> CompleteRuns
+        {
+            get
+            {
+                List<Run> runs = new List<Run>();
+                foreach (Trial trial in Trials)
+                {
+                    runs.AddRange(trial.Runs.Where((r) => r.Status == Run.RunStatus.Complete));
+                }
+
+                return runs;
+            }
+        }
     }
 }

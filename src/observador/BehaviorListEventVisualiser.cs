@@ -122,16 +122,19 @@ namespace observador
 
         public void Clear()
         {
-            foreach (Behavior behavior in _stateBehaviorDurations.Keys)
+            foreach (Behavior behavior in _stateBehaviorDurations.Keys.ToList())
             {
                 _stateBehaviorDurations[behavior] = 0L;
             }
-            foreach (Behavior behavior in _instantBehaviorCounts.Keys)
+            foreach (Behavior behavior in _instantBehaviorCounts.Keys.ToList())
             {
                 _instantBehaviorCounts[behavior] = 0;
             }
 
             UpdateDurationCountCells();
+
+            _lastStateBehavior = null;
+            _lastMilliseconds = 0L;
         }
 
         public void UpdateInterval(long milliseconds)
@@ -182,7 +185,7 @@ namespace observador
             }
         }
 
-        public void SetDurationMilliseconds(int milliseconds) { }
+        public void SetDurationMilliseconds(long milliseconds) { }
 
         public void SetBehaviorColorAssigner(BehaviorColorAssigner behaviorColorAssigner)
         {

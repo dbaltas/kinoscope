@@ -74,6 +74,7 @@
     <Compile Include="BehaviorListEventVisualiser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RunImageExporter.cs" />
     <Compile Include="TrialListForm.cs">
       <SubType>Form</SubType>
     </Compile>

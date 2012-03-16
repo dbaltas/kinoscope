@@ -118,6 +118,10 @@ namespace observador
             manageProjectsToolStripMenuItem.Text = "Manage Projects (Ctrl+P)";
             manageProjectsToolStripMenuItem.Click += manageProjectsToolStripMenuItem_Click;
 
+            ToolStripMenuItem exportRunImagesToolStripMenuItem = new ToolStripMenuItem();
+            exportRunImagesToolStripMenuItem.Text = "Export Run Images";
+            exportRunImagesToolStripMenuItem.Click += exportRunImagesToolStripMenuItem_Click;
+
 
             foreach (Project project in Researcher.Current.Projects)
             {
@@ -134,6 +138,7 @@ namespace observador
             }
 
             myProjectsToolStripMenuItem.DropDownItems.Add(manageProjectsToolStripMenuItem);
+            myProjectsToolStripMenuItem.DropDownItems.Add(exportRunImagesToolStripMenuItem);
         }
 
         private void manageProjectsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -142,6 +147,32 @@ namespace observador
 
             FillProjectsMenu();
             DisplayActiveProject();
+        }
+
+        private void exportRunImagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Researcher.Current.ActiveProject == null)
+            {
+                MessageBox.Show("Please create a project first.", "Cannot extract run images");
+                return;
+            }
+
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                string folderPath = folderBrowserDialog.SelectedPath;
+
+                RunImageExporter runImageExporter = new RunImageExporter();
+                runImageExporter.FolderPath = folderPath;
+                int imagesExported = runImageExporter.Export(Researcher.Current.ActiveProject);
+
+                MessageBox.Show(
+                    string.Format(
+                        "{1} images were exported in the following directory: {0}{2}",
+                        Environment.NewLine, imagesExported, folderPath),
+                    "Info");
+            }
         }
 
         void projectItem_Click(object sender, EventArgs e)

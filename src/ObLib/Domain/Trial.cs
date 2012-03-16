@@ -11,7 +11,13 @@ namespace ObLib.Domain
         public virtual string Name { get; set; }
         public virtual int Duration { get; set; }
         public virtual IList<Run> Runs { get; set; }
-        public virtual int RunCount { get { return Runs.Count; } }
+        public virtual int CompleteRunCount
+        {
+            get
+            {
+                return Runs.Count(r => r.Status == Run.RunStatus.Complete);
+            }
+        }
 
         public Trial()
         {

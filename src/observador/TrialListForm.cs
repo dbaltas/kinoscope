@@ -17,7 +17,7 @@ namespace observador
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Session", HeaderText = "Session" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Duration", HeaderText = "Duration" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "RunCount", HeaderText = "Runs" },
+                new DataGridViewTextBoxColumn() { DataPropertyName = "CompleteRunCount", HeaderText = "Complete Runs" },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }},
 
                 () => (IList)Researcher.Current.ActiveProject.Trials,

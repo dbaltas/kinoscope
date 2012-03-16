@@ -15,7 +15,7 @@ namespace observador
         void UpdateInterval(long milliseconds);
         void AddRunEvent(RunEvent runEvent);
         void SetBehaviors(List<Behavior> behaviors);
-        void SetDurationMilliseconds(int milliseconds);
+        void SetDurationMilliseconds(long milliseconds);
         void SetBehaviorColorAssigner(BehaviorColorAssigner behaviorColorAssigner);
     }
 }

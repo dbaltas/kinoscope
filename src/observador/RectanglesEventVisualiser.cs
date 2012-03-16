@@ -51,6 +51,7 @@ namespace observador
         private List<ColoredRectangle> _instantRectangles = new List<ColoredRectangle>();
         private ColoredRectangle _lastStateRectangle = ColoredRectangle.Empty;
 
+        private int _numberOfRows;
         private double _rowHeight;
         private double _marginInRow;
         private double _rectangleHeight;
@@ -64,7 +65,16 @@ namespace observador
         public float MarginHeightPercentage { get; set; }
         public float BarHeightPercentage { get; set; }
         public float InstantEventWidthPercentage { get; set; }
-        public int NumberOfRows { get; set; }
+        public int NumberOfRows
+        {
+            get { return _numberOfRows; }
+            set
+            {
+                _numberOfRows = value;
+                CalculateDerivedFields();
+                CreateBackgroundBars();
+            }
+        }
         public Color BarColor { get; set; }
 
         public RectanglesEventVisualiser()
@@ -233,6 +243,7 @@ namespace observador
 
         private void CreateBackgroundBars()
         {
+            _oldStateRectangles.Clear();
             for (int i = 0; i < NumberOfRows; ++i)
             {
                 ColoredRectangle bar = new ColoredRectangle(
@@ -257,7 +268,7 @@ namespace observador
             Invalidate(rectangle.MapToArea(Size));
         }
 
-        public void SetDurationMilliseconds(int milliseconds)
+        public void SetDurationMilliseconds(long milliseconds)
         {
             _totalMilliseconds = milliseconds;
         }

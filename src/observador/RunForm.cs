@@ -36,7 +36,7 @@ namespace observador
             InitializeAllowedBehaviors();
 
             _behaviorColorAssigner = new BehaviorColorAssigner(_allowedBehaviors,
-                new Color[] { Color.Brown, Color.SandyBrown, Color.Tan, Color.Khaki, Color.Red });
+                new Color[] { Color.Coral, Color.MediumSeaGreen, Color.PaleGoldenrod, Color.DarkSeaGreen, Color.Gray });
 
             InitializeComponent();
 
@@ -224,7 +224,6 @@ namespace observador
             _stopwatch.Reset();
             foreach (IEventVisualiser eventVisualiser in _eventVisualisers)
             {
-
                 eventVisualiser.Clear();
             }
             _runEvents.Clear();

@@ -44,7 +44,7 @@ namespace observador
 
         public void SetBehaviors(List<Behavior> behaviors) { }
 
-        public void SetDurationMilliseconds(int milliseconds) { }
+        public void SetDurationMilliseconds(long milliseconds) { }
 
         public void SetBehaviorColorAssigner(BehaviorColorAssigner behaviorColorAssigner)
         {
