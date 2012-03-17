@@ -82,37 +82,40 @@ namespace ObLib.Domain
                 }
             }
 
-            Dictionary<Behavior, int> instantBehaviorCount = new Dictionary<Behavior, int>();
-            Dictionary<Behavior, long> stateBehaviorTotal = new Dictionary<Behavior, long>();
+            Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
+            Dictionary<Behavior, long> stateBehaviorTotalDuration = new Dictionary<Behavior, long>();
 
-            foreach (Behavior behavior in allInstantBehaviorsOnThisBehavioralType)
+            foreach (Behavior behavior in this.Trial.Session.BehavioralTest.GetBehaviors())
             {
-                instantBehaviorCount.Add(behavior, 0);
+                behaviorFrequency.Add(behavior, 0);
             }
             foreach (Behavior behavior in allStateBehaviorsOnThisBehavioralType)
             {
-                stateBehaviorTotal.Add(behavior, 0);
+                stateBehaviorTotalDuration.Add(behavior, 0);
             }
 
             List<RunEvent> sortedRunEvents = new List<RunEvent>(RunEvents);
             sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
 
             RunEvent lastStateRunEvent = sortedRunEvents[0];
-            foreach (RunEvent runEvent in sortedRunEvents.Skip(1))
+            foreach (RunEvent runEvent in sortedRunEvents)
             {
-                if (runEvent.Behavior.Type == Behavior.BehaviorType.Instant)
+                behaviorFrequency[runEvent.Behavior]++;
+
+                if (runEvent.TimeTracked == 0)
                 {
-                    instantBehaviorCount[runEvent.Behavior]++;
+                    continue;
                 }
-                else
+
+                if (runEvent.Behavior.Type == Behavior.BehaviorType.State)
                 {
                     // State Behaviors tracked other than the first.
-                    stateBehaviorTotal[lastStateRunEvent.Behavior] += runEvent.TimeTracked - lastStateRunEvent.TimeTracked;
+                    stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += runEvent.TimeTracked - lastStateRunEvent.TimeTracked;
                     lastStateRunEvent = runEvent;
                 }
             }
             // add the time left till the end of the run
-            stateBehaviorTotal[lastStateRunEvent.Behavior] += this.Trial.Duration * 1000 - lastStateRunEvent.TimeTracked;
+            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += this.Trial.Duration * 1000 - lastStateRunEvent.TimeTracked;
 
             // EXPORTING
             List<string> headers = new List<string>();
@@ -143,15 +146,15 @@ namespace ObLib.Domain
             data.Add(this.TmCreated.ToString("dd/MM/yyyy"));
             data.Add(this.TmCreated.ToString("HH:mm:ss"));
 
-            foreach (var behaviorTotal in stateBehaviorTotal)
+            foreach (var behaviorTotal in stateBehaviorTotalDuration)
             {
-                headers.Add(behaviorTotal.Key.Name);
+                headers.Add(behaviorTotal.Key.Name + " Duration");
                 data.Add(behaviorTotal.Value.ToString());
             }
 
-            foreach (var behaviorCount in instantBehaviorCount)
+            foreach (var behaviorCount in behaviorFrequency)
             {
-                headers.Add(behaviorCount.Key.Name);
+                headers.Add(behaviorCount.Key.Name + " Frequency");
                 data.Add(behaviorCount.Value.ToString());
             }
 
