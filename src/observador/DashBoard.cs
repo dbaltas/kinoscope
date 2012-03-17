@@ -37,7 +37,7 @@ namespace observador
             _listFormCreator.CreateResearcherListForm().ShowDialog();
         }
 
-        private void trialsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void runsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Researcher.Current.ActiveProject == null)
             {
@@ -192,8 +192,8 @@ namespace observador
         {
             switch (e.KeyData)
             {
-                case Keys.Control | Keys.T:
-                    trialsToolStripMenuItem_Click(sender, e);
+                case Keys.Control | Keys.R:
+                    runsToolStripMenuItem_Click(sender, e);
                     break;
                 case Keys.Control | Keys.S:
                     subjectsToolStripMenuItem_Click(sender, e);

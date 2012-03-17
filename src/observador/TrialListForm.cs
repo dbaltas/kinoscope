@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ObLib;
 using ObLib.Domain;
 
 namespace observador
@@ -29,6 +30,14 @@ namespace observador
             Width = 900;
             _allowAdd = false;
             _allowRemove = false;
+            _allowExport = true;
+        }
+
+        protected override void ItemExport(Trial trial)
+        {
+            ExportRun export = new ExportRun();
+            export.exportTrial(trial);
+            MessageBox.Show("Export Successful at application directory.", "Info");
         }
     }
 }

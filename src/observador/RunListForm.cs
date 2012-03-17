@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using ObLib;
 using ObLib.Domain;
 
 namespace observador
@@ -52,7 +53,8 @@ namespace observador
                 return;
             }
 
-            run.Export();
+            ExportRun export = new ExportRun();
+            export.exportRun(run);
             MessageBox.Show("Export Successful at application directory.", "Info");
         }
 

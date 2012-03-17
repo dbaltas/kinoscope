@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExportRun.cs" />
     <Compile Include="Domain\ResearcherBehaviorKeyStroke.cs" />
     <Compile Include="Domain\RunEvent.cs" />
     <Compile Include="Domain\Run.cs" />
