@@ -49,14 +49,68 @@ namespace observador
             _createDetailForm = createDetailForm;
         }
 
-        private void LoadForm()
+        private void LoadForm(T itemToSelect = null)
         {
+            int lastSelectedRowIndex = -1;
+            if (dgvMain.CurrentRow != null)
+            {
+                // get current row index to have selected the item after an edit and the next item after delete
+                lastSelectedRowIndex = dgvMain.CurrentRow.Index;
+            }
+
             BindingSource bindingSource = new BindingSource() { AllowNew = false };
             bindingSource.DataSource = _createDataSource();
             dgvMain.DataSource = bindingSource;
-
             RefreshToolbar();
+
+            if (itemToSelect != null)
+            {
+                SelectItemInList(itemToSelect);
+                return;
+            }
+
+            SetCurrentRowByIndex(lastSelectedRowIndex);
         }
+
+        protected bool SelectItemInList(T itemToSelect)
+        {
+            if (itemToSelect != null)
+            {
+                int rowIndex = 0;
+                foreach (DataGridViewRow row in dgvMain.Rows)
+                {
+                    if ((T)row.DataBoundItem == itemToSelect)
+                    {
+                        SetCurrentRowByIndex(rowIndex);
+                        return true;
+                    }
+                    rowIndex++;
+                }
+            }
+
+            return false;
+        }
+
+        protected void SetCurrentRowByIndex(int rowIndex)
+        {
+            if (rowIndex == dgvMain.Rows.Count)
+            {
+                rowIndex--;
+            }
+
+            if (rowIndex < 0)
+            {
+                return;
+            }
+
+            if (dgvMain.Rows[rowIndex].Displayed == false)
+            {
+                dgvMain.FirstDisplayedScrollingRowIndex = rowIndex;
+            }
+            dgvMain.Rows[rowIndex].Selected = true;
+            dgvMain.CurrentCell = dgvMain.Rows[rowIndex].Cells[0];
+        }
+
 
         protected void RefreshToolbar()
         {
@@ -182,9 +236,9 @@ namespace observador
             LoadForm();
         }
 
-        public void OrderRefresh()
+        public void OrderRefresh(T itemToSelect = null)
         {
-            LoadForm();
+            LoadForm(itemToSelect);
         }
 
         private void OrderClose()
@@ -271,6 +325,8 @@ namespace observador
                 case Keys.F2:
                 case Keys.Enter:
                     OrderEdit();
+                    // handled true to avoid on ENTER moving current row pointer to next row
+                    e.Handled = true;
                     break;
                 case Keys.F6:
                     OrderExport();

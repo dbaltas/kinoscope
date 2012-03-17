@@ -63,6 +63,10 @@ namespace observador
                 {
                     _run.AddRunEvent(runEvent);
                     _run.Save();
+                    if (Owner is ListForm<RunEvent>)
+                    {
+                        (Owner as ListForm<RunEvent>).OrderRefresh(runEvent);
+                    }
                 }
                 else
                 {

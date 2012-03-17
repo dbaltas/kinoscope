@@ -64,12 +64,12 @@ namespace ObLib
         }
 
 
-        public static void CreateDefaultFst(Researcher researcher, String name)
+        public static Project CreateDefaultFst(Researcher researcher, String name)
         {
             if (researcher == null)
             {
                 Logger.logError("Invalid Researcher");
-                return;
+                return null;
             }
 
             var project = new Project { Name = name };
@@ -124,6 +124,8 @@ namespace ObLib
             testSession.AddTrial(testTrial2);
 
             Researcher.Current.Save();
+
+            return project;
         }
 
         static private void InsertProject()

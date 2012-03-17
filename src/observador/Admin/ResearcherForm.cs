@@ -55,6 +55,14 @@ namespace observador
                 researcher.Username = txtUsername.Text;
                 researcher.Password = txtPassword.Text;
                 researcher.Save();
+
+                if (_researcher == null)
+                {
+                    if (Owner is ListForm<Researcher>)
+                    {
+                        (Owner as ListForm<Researcher>).OrderRefresh(researcher);
+                    }
+                }
                 this.Close();
             }
             catch (Exception ex)

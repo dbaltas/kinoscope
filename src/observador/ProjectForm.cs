@@ -52,7 +52,11 @@ namespace observador
 
                 if (_project == null)
                 {
-                    SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
+                    Project project = SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
+                    if (Owner is ListForm<Project>)
+                    {
+                        (Owner as ListForm<Project>).OrderRefresh(project);
+                    }
                     this.Close();
                 }
                 else
@@ -60,6 +64,7 @@ namespace observador
                     _project.Name = txtName.Text;
                     _project.Save();
                 }
+
                 this.Close();
             }
             catch (Exception ex)

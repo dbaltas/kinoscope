@@ -53,6 +53,11 @@ namespace observador
                 {
                     Researcher.Current.ActiveProject.AddSubjectGroup(subjectGroup);
                     Researcher.Current.ActiveProject.Save();
+                    if (Owner is ListForm<SubjectGroup>)
+                    {
+                        (Owner as ListForm<SubjectGroup>).OrderRefresh(subjectGroup);
+                    }
+
                 }
                 else
                 {

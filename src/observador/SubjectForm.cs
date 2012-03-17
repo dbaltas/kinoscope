@@ -63,10 +63,7 @@ namespace observador
         {
             if (Save())
             {
-                if (Owner is ListForm<Subject>)
-                {
-                    (Owner as ListForm<Subject>).OrderRefresh();
-                }
+                txtCode.Text = SuggestedNextSubjectCode(txtCode.Text);
                 txtCode.Focus();
             }
         }
@@ -102,6 +99,11 @@ namespace observador
                 {
                     Researcher.Current.ActiveProject.AddSubject(subject);
                     Researcher.Current.ActiveProject.Save();
+                    _subject = subject;
+                    if (Owner is ListForm<Subject>)
+                    {
+                        (Owner as ListForm<Subject>).OrderRefresh(_subject);
+                    }
                 }
                 else
                 {
@@ -152,6 +154,16 @@ namespace observador
             }
         }
 
+        private string SuggestedNextSubjectCode(string subjectCode)
+        {
+            int numericSubjectCode;
+            if (int.TryParse(subjectCode, out numericSubjectCode))
+            {
+                subjectCode = (++numericSubjectCode).ToString();
+            }
+
+            return subjectCode;
+        }
         private void txtWeight_Validating(object sender, CancelEventArgs e)
         {
             Decimal weight;
