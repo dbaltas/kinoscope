@@ -99,10 +99,9 @@ namespace observador
                 {
                     Researcher.Current.ActiveProject.AddSubject(subject);
                     Researcher.Current.ActiveProject.Save();
-                    _subject = subject;
                     if (Owner is ListForm<Subject>)
                     {
-                        (Owner as ListForm<Subject>).OrderRefresh(_subject);
+                        (Owner as ListForm<Subject>).OrderRefresh(subject);
                     }
                 }
                 else
