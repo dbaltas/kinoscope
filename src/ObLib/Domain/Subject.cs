@@ -31,6 +31,14 @@ namespace ObLib.Domain
                 SubjectGroup.Save();
             }
 
+            if (Runs.Count > 0)
+            {
+                foreach (Run run in Runs)
+                {
+                    run.Delete();
+                }
+            }
+
             Project.Subjects.Remove(this);
             Project.Save();
         }
