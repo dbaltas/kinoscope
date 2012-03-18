@@ -10,7 +10,7 @@ namespace ObLib.Domain
 {
     public class NHibernateHelper
     {
-        private const string DbFile = "ob.db";
+        private const string DbFile = @"..\db\ob.db";
 
         private static FluentConfiguration _configuration = Fluently.Configure()
                         .Database(SQLiteConfiguration.Standard
@@ -54,6 +54,11 @@ namespace ObLib.Domain
 
         public static void BuildSchema()
         {
+            string dbDirectory = Path.GetDirectoryName(DbFile);
+            if (!Directory.Exists(dbDirectory))
+            {
+                Directory.CreateDirectory(dbDirectory);
+            }
             if (DatabaseExists())
             {
                 DropDatabase();

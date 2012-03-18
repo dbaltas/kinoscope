@@ -15,7 +15,8 @@ namespace observador
                 Properties.Settings.Default.TitleFormat,
                 Application.ProductName,
                 version.Major,
-                version.Minor);
+                version.Minor,
+                version.Build);
         }
 
         /// <summary>

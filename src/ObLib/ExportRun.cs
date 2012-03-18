@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using System.IO;
+
 using ObLib.Domain;
 
 namespace ObLib
@@ -16,10 +18,16 @@ namespace ObLib
             string dataRow = String.Join<String>("\t", 
                 fstRun(run));
 
-            string exportFilename = String.Format(@"a{0}-{1}-{2}.csv",
+            string exportFilename = String.Format(@"../export/{0}-{1}-{2}.csv",
                 run.Trial.Session.BehavioralTest.Project,
                 run.Trial,
                 run.Subject);
+
+            string exportDirectory = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportDirectory))
+            {
+                Directory.CreateDirectory(exportDirectory);
+            }
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(exportFilename))
             {
@@ -46,9 +54,15 @@ namespace ObLib
                 }
             }
 
-            string exportFilename = String.Format(@"{0}-{1}.csv",
+            string exportFilename = String.Format(@"../export/{0}-{1}.csv",
                 trial.Session.BehavioralTest.Project,
                 trial);
+
+            string exportDirectory = Path.GetDirectoryName(exportFilename);
+            if (!Directory.Exists(exportDirectory))
+            {
+                Directory.CreateDirectory(exportDirectory);
+            }
 
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(exportFilename))
             {
