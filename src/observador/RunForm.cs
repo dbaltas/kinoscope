@@ -44,6 +44,8 @@ namespace observador
 
             RefreshStateBehaviorLabel(null);
 
+            lblSubjectCode.Text = run.Subject.Code;
+
             SetStatus(RunStatus.Ready);
         }
 
