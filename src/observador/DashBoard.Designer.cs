@@ -59,7 +59,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(906, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(907, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -164,9 +164,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tssResearcher});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 275);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 270);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(906, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(907, 22);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "lala";
             // 
@@ -179,11 +179,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(906, 297);
+            this.ClientSize = new System.Drawing.Size(907, 292);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "DashBoard";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.DashBoard_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashBoard_KeyDown);
             this.menuStrip1.ResumeLayout(false);

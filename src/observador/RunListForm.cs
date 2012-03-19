@@ -65,7 +65,7 @@ namespace observador
                 MessageBox.Show("Run Is already complete. Delete first if you want to run again", "Cannot run");
                 return;
             }
-            (new RunForm(run)).ShowDialog();
+            (new RunForm(run)).Show();
         }
     }
 }

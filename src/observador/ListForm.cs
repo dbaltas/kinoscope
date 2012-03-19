@@ -47,6 +47,9 @@ namespace observador
 
             _createDataSource = createDataSource;
             _createDetailForm = createDetailForm;
+
+            MdiParent = DashBoard.GetInstance();
+            WindowState = FormWindowState.Maximized;
         }
 
         private void LoadForm(T itemToSelect = null)
@@ -283,13 +286,25 @@ namespace observador
         protected virtual void ItemNew()
         {
             Form form = _createDetailForm(null);
-            form.ShowDialog(this);
+            form.MdiParent = DashBoard.GetInstance();
+            form.WindowState = FormWindowState.Maximized;
+            //form.TopLevel = false;
+            form.Show(this);
         }
 
         protected virtual void ItemEdit(T item)
         {
+            // following code throws exception when dashboard is an MDI Container
             Form form = _createDetailForm(item);
-            form.ShowDialog(this);
+            form.MdiParent = DashBoard.GetInstance();
+            form.WindowState = FormWindowState.Maximized;
+            form.Show(this);
+            // where following code works
+            //Form form = new SubjectForm(item as Subject);
+            //form.MdiParent = DashBoard.GetInstance();
+            //form.WindowState = FormWindowState.Maximized;
+            //form.Show();
+
         }
 
         protected virtual void ItemDelete(T item)

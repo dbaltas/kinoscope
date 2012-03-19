@@ -16,10 +16,17 @@ namespace observador
     public partial class DashBoard : ObWin.Form
     {
         private ListFormCreator _listFormCreator = new ListFormCreator();
+        private static DashBoard _dashboardForm;
 
         public DashBoard()
         {
             InitializeComponent();
+            _dashboardForm = this;
+        }
+
+        public static DashBoard GetInstance()
+        {
+            return _dashboardForm;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -34,7 +41,7 @@ namespace observador
 
         private void researchersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _listFormCreator.CreateResearcherListForm().ShowDialog();
+            _listFormCreator.CreateResearcherListForm().Show();
         }
 
         private void runsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,7 +52,7 @@ namespace observador
                 return;
             }
 
-            (new TrialListForm()).ShowDialog();
+            (new TrialListForm()).Show();
         }
 
         private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,7 +63,7 @@ namespace observador
                 return;
             }
 
-            _listFormCreator.CreateSubjectGroupListForm().ShowDialog();
+            _listFormCreator.CreateSubjectGroupListForm().Show();
         }
 
         private void subjectsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -67,12 +74,12 @@ namespace observador
                 return;
             }
 
-            _listFormCreator.CreateSubjectListForm().ShowDialog();
+            _listFormCreator.CreateSubjectListForm().Show();
         }
 
         private void bResearchers_Click(object sender, EventArgs e)
         {
-            _listFormCreator.CreateResearcherListForm().ShowDialog();
+            _listFormCreator.CreateResearcherListForm().Show();
         }
 
         private void DashBoard_Load(object sender, EventArgs e)
@@ -143,7 +150,7 @@ namespace observador
 
         private void manageProjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _listFormCreator.CreateProjectListForm().ShowDialog();
+            _listFormCreator.CreateProjectListForm().Show();
 
             FillProjectsMenu();
             DisplayActiveProject();
@@ -209,7 +216,7 @@ namespace observador
 
         private void behaviorKeyStrokesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _listFormCreator.CreateResearcherBehaviorKeyStrokeListForm().ShowDialog();
+            _listFormCreator.CreateResearcherBehaviorKeyStrokeListForm().Show();
         }
     }
 }

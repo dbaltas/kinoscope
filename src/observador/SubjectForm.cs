@@ -19,6 +19,7 @@ namespace observador
         public SubjectForm()
         {
             InitializeComponent();
+
             List<SubjectGroup> comboBoxSubjectGroups = new List<SubjectGroup>();
 
             SubjectGroup emptySubjectGroup = new SubjectGroup();
