@@ -97,7 +97,6 @@ namespace observador
         {
             AllowUserToAddRows = false;
             AllowUserToDeleteRows = false;
-            AllowUserToOrderColumns = true;
             AllowUserToResizeColumns = false;
             AllowUserToResizeRows = false;
             ReadOnly = true;

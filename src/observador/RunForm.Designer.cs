@@ -165,11 +165,6 @@
             // 
             // eventVisualiserBehaviorList
             // 
-            this.eventVisualiserBehaviorList.AllowUserToAddRows = false;
-            this.eventVisualiserBehaviorList.AllowUserToDeleteRows = false;
-            this.eventVisualiserBehaviorList.AllowUserToOrderColumns = true;
-            this.eventVisualiserBehaviorList.AllowUserToResizeColumns = false;
-            this.eventVisualiserBehaviorList.AllowUserToResizeRows = false;
             this.eventVisualiserBehaviorList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.eventVisualiserBehaviorList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.eventVisualiserBehaviorList.Location = new System.Drawing.Point(264, 230);
