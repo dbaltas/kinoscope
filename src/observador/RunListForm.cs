@@ -55,7 +55,7 @@ namespace observador
 
             ExportRun export = new ExportRun();
             export.exportRun(run);
-            MessageBox.Show("Export Successful at application directory.", "Info");
+            MessageBox.Show("Export Successful at export directory.", "Info");
         }
 
         protected override void ItemRun(Run run)

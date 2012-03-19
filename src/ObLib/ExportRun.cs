@@ -107,7 +107,7 @@ namespace ObLib
         {
             List<string> data = new List<string>();
             Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
-            Dictionary<Behavior, long> stateBehaviorTotalDuration = new Dictionary<Behavior, long>();
+            Dictionary<Behavior, double> stateBehaviorTotalDuration = new Dictionary<Behavior, double>();
 
             data.Add(run.Trial.Session.BehavioralTest.Project.ToString());
             data.Add(run.Subject.ToString());
@@ -132,7 +132,7 @@ namespace ObLib
                 behaviorFrequency.Add(behavior, 0);
                 if (behavior.Type == Behavior.BehaviorType.State)
                 {
-                    stateBehaviorTotalDuration.Add(behavior, 0);
+                    stateBehaviorTotalDuration.Add(behavior, 0.0);
                 }
             }
 
@@ -149,12 +149,12 @@ namespace ObLib
                 if (runEvent.Behavior.Type == Behavior.BehaviorType.State)
                 {
                     // State Behaviors tracked other than the first.
-                    stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += runEvent.TimeTracked - lastStateRunEvent.TimeTracked;
+                    stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += runEvent.TimeTrackedInSeconds - lastStateRunEvent.TimeTrackedInSeconds;
                     lastStateRunEvent = runEvent;
                 }
             }
             // add the time left till the end of the run
-            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += run.Trial.Duration * 1000 - lastStateRunEvent.TimeTracked;
+            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += run.Trial.Duration - lastStateRunEvent.TimeTrackedInSeconds;
 
             foreach (var behaviorTotal in stateBehaviorTotalDuration)
             {

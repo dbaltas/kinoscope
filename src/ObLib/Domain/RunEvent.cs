@@ -11,6 +11,8 @@ namespace ObLib.Domain
         public virtual Behavior Behavior { get; set; }
         public virtual long TimeTracked { get; set; }
 
+        public virtual double TimeTrackedInSeconds { get { return TimeTracked / 1000.0; } }
+
         public override void Delete()
         {
             Run.RunEvents.Remove(this);

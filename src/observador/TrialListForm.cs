@@ -37,7 +37,7 @@ namespace observador
         {
             ExportRun export = new ExportRun();
             export.exportTrial(trial);
-            MessageBox.Show("Export Successful at application directory.", "Info");
+            MessageBox.Show("Export Successful at export directory.", "Info");
         }
     }
 }

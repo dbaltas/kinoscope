@@ -167,12 +167,8 @@ namespace observador
         {
             Decimal weight;
             if (txtWeight.Text != ""
-                && (!Decimal.TryParse(txtWeight.Text, out weight)
-                    || weight < 0
-                // The following condition is to prevent parser sweeping-off separators
-                // e.g. in greek locale 3,5 is parsed correctly as three and a half
-                // but 3.5 is parsed as thirty five.
-                    || weight.ToString() != txtWeight.Text))
+                && (!Decimal.TryParse(txtWeight.Text, System.Globalization.NumberStyles.Float, null, out weight)
+                    || weight < 0))
             {
                 e.Cancel = true;
                 errorProvider.SetError(txtWeight, "Invalid weight. Must be a non-negative number.");

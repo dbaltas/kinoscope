@@ -33,7 +33,7 @@ namespace observador
 
         public void AddRunEvent(RunEvent runEvent)
         {
-            AppendLine(string.Format("Behavior {0} at time {1}.", runEvent.Behavior, runEvent.TimeTracked / 1000.0));
+            AppendLine(string.Format("Behavior {0} at time {1}.", runEvent.Behavior, runEvent.TimeTrackedInSeconds));
         }
 
         private void AppendLine(string line)

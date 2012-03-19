@@ -15,7 +15,10 @@ namespace observador
             : base(
                 new DataGridViewColumn[] {
                 new DataGridViewTextBoxColumn() { DataPropertyName = "Behavior", HeaderText = "Behavior" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "TimeTracked", HeaderText = "Time Tracked (ms)" },
+                new DataGridViewTextBoxColumn() { 
+                    DataPropertyName = "TimeTrackedInSeconds",
+                    HeaderText = "Time Tracked",
+                    DefaultCellStyle = new DataGridViewCellStyle() { Format = "F3" } },
                 new DataGridViewTextBoxColumn() { DataPropertyName = "TmModified", HeaderText = "Date Modified" }},
 
                 () => (IList)run.RunEvents.OrderBy((item) => item.TimeTracked).ToList(),
