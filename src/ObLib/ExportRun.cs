@@ -11,6 +11,9 @@ namespace ObLib
 {
     public class ExportRun
     {
+        private const double _LATENCY_TIME_TO_IGNORE_IN_SECONDS = 10;
+        private const double _LATENCY_MINIMUM_DURATION_IN_SECONDS = 3;
+
         public void exportRun(Run run)
         {
             string headerRow = String.Join<String>("\t", 
@@ -87,6 +90,7 @@ namespace ObLib
             headers.Add("DateRun");
             headers.Add("TimeRun");
 
+            // Duration
             foreach (Behavior behavior in behavioralTest.GetBehaviors())
             {
                 if (behavior.Type == Behavior.BehaviorType.State)
@@ -95,9 +99,19 @@ namespace ObLib
                 }
             }
 
+            // Frequency
             foreach (Behavior behavior in behavioralTest.GetBehaviors())
             {
                 headers.Add(behavior.Name + " Frequency");
+            }
+
+            // Latency
+            foreach (Behavior behavior in behavioralTest.GetBehaviors())
+            {
+                if (behavior.Type == Behavior.BehaviorType.State)
+                {
+                    headers.Add(behavior.Name + " Latency");
+                }
             }
 
             return headers;
@@ -108,6 +122,7 @@ namespace ObLib
             List<string> data = new List<string>();
             Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
             Dictionary<Behavior, double> stateBehaviorTotalDuration = new Dictionary<Behavior, double>();
+            Dictionary<Behavior, double> stateBehaviorLatency = new Dictionary<Behavior, double>();
 
             data.Add(run.Trial.Session.BehavioralTest.Project.ToString());
             data.Add(run.Subject.ToString());
@@ -127,20 +142,24 @@ namespace ObLib
             List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
             sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
 
+            // initialize counters
             foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
             {
                 behaviorFrequency.Add(behavior, 0);
                 if (behavior.Type == Behavior.BehaviorType.State)
                 {
                     stateBehaviorTotalDuration.Add(behavior, 0.0);
+                    stateBehaviorLatency.Add(behavior, 0.0);
                 }
             }
 
             RunEvent lastStateRunEvent = sortedRunEvents[0];
             foreach (RunEvent runEvent in sortedRunEvents)
             {
+                // calculate frequency
                 behaviorFrequency[runEvent.Behavior]++;
 
+                // ignore first event since we calculate diffs with previous event time
                 if (runEvent.TimeTracked == 0)
                 {
                     continue;
@@ -148,22 +167,44 @@ namespace ObLib
 
                 if (runEvent.Behavior.Type == Behavior.BehaviorType.State)
                 {
-                    // State Behaviors tracked other than the first.
-                    stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += runEvent.TimeTrackedInSeconds - lastStateRunEvent.TimeTrackedInSeconds;
+                    double currentEventDuration = runEvent.TimeTrackedInSeconds - lastStateRunEvent.TimeTrackedInSeconds;
+                    // State Behaviors Duration
+                    stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += currentEventDuration;
+
+                    // Latency
+                    if (runEvent.TimeTrackedInSeconds > _LATENCY_TIME_TO_IGNORE_IN_SECONDS)
+                    {
+                        if (currentEventDuration >= _LATENCY_MINIMUM_DURATION_IN_SECONDS)
+                        {
+                            if (stateBehaviorLatency[lastStateRunEvent.Behavior] == 0.0)
+                            {
+                                stateBehaviorLatency[lastStateRunEvent.Behavior] = lastStateRunEvent.TimeTrackedInSeconds;
+                            }
+                        }
+                    }
+
                     lastStateRunEvent = runEvent;
                 }
+
+
             }
-            // add the time left till the end of the run
+
+            // State Behavior Duration add the time left till the end of the run
             stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += run.Trial.Duration - lastStateRunEvent.TimeTrackedInSeconds;
 
             foreach (var behaviorTotal in stateBehaviorTotalDuration)
             {
-                data.Add(behaviorTotal.Value.ToString());
+                data.Add(behaviorTotal.Value.ToString("F3"));
             }
 
             foreach (var behaviorCount in behaviorFrequency)
             {
                 data.Add(behaviorCount.Value.ToString());
+            }
+
+            foreach (var behaviorTime in stateBehaviorLatency)
+            {
+                data.Add(behaviorTime.Value.ToString("F3"));
             }
 
             return data;

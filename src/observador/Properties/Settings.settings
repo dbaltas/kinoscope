@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="TitleFormat" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{0} v{1}.{2}</Value>
+      <Value Profile="(Default)">{0} v{1}.{2}.{3}</Value>
     </Setting>
   </Settings>
 </SettingsFile>
