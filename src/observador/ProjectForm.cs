@@ -53,9 +53,9 @@ namespace observador
                 if (_project == null)
                 {
                     Project project = SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
-                    if (Owner is ListForm<Project>)
+                    if (CallerForm is ListForm<Project>)
                     {
-                        (Owner as ListForm<Project>).OrderRefresh(project);
+                        (CallerForm as ListForm<Project>).OrderRefresh(project);
                     }
                     this.Close();
                 }

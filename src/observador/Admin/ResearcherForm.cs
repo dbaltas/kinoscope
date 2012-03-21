@@ -58,9 +58,9 @@ namespace observador
 
                 if (_researcher == null)
                 {
-                    if (Owner is ListForm<Researcher>)
+                    if (CallerForm is ListForm<Researcher>)
                     {
-                        (Owner as ListForm<Researcher>).OrderRefresh(researcher);
+                        (CallerForm as ListForm<Researcher>).OrderRefresh(researcher);
                     }
                 }
                 this.Close();

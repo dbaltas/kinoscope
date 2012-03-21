@@ -15,7 +15,7 @@ namespace observador
     public partial class ListForm<T> : ObWin.Form where T : ActiveRecordBase<T>
     {
         public delegate IList DataSourceDelegate();
-        public delegate Form CreateDetailFormDelegate(T item);
+        public delegate ObWin.Form CreateDetailFormDelegate(T item);
 
         protected bool _allowAdd = true;
         protected bool _allowEdit = true;
@@ -47,9 +47,6 @@ namespace observador
 
             _createDataSource = createDataSource;
             _createDetailForm = createDetailForm;
-
-            MdiParent = DashBoard.GetInstance();
-            WindowState = FormWindowState.Maximized;
         }
 
         private void LoadForm(T itemToSelect = null)
@@ -285,26 +282,16 @@ namespace observador
         #region item commands overridable
         protected virtual void ItemNew()
         {
-            Form form = _createDetailForm(null);
-            form.MdiParent = DashBoard.GetInstance();
-            form.WindowState = FormWindowState.Maximized;
-            //form.TopLevel = false;
-            form.Show(this);
+            ObWin.Form form = _createDetailForm(null);
+            form.CallerForm = this;
+            form.Show();
         }
 
         protected virtual void ItemEdit(T item)
         {
-            // following code throws exception when dashboard is an MDI Container
-            Form form = _createDetailForm(item);
-            form.MdiParent = DashBoard.GetInstance();
-            form.WindowState = FormWindowState.Maximized;
-            form.Show(this);
-            // where following code works
-            //Form form = new SubjectForm(item as Subject);
-            //form.MdiParent = DashBoard.GetInstance();
-            //form.WindowState = FormWindowState.Maximized;
-            //form.Show();
-
+            ObWin.Form form = _createDetailForm(item);
+            form.CallerForm = this;
+            form.Show();
         }
 
         protected virtual void ItemDelete(T item)

@@ -11,6 +11,20 @@ namespace ObWin
 
     public partial class Form : System.Windows.Forms.Form
     {
+        private static System.Windows.Forms.Form _mdiContainer;
+        public Form CallerForm;
+
+        public Form()  : base()
+        {
+            MdiParent = _mdiContainer;
+            StartPosition = FormStartPosition.CenterParent;
+        }
+
+        public static void SetMDIContainer(System.Windows.Forms.Form form)
+        {
+            _mdiContainer = form;
+        }
+
         protected void FailWithError(Exception ex)
         {
             Logger.logError(ex);

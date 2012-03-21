@@ -102,9 +102,9 @@ namespace observador
                 {
                     Researcher.Current.AddResearcherBehaviorKeyStroke(researcherBehaviorKeyStroke);
                     Researcher.Current.Save();
-                    if (Owner is ListForm<ResearcherBehaviorKeyStroke>)
+                    if (CallerForm is ListForm<ResearcherBehaviorKeyStroke>)
                     {
-                        (Owner as ListForm<ResearcherBehaviorKeyStroke>).OrderRefresh(researcherBehaviorKeyStroke);
+                        (CallerForm as ListForm<ResearcherBehaviorKeyStroke>).OrderRefresh(researcherBehaviorKeyStroke);
                     }
 
                 }

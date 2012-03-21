@@ -8,11 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 
 using ObLib.Domain;
-using ObWin;
 
 namespace observador
 {
-    public partial class Login : ObWin.Form
+    public partial class Login : Form
     {
         public bool IsUserAuthenticated { get; private set; }
 
