@@ -11,6 +11,13 @@ namespace ObLib
     {
         static public void AddInitialData()
         {
+            _FstBehavioralTestTypeAndBehaviors();
+            var researcher = new Researcher { Username = "admin", Password = "123" };
+            researcher.Save();
+        }
+
+        private static void _FstBehavioralTestTypeAndBehaviors()
+        {
             var behavioralTestType = new BehavioralTestType { Name = "FST", Description = "Forced Swimmend Test" };
             behavioralTestType.Save();
 
@@ -58,11 +65,76 @@ namespace ObLib
                 Type = Behavior.BehaviorType.Instant
             };
             behavior.Save();
-
-            var researcher = new Researcher { Username = "admin", Password = "123" };
-            researcher.Save();
         }
 
+        private static void _PlusMazeBehavioralTestTypeAndBehaviors()
+        {
+            var behavioralTestType = new BehavioralTestType { Name = "EPM", Description = "Elevated Plus Maze" };
+            behavioralTestType.Save();
+
+            var behavior = new Behavior
+            {
+                Name = "Rat entry in open arm 1",
+                DefaultKeyStroke = "1",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Rat entry in open arm 2",
+                DefaultKeyStroke = "2",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Rat entry in closed arm 1",
+                DefaultKeyStroke = "3",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Rat entry in closed arm 1",
+                DefaultKeyStroke = "4",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Rat entry in center",
+                DefaultKeyStroke = "5",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Attempt to enter open",
+                DefaultKeyStroke = "6",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.Instant
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Attempt to enter close",
+                DefaultKeyStroke = "7",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.Instant
+            };
+            behavior.Save();
+        }
 
         public static Project CreateDefaultFst(Researcher researcher, String name)
         {
@@ -109,19 +181,50 @@ namespace ObLib
             };
             test.AddSession(testSession);
 
-            var testTrial = new Trial
-            {
-                Name = "for demo purposes",
-                Duration = 10,
-            };
-            preTestSession.AddTrial(testTrial);
-
             var testTrial2 = new Trial
             {
                 Name = "",
                 Duration = 5 * 60,
             };
             testSession.AddTrial(testTrial2);
+
+            Researcher.Current.Save();
+
+            return project;
+        }
+
+        public static Project CreateDefaultEpm(Researcher researcher, String name)
+        {
+            if (researcher == null)
+            {
+                Logger.logError("Invalid Researcher");
+                return null;
+            }
+
+            var project = new Project { Name = name };
+
+            var test = new BehavioralTest
+            {
+                Name = "test",
+                BehavioralTestType = BehavioralTestType.Epm,
+            };
+
+            project.AddBehavioralTest(test);
+
+            Researcher.Current.AddProject(project);
+
+            var testSession = new Session
+            {
+                Name = "",
+            };
+            test.AddSession(testSession);
+
+            var testTrial = new Trial
+            {
+                Name = "",
+                Duration = 300,
+            };
+            testSession.AddTrial(testTrial);
 
             Researcher.Current.Save();
 

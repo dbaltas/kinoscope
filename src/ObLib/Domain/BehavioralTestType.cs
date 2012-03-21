@@ -12,6 +12,7 @@ namespace ObLib.Domain
         public virtual string Name { get; set; }
         public virtual string Description { get; set; }
         private static BehavioralTestType _fst;
+        private static BehavioralTestType _epm;
 
         public static BehavioralTestType Fst
         {
@@ -35,7 +36,30 @@ namespace ObLib.Domain
             }
         }
 
+        public static BehavioralTestType Epm
+        {
+            get
+            {
+                if (_epm == null)
+                {
+                    BehavioralTestType behavioralTestType = NHibernateHelper.OpenSession()
+                            .CreateCriteria(typeof(BehavioralTestType))
+                            .Add(Restrictions.Eq("Name", _EPM))
+                            .UniqueResult<BehavioralTestType>();
+
+                    if (behavioralTestType == null)
+                    {
+                        Logger.logError("NO EPM behavioral test type found");
+                    }
+                    _fst = behavioralTestType;
+                }
+
+                return _fst;
+            }
+        }
+
         private const string _FST = "FST";
+        private const string _EPM = "EPM";
 
         public override string ToString()
         {
