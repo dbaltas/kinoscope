@@ -38,7 +38,7 @@ namespace observador
             _listFormCreator.CreateResearcherListForm().Show();
         }
 
-        private void runsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void trialsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Researcher.Current.ActiveProject == null)
             {
@@ -116,7 +116,7 @@ namespace observador
             myProjectsToolStripMenuItem.DropDownItems.Clear();
 
             ToolStripMenuItem manageProjectsToolStripMenuItem = new ToolStripMenuItem();
-            manageProjectsToolStripMenuItem.Text = "Manage Projects (Ctrl+P)";
+            manageProjectsToolStripMenuItem.Text = "Manage Projects";
             manageProjectsToolStripMenuItem.Click += manageProjectsToolStripMenuItem_Click;
 
             ToolStripMenuItem exportRunImagesToolStripMenuItem = new ToolStripMenuItem();
@@ -189,23 +189,12 @@ namespace observador
 
         #endregion
 
-        protected override bool ProcessKeyPreview(ref System.Windows.Forms.Message m)
-        {
-            int _ENTER = 13;
-            int _KEYUP = 257;
-            if (m.Msg == _ENTER && (int)m.WParam == _KEYUP)
-            {
-//                Application.Exit();
-            }
-            return base.ProcessKeyPreview(ref m);
-        }
-
         private void DashBoard_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyData)
             {
-                case Keys.Control | Keys.R:
-                    runsToolStripMenuItem_Click(sender, e);
+                case Keys.Control | Keys.T:
+                    trialsToolStripMenuItem_Click(sender, e);
                     break;
                 case Keys.Control | Keys.S:
                     subjectsToolStripMenuItem_Click(sender, e);
