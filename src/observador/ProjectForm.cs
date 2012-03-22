@@ -28,10 +28,12 @@ namespace observador
             {
                 _project = project;
                 txtName.Text = project.Name;
+                cbTemplate.Enabled = false;
             }
             else
             {
-                bSave.Text = "Create FST Project";
+                cbTemplate.DataSource = BehavioralTestType.All();
+                bSave.Text = "Create Project";
             }
         }
 
@@ -52,7 +54,15 @@ namespace observador
 
                 if (_project == null)
                 {
-                    Project project = SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
+                    Project project;
+                    if (cbTemplate.SelectedItem == BehavioralTestType.Epm)
+                    {
+                        project = SeedData.CreateDefaultEpm(Researcher.Current, txtName.Text);
+                    }
+                    else 
+                    {
+                        project = SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
+                    }
                     if (CallerForm is ListForm<Project>)
                     {
                         (CallerForm as ListForm<Project>).OrderRefresh(project);

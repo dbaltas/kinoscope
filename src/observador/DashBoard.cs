@@ -212,5 +212,11 @@ namespace observador
         {
             _listFormCreator.CreateResearcherBehaviorKeyStrokeListForm().Show();
         }
+
+        private void myProjectsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FillProjectsMenu();
+            DisplayActiveProject();
+        }
     }
 }

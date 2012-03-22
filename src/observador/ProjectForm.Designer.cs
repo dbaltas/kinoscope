@@ -34,6 +34,8 @@
             this.lName = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.cbTemplate = new System.Windows.Forms.ComboBox();
+            this.lTemplate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,7 +43,7 @@
             // 
             this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(202, 32);
+            this.bCancel.Location = new System.Drawing.Point(202, 56);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 4;
@@ -51,10 +53,10 @@
             // 
             // bSave
             // 
-            this.bSave.Location = new System.Drawing.Point(84, 32);
+            this.bSave.Location = new System.Drawing.Point(84, 56);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
-            this.bSave.TabIndex = 2;
+            this.bSave.TabIndex = 3;
             this.bSave.Text = "Save";
             this.bSave.UseVisualStyleBackColor = true;
             this.bSave.Click += new System.EventHandler(this.bSave_Click);
@@ -62,7 +64,7 @@
             // lName
             // 
             this.lName.AutoSize = true;
-            this.lName.Location = new System.Drawing.Point(12, 9);
+            this.lName.Location = new System.Drawing.Point(12, 33);
             this.lName.Name = "lName";
             this.lName.Size = new System.Drawing.Size(35, 13);
             this.lName.TabIndex = 0;
@@ -72,15 +74,35 @@
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.Location = new System.Drawing.Point(53, 6);
+            this.txtName.Location = new System.Drawing.Point(75, 30);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(271, 20);
-            this.txtName.TabIndex = 1;
+            this.txtName.Size = new System.Drawing.Size(258, 20);
+            this.txtName.TabIndex = 2;
             this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // errorProvider
             // 
             this.errorProvider.ContainerControl = this;
+            // 
+            // cbTemplate
+            // 
+            this.cbTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTemplate.FormattingEnabled = true;
+            this.cbTemplate.Location = new System.Drawing.Point(75, 6);
+            this.cbTemplate.Name = "cbTemplate";
+            this.cbTemplate.Size = new System.Drawing.Size(257, 21);
+            this.cbTemplate.TabIndex = 1;
+            // 
+            // lTemplate
+            // 
+            this.lTemplate.AutoSize = true;
+            this.lTemplate.Location = new System.Drawing.Point(12, 9);
+            this.lTemplate.Name = "lTemplate";
+            this.lTemplate.Size = new System.Drawing.Size(51, 13);
+            this.lTemplate.TabIndex = 12;
+            this.lTemplate.Text = "Template";
             // 
             // ProjectForm
             // 
@@ -89,7 +111,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
-            this.ClientSize = new System.Drawing.Size(348, 67);
+            this.ClientSize = new System.Drawing.Size(357, 96);
+            this.Controls.Add(this.cbTemplate);
+            this.Controls.Add(this.lTemplate);
             this.Controls.Add(this.lName);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.bSave);
@@ -111,5 +135,7 @@
         private System.Windows.Forms.Label lName;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.ComboBox cbTemplate;
+        private System.Windows.Forms.Label lTemplate;
     }
 }

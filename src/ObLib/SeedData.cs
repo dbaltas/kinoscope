@@ -12,6 +12,7 @@ namespace ObLib
         static public void AddInitialData()
         {
             _FstBehavioralTestTypeAndBehaviors();
+            PlusMazeBehavioralTestTypeAndBehaviors();
             var researcher = new Researcher { Username = "admin", Password = "123" };
             researcher.Save();
         }
@@ -67,7 +68,7 @@ namespace ObLib
             behavior.Save();
         }
 
-        private static void _PlusMazeBehavioralTestTypeAndBehaviors()
+        public static void PlusMazeBehavioralTestTypeAndBehaviors()
         {
             var behavioralTestType = new BehavioralTestType { Name = "EPM", Description = "Elevated Plus Maze" };
             behavioralTestType.Save();

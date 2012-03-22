@@ -51,10 +51,10 @@ namespace ObLib.Domain
                     {
                         Logger.logError("NO EPM behavioral test type found");
                     }
-                    _fst = behavioralTestType;
+                    _epm = behavioralTestType;
                 }
 
-                return _fst;
+                return _epm;
             }
         }
 

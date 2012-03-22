@@ -83,6 +83,7 @@
             this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
             this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.myProjectsToolStripMenuItem.Text = "My Projects";
+            this.myProjectsToolStripMenuItem.Click += new System.EventHandler(this.myProjectsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -142,7 +143,7 @@
             // researchersToolStripMenuItem
             // 
             this.researchersToolStripMenuItem.Name = "researchersToolStripMenuItem";
-            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
             // 
@@ -157,7 +158,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // statusStrip1
