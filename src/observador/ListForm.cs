@@ -227,6 +227,7 @@ namespace observador
                 }
 
                 ItemDelete(dgvMain.CurrentRow.DataBoundItem as T);
+                // dashboard refresh
             }
             catch (Exception ex)
             {

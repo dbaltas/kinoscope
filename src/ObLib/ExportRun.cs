@@ -122,7 +122,7 @@ namespace ObLib
             List<string> data = new List<string>();
             Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
             Dictionary<Behavior, double> stateBehaviorTotalDuration = new Dictionary<Behavior, double>();
-            Dictionary<Behavior, double> stateBehaviorLatency = new Dictionary<Behavior, double>();
+            Dictionary<Behavior, double?> stateBehaviorLatency = new Dictionary<Behavior, double?>();
 
             data.Add(run.Trial.Session.BehavioralTest.Project.ToString());
             data.Add(run.Subject.ToString());
@@ -176,7 +176,7 @@ namespace ObLib
                     {
                         if (currentEventDuration >= _LATENCY_MINIMUM_DURATION_IN_SECONDS)
                         {
-                            if (stateBehaviorLatency[lastStateRunEvent.Behavior] == 0.0)
+                            if (stateBehaviorLatency[lastStateRunEvent.Behavior] == null)
                             {
                                 stateBehaviorLatency[lastStateRunEvent.Behavior] = lastStateRunEvent.TimeTrackedInSeconds;
                             }
@@ -192,6 +192,19 @@ namespace ObLib
             // State Behavior Duration add the time left till the end of the run
             stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += run.Trial.Duration - lastStateRunEvent.TimeTrackedInSeconds;
 
+            // state behavior latency set to trial duration if unset
+            foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
+            {
+                if (behavior.Type == Behavior.BehaviorType.State)
+                {
+                    if (stateBehaviorLatency[lastStateRunEvent.Behavior] == null)
+                    {
+                        stateBehaviorLatency[lastStateRunEvent.Behavior] = run.Trial.Duration;
+                    }
+                }
+            }
+
+
             foreach (var behaviorTotal in stateBehaviorTotalDuration)
             {
                 data.Add(behaviorTotal.Value.ToString("F3"));
@@ -204,7 +217,7 @@ namespace ObLib
 
             foreach (var behaviorTime in stateBehaviorLatency)
             {
-                data.Add(behaviorTime.Value.ToString("F3"));
+                data.Add(behaviorTime.Value.Value.ToString("F3"));
             }
 
             return data;

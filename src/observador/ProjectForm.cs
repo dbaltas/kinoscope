@@ -67,13 +67,14 @@ namespace observador
                     {
                         (CallerForm as ListForm<Project>).OrderRefresh(project);
                     }
-                    this.Close();
                 }
                 else
                 {
                     _project.Name = txtName.Text;
                     _project.Save();
                 }
+
+                //dashboard.refreshprojectmenu
 
                 this.Close();
             }
