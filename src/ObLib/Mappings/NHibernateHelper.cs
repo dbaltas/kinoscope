@@ -46,6 +46,11 @@ namespace ObLib.Domain
             return File.Exists(DbFile);
         }
 
+        public static string GetDbFile()
+        {
+            return DbFile;
+        }
+
         public static void CreateDatabaseWithSeedData()
         {
             BuildSchema();
