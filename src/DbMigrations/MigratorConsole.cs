@@ -39,7 +39,16 @@ namespace DbMigrations
         /// <param name="argv">Command line arguments</param>
         public MigratorConsole()
         {
-            args = new string[] { "sqlite", @"Data Source=C:\workspace\projects\schema-migration\ob.db;Version=3;", @"C:\workspace\projects\schema-migration\migratordotnet-sample-on-.NET-4\bin\Release\migro.dll" };
+        }
+
+        public void Perform()
+        {
+            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(MigratorConsole)).Location;
+
+            args = new string[] { "sqlite",
+                String.Format(@"Data Source={0};Version=3;", ObLib.Domain.NHibernateHelper.GetDbFile()),
+                fullPath};
+
             ParseArguments(args);
             _migrateTo = -1;
             Run();

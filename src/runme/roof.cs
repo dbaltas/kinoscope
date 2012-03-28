@@ -8,6 +8,8 @@ using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
 using System.IO;
 using System.Data.SQLite;
+
+using DbMigrations;
 	
 	class FirstProgram
 	{
@@ -59,11 +61,21 @@ using System.Data.SQLite;
                     case "all":
                         ListResearchers();
                         break;
+                    case "m":
+                    case "migrations":
+                        Migrations();
+                        break;
                     default:
                         DisplayMenu();
                         break;
                 }
             }
+        }
+
+        private static void Migrations()
+        {
+            MigratorConsole console = new MigratorConsole();
+            console.Perform();
         }
 
         private static void AuthenticateResearcher(string username, string password)
@@ -98,6 +110,7 @@ using System.Data.SQLite;
             System.Console.WriteLine("  find [id]: find a researcher from the database. ex: 'find 1' brings the researcher with id=1");
             System.Console.WriteLine("  auth: authenticate researcher, provide username, password");
             System.Console.WriteLine("  all: display all researchers");
+            System.Console.WriteLine("  migrations: load db.migrator (alias m)");
             System.Console.WriteLine("*********************************");
         }
 
