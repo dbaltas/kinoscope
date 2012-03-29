@@ -29,33 +29,49 @@ namespace observador
             Application.SetCompatibleTextRenderingDefault(false);
 
             Cursor.Current = Cursors.WaitCursor;
+
+            DbMigrations.MigrationManager migrationManager = new DbMigrations.MigrationManager();
+
             if (!NHibernateHelper.DatabaseExists)
             {
                 if (MessageBox.Show("No Database Found. Click ok to Create new database. or cancel to exit.", GetTitle(), MessageBoxButtons.OKCancel) != DialogResult.OK)
                 {
                     return;
                 }
-                NHibernateHelper.CreateDatabaseWithSeedData();
+                migrationManager.MigrateToLastRevision();
             }
+            else
+            {
+                if (migrationManager.hasDetectedNewMigrations())
+                {
+                    if (MessageBox.Show(String.Format(@"The database schema has changed.
+Click OK to backup the existing database and upgrade to the newer version, or Cancel to exit.
+NOTE: After the upgrade the database will no longer be accessible through previous versions of {0}", Application.ProductName),
+                    "Upgrade Database", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                    {
+                        NHibernateHelper.BackupDatabase();
+                        migrationManager.MigrateToLastRevision();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                if (migrationManager.hasDetectedDatabaseWithNewerVersion())
+                {
+                    MessageBox.Show(String.Format(@"The database has been in use by a newer version of {0}.
+Please upgrade {0}. The application will now exit", Application.ProductName),
+                    "Database from a newer version detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             // hack to seed epm behaviors on test type on databases < 0.1.6
             if (BehavioralTestType.Epm == null)
             {
                 ObLib.SeedData.PlusMazeBehavioralTestTypeAndBehaviors();
             }
 
-            DbMigrations.MigrationManager migrationManager = new DbMigrations.MigrationManager();
-
-            if (migrationManager.hasDetectedNewMigrations())
-            {
-                if (MessageBox.Show(@"The database schema has changed.
-Click OK to backup the existing database and upgrade to the newer version.
-NOTE: After the upgrade the database will no longer be accessible through previous versions of the Application", 
-                "Upgrade Database", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
-                {
-                    NHibernateHelper.BackupDatabase();
-                    migrationManager.MigrateToLastRevision();
-                }
-            }
             Application.Run(new DashBoard());
         }
     }

@@ -51,9 +51,14 @@ namespace ObLib.Domain
             {
                 Directory.CreateDirectory(dbBackupDirectory);
             }
+            //Version version = new Version(Application.ProductVersion);
 
-            string backupFile = string.Format("ob.{0:yyyyMMdd-HHmmss}.db", DateTime.Now);
-            File.Copy(DbFile, backupFile);
+            Version version = System.Reflection.Assembly.GetCallingAssembly().GetName().Version;
+            string backupFile = string.Format("ob.{0:yyyyMMdd-HHmmss}-prior-to-{1}.{2}.{3}.db", DateTime.Now,
+                version.Major,
+                version.Minor,
+                version.Build);
+            File.Copy(DbFile, Path.Combine(dbBackupDirectory, backupFile));
         }
 
         public static bool DatabaseExists

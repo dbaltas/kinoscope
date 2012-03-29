@@ -61,6 +61,17 @@ namespace DbMigrations
             return false;
         }
 
+        public bool hasDetectedDatabaseWithNewerVersion()
+        {
+            Migrator.Migrator mig = GetMigrator();
+            if (mig.AppliedMigrations.Count > mig.MigrationsTypes.Count)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void MigrateToLastRevision()
         {
             Migrator.Migrator mig = GetMigrator();
