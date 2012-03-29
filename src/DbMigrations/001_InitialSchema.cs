@@ -6,10 +6,10 @@ namespace DbMigrations
     [Migration(1)]
     public class CreateInitialSchema : Migration
     {
-        private bool _pretendMigrationHasRunForProductionDatabasesOfPreviousVersion = true;
+        public static bool pretendMigrationHasRunForProductionDatabasesOfPreviousVersion = false;
         override public void Up()
         {
-            if (_pretendMigrationHasRunForProductionDatabasesOfPreviousVersion)
+            if (pretendMigrationHasRunForProductionDatabasesOfPreviousVersion)
             {
                 return;
             }
@@ -39,7 +39,7 @@ CREATE TABLE 'Trial' (Id  integer primary key autoincrement, TmCreated DATETIME,
         {
             base.AfterUp();
 
-            if (_pretendMigrationHasRunForProductionDatabasesOfPreviousVersion)
+            if (pretendMigrationHasRunForProductionDatabasesOfPreviousVersion)
             {
                 return;
             }

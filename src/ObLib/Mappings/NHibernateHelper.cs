@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using NHibernate;
 using ObLib.Domain;
 using NHibernate.Cfg;
@@ -10,7 +11,7 @@ namespace ObLib.Domain
 {
     public class NHibernateHelper
     {
-        private const string DbFile = @"..\db\ob.db";
+        private const string _DbFile = @"..\db\ob.db";
 
         private static FluentConfiguration _configuration = Fluently.Configure()
                         .Database(SQLiteConfiguration.Standard
@@ -41,14 +42,34 @@ namespace ObLib.Domain
             File.Delete(DbFile);
         }
 
-        public static bool DatabaseExists()
+        public static void BackupDatabase()
         {
-            return File.Exists(DbFile);
+            string dbDirectory = Path.GetDirectoryName(DbFile);
+            string dbBackupDirectory = Path.Combine(dbDirectory, "backup");
+
+            if (!Directory.Exists(dbBackupDirectory))
+            {
+                Directory.CreateDirectory(dbBackupDirectory);
+            }
+
+            string backupFile = string.Format("ob.{0:yyyyMMdd-HHmmss}.db", DateTime.Now);
+            File.Copy(DbFile, backupFile);
         }
 
-        public static string GetDbFile()
+        public static bool DatabaseExists
         {
-            return DbFile;
+            get
+            {
+                return File.Exists(DbFile);
+            }
+        }
+
+        public static string DbFile
+        {
+            get
+            {
+                return _DbFile;
+            }
         }
 
         public static void CreateDatabaseWithSeedData()
@@ -64,7 +85,7 @@ namespace ObLib.Domain
             {
                 Directory.CreateDirectory(dbDirectory);
             }
-            if (DatabaseExists())
+            if (DatabaseExists)
             {
                 DropDatabase();
             }

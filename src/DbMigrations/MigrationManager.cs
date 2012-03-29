@@ -21,7 +21,7 @@ namespace DbMigrations
     /// Commande line utility to run the migrations
     /// </summary>
     /// </remarks>
-    public class MigratorConsole
+    public class MigrationManager
     {
         private string _provider;
         private string _connectionString;
@@ -33,11 +33,13 @@ namespace DbMigrations
         private long _migrateTo = -1;
         private string[] args;
 
+        Migrator.Migrator _migrator;
+
         /// <summary>
         /// Builds a new console
         /// </summary>
         /// <param name="argv">Command line arguments</param>
-        public MigratorConsole()
+        public MigrationManager()
         {
             string fullPath = System.Reflection.Assembly.GetAssembly(typeof(MigratorConsole)).Location;
 
@@ -46,6 +48,46 @@ namespace DbMigrations
                 fullPath};
 
             ParseArguments(args);
+        }
+
+        public bool hasDetectedNewMigrations()
+        {
+            Migrator.Migrator mig = GetMigrator();
+            if (mig.AppliedMigrations.Count < mig.MigrationsTypes.Count)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void MigrateToLastRevision()
+        {
+            Migrator.Migrator mig = GetMigrator();
+
+            if (mig.AppliedMigrations.Count == 0 &&
+                databaseContainsProductionData())
+            {
+                CreateInitialSchema.pretendMigrationHasRunForProductionDatabasesOfPreviousVersion = true;
+            }
+
+            mig.MigrateToLastVersion();
+        }
+
+        protected bool databaseContainsProductionData()
+        {
+            bool flag = false;
+            try
+            {
+                // if table researchers does not exist the command below will throw an exception
+                var researchers = ObLib.Domain.Researcher.All();
+                flag = true;
+            }
+            catch
+            {
+                flag = false;
+            }
+            return flag;
         }
 
         public void Perform()
@@ -59,7 +101,7 @@ namespace DbMigrations
         /// Run the migrator's console
         /// </summary>
         /// <returns>-1 if error, else 0</returns>
-        public int Run()
+        private int Run()
         {
             try
             {
@@ -88,7 +130,7 @@ namespace DbMigrations
         /// <summary>
         /// Runs the migrations.
         /// </summary>
-        public void Migrate()
+        private void Migrate()
         {
             CheckArguments();
 
@@ -102,16 +144,10 @@ namespace DbMigrations
                 mig.MigrateTo(_migrateTo);
         }
 
-        public void MigrateToRevision(int revision)
-        {
-            Migrator.Migrator mig = GetMigrator();
-            mig.MigrateTo(revision);
-        }
-
         /// <summary>
         /// List migrations.
         /// </summary>
-        public void List()
+        private void List()
         {
             CheckArguments();
 
@@ -130,7 +166,7 @@ namespace DbMigrations
             }
         }
 
-        public void Dump()
+        private void Dump()
         {
             CheckArguments();
 
@@ -142,7 +178,7 @@ namespace DbMigrations
         /// <summary>
         /// Show usage information and help.
         /// </summary>
-        public void PrintUsage()
+        private void PrintUsage()
         {
             int tab = 17;
             Version ver = Assembly.GetExecutingAssembly().GetName().Version;
@@ -174,12 +210,16 @@ namespace DbMigrations
 
         private Migrator.Migrator GetMigrator()
         {
-            Assembly asm = Assembly.LoadFrom(_migrationsAssembly);
+            if (_migrator == null)
+            {
+                Assembly asm = Assembly.LoadFrom(_migrationsAssembly);
 
-            Migrator.Migrator migrator = new Migrator.Migrator(_provider, _connectionString, asm, _trace);
-            migrator.args = args;
-            migrator.DryRun = _dryrun;
-            return migrator;
+                _migrator = new Migrator.Migrator(_provider, _connectionString, asm, _trace);
+                _migrator.args = args;
+                _migrator.DryRun = _dryrun;
+            }
+
+            return _migrator;
         }
 
         private void ParseArguments(string[] argv)

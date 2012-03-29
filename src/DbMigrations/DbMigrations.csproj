@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="001_InitialSchema.cs" />
-    <Compile Include="002_CreateFooTable.cs" />
+    <Compile Include="MigrationManager.cs" />
     <Compile Include="MigratorConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

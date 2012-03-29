@@ -63,7 +63,7 @@ using DbMigrations;
                         break;
                     case "m":
                     case "migrations":
-                        Migrations();
+                        Migrations(inputArgs);
                         break;
                     default:
                         DisplayMenu();
@@ -72,10 +72,20 @@ using DbMigrations;
             }
         }
 
-        private static void Migrations()
+        private static void Migrations(string[] args)
         {
-            MigratorConsole console = new MigratorConsole();
-            console.Perform();
+            if (args.Length > 2 && args[1] == "d")
+            {
+                MigratorConsole console = new MigratorConsole();
+                console.MigrateToRevision(Int32.Parse(args[2]));
+                return;
+            }
+            MigrationManager migrationManager = new MigrationManager();
+            if (migrationManager.hasDetectedNewMigrations())
+            {
+                Console.WriteLine("new migrations found");
+                migrationManager.MigrateToLastRevision();
+            }
         }
 
         private static void AuthenticateResearcher(string username, string password)

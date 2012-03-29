@@ -27,7 +27,9 @@ namespace observador
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (!NHibernateHelper.DatabaseExists())
+
+            Cursor.Current = Cursors.WaitCursor;
+            if (!NHibernateHelper.DatabaseExists)
             {
                 if (MessageBox.Show("No Database Found. Click ok to Create new database. or cancel to exit.", GetTitle(), MessageBoxButtons.OKCancel) != DialogResult.OK)
                 {
@@ -39,6 +41,20 @@ namespace observador
             if (BehavioralTestType.Epm == null)
             {
                 ObLib.SeedData.PlusMazeBehavioralTestTypeAndBehaviors();
+            }
+
+            DbMigrations.MigrationManager migrationManager = new DbMigrations.MigrationManager();
+
+            if (migrationManager.hasDetectedNewMigrations())
+            {
+                if (MessageBox.Show(@"The database schema has changed.
+Click OK to backup the existing database and upgrade to the newer version.
+NOTE: After the upgrade the database will no longer be accessible through previous versions of the Application", 
+                "Upgrade Database", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                {
+                    NHibernateHelper.BackupDatabase();
+                    migrationManager.MigrateToLastRevision();
+                }
             }
             Application.Run(new DashBoard());
         }
