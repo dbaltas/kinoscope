@@ -22,7 +22,11 @@ namespace ObLib.Domain
             {
                 NHibernateHelper.OnActiveProjectModified(this, new EventArgs());
             }
-//            if (@event.Entity is Project)
+            // on project new/update/delete the researcher save is being called
+            if (@event.Entity == Researcher.Current)
+            {
+                NHibernateHelper.OnProjectModified(this, new EventArgs());
+            }
 
             return _object;
         }

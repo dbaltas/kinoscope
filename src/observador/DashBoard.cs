@@ -88,6 +88,7 @@ namespace observador
             if (Researcher.Current != null)
             {
                 tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
+                NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
                 if (Researcher.Current.ActiveProject != null)
                 {
                     NHibernateHelper.ActiveProjectModified += new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
@@ -218,18 +219,19 @@ namespace observador
             _listFormCreator.CreateResearcherBehaviorKeyStrokeListForm().Show();
         }
 
-        private void myProjectsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FillProjectsMenu();
-            DisplayActiveProject();
-        }
-
-        public void NHibernateHelper_ActiveProjectModified(object sender, EventArgs e)
+        private void NHibernateHelper_ActiveProjectModified(object sender, EventArgs e)
         {
             foreach (Form f in MdiChildren)
             {
                 f.Refresh();
             }
         }
+
+        private void NHibernateHelper_ProjectModified(object sender, EventArgs e)
+        {
+            FillProjectsMenu();
+            DisplayActiveProject();
+        }
+
     }
 }

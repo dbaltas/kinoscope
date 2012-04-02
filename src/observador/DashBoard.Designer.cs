@@ -83,7 +83,6 @@
             this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
             this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.myProjectsToolStripMenuItem.Text = "My Projects";
-            this.myProjectsToolStripMenuItem.Click += new System.EventHandler(this.myProjectsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
