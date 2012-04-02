@@ -13,11 +13,11 @@ using ObLib;
 
 namespace observador
 {
-    public partial class DashBoard : Form
+    public partial class DashBoard : ObWin.Form
     {
         private ListFormCreator _listFormCreator = new ListFormCreator();
 
-        public DashBoard()
+        public DashBoard() : base()
         {
             InitializeComponent();
             ObWin.Form.SetMDIContainer(this);
@@ -121,7 +121,7 @@ namespace observador
             myProjectsToolStripMenuItem.DropDownItems.Clear();
 
             ToolStripMenuItem manageProjectsToolStripMenuItem = new ToolStripMenuItem();
-            manageProjectsToolStripMenuItem.Text = "Manage Projects";
+            manageProjectsToolStripMenuItem.Text = "Manage Projects (Ctrl+P)";
             manageProjectsToolStripMenuItem.Click += manageProjectsToolStripMenuItem_Click;
 
             ToolStripMenuItem exportRunImagesToolStripMenuItem = new ToolStripMenuItem();
@@ -195,23 +195,25 @@ namespace observador
 
         #endregion
 
-        private void DashBoard_KeyDown(object sender, KeyEventArgs e)
+        protected override bool ProcessCmdKey(ref Message message, Keys keys)
         {
-            switch (e.KeyData)
+            switch (keys)
             {
                 case Keys.Control | Keys.T:
-                    trialsToolStripMenuItem_Click(sender, e);
+                    trialsToolStripMenuItem_Click(this, null);
                     break;
                 case Keys.Control | Keys.S:
-                    subjectsToolStripMenuItem_Click(sender, e);
+                    subjectsToolStripMenuItem_Click(this, null);
                     break;
                 case Keys.Control | Keys.G:
-                    subjectGroupsToolStripMenuItem_Click(sender, e);
+                    subjectGroupsToolStripMenuItem_Click(this, null);
                     break;
                 case Keys.Control | Keys.P:
-                    manageProjectsToolStripMenuItem_Click(sender, e);
+                    manageProjectsToolStripMenuItem_Click(this, null);
                     break;
             }
+
+            return false;
         }
 
         private void behaviorKeyStrokesToolStripMenuItem_Click(object sender, EventArgs e)

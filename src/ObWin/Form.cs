@@ -16,8 +16,11 @@ namespace ObWin
 
         public Form()  : base()
         {
-            MdiParent = _mdiContainer;
-            StartPosition = FormStartPosition.CenterParent;
+            if (!IsMdiContainer)
+            {
+                MdiParent = _mdiContainer;
+                StartPosition = FormStartPosition.CenterParent;
+            }
         }
 
         public static void SetMDIContainer(System.Windows.Forms.Form form)

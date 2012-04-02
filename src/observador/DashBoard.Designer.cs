@@ -112,22 +112,22 @@
             // trialsToolStripMenuItem
             // 
             this.trialsToolStripMenuItem.Name = "trialsToolStripMenuItem";
-            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.trialsToolStripMenuItem.Text = "Trials";
+            this.trialsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.trialsToolStripMenuItem.Text = "Trials (Ctrl+T)";
             this.trialsToolStripMenuItem.Click += new System.EventHandler(this.trialsToolStripMenuItem_Click);
             // 
             // subjectGroupsToolStripMenuItem
             // 
             this.subjectGroupsToolStripMenuItem.Name = "subjectGroupsToolStripMenuItem";
-            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.subjectGroupsToolStripMenuItem.Text = "Manage Subject Groups";
+            this.subjectGroupsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.subjectGroupsToolStripMenuItem.Text = "Manage Subject Groups (Ctrl+G)";
             this.subjectGroupsToolStripMenuItem.Click += new System.EventHandler(this.subjectGroupsToolStripMenuItem_Click);
             // 
             // subjectsToolStripMenuItem
             // 
             this.subjectsToolStripMenuItem.Name = "subjectsToolStripMenuItem";
-            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.subjectsToolStripMenuItem.Text = "Manage Subjects";
+            this.subjectsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
+            this.subjectsToolStripMenuItem.Text = "Manage Subjects (Ctrl+S)";
             this.subjectsToolStripMenuItem.Click += new System.EventHandler(this.subjectsToolStripMenuItem_Click);
             // 
             // adminToolStripMenuItem
@@ -187,7 +187,6 @@
             this.Name = "DashBoard";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.DashBoard_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DashBoard_KeyDown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
