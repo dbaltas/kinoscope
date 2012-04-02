@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\ModifiedEventListener.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="ExportRun.cs" />
     <Compile Include="Domain\ResearcherBehaviorKeyStroke.cs" />

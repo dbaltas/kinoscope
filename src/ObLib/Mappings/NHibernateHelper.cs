@@ -9,9 +9,13 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace ObLib.Domain
 {
+    public delegate void ActiveProjectModifiedHandler(object sender, EventArgs e);
+
     public class NHibernateHelper
     {
         private const string _DbFile = @"..\db\ob.db";
+
+        public static event ActiveProjectModifiedHandler ActiveProjectModified;
 
         private static FluentConfiguration _configuration = Fluently.Configure()
                         .Database(SQLiteConfiguration.Standard
@@ -31,7 +35,14 @@ namespace ObLib.Domain
             {
                 if (_sessionFactory == null)
                 {
-                    _sessionFactory = _configuration.BuildSessionFactory();
+                    try
+                    {
+                        _sessionFactory = _configuration.BuildSessionFactory();
+                    }
+                    catch (FluentConfigurationException exc)
+                    {
+                        Logger.logError(exc);
+                    }
                 }
                 return _sessionFactory;
             }
@@ -104,8 +115,19 @@ namespace ObLib.Domain
             if (_openSession == null)
             {
                 _openSession = SessionFactory.OpenSession();
+                ModifiedEventListener ModifiedListener = new ModifiedEventListener();
+                _openSession.GetSessionImplementation().Listeners.SaveEventListeners = new
+                    NHibernate.Event.ISaveOrUpdateEventListener[] { ModifiedListener};
             }
             return _openSession;
+        }
+
+        public static void OnActiveProjectModified(object sender, EventArgs e)
+        {
+            if (ActiveProjectModified != null)
+            {
+                ActiveProjectModified(sender, e);
+            }
         }
     }
 

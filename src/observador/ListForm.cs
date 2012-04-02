@@ -349,6 +349,12 @@ namespace observador
             }
         }
 
+        public override void Refresh()
+        {
+            OrderRefresh();
+            base.Refresh();
+        }
+
         private void dgvMain_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             OrderEdit();

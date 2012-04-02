@@ -88,6 +88,10 @@ namespace observador
             if (Researcher.Current != null)
             {
                 tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
+                if (Researcher.Current.ActiveProject != null)
+                {
+                    NHibernateHelper.ActiveProjectModified += new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
+                }
 
                 FillProjectsMenu();
                 if (Researcher.Current.IsAdmin)
@@ -182,6 +186,7 @@ namespace observador
             if (selectedProject != Researcher.Current.ActiveProject)
             {
                 Researcher.Current.ActiveProject = selectedProject;
+                NHibernateHelper.ActiveProjectModified +=new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
                 FillProjectsMenu();
                 DisplayActiveProject();
             }
@@ -217,6 +222,14 @@ namespace observador
         {
             FillProjectsMenu();
             DisplayActiveProject();
+        }
+
+        public void NHibernateHelper_ActiveProjectModified(object sender, EventArgs e)
+        {
+            foreach (Form f in MdiChildren)
+            {
+                f.Refresh();
+            }
         }
     }
 }
