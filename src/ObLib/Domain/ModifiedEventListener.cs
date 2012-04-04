@@ -18,7 +18,7 @@ namespace ObLib.Domain
         protected override object PerformSaveOrUpdate(NHibernate.Event.SaveOrUpdateEvent @event)
         {
             object _object = base.PerformSaveOrUpdate(@event);
-            if (@event.Entity == Researcher.Current.ActiveProject )
+            if (Researcher.Current != null && @event.Entity == Researcher.Current.ActiveProject )
             {
                 NHibernateHelper.OnActiveProjectModified(this, new EventArgs());
             }

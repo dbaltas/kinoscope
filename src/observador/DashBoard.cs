@@ -163,11 +163,10 @@ namespace observador
                 return;
             }
 
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+                string folderPath = String.Format(String.Format("{0}/{1}/images/",
+                ExportRun.EXPORT_DIRECTORY,
+                Researcher.Current.ActiveProject));
 
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                string folderPath = folderBrowserDialog.SelectedPath;
 
                 RunImageExporter runImageExporter = new RunImageExporter();
                 runImageExporter.FolderPath = folderPath;
@@ -178,7 +177,6 @@ namespace observador
                         "{1} images were exported in the following directory: {0}{2}",
                         Environment.NewLine, imagesExported, folderPath),
                     "Info");
-            }
         }
 
         void projectItem_Click(object sender, EventArgs e)

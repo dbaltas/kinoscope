@@ -14,6 +14,25 @@ namespace ObLib
         private const double _LATENCY_TIME_TO_IGNORE_IN_SECONDS = 10;
         private const double _LATENCY_MINIMUM_DURATION_IN_SECONDS = 3;
 
+        public const string EXPORT_DIRECTORY = @"../export/";
+
+        private string exportFile(Run run)
+        {
+            return String.Format("{0}/{1}/text/{1}-{2}-{3}.csv",
+                EXPORT_DIRECTORY,
+                run.Trial.Session.BehavioralTest.Project,
+                run.Trial.Session.BehavioralTest,
+                run.Subject);
+        }
+
+        private string exportFile(Trial trial)
+        {
+            return String.Format("{0}/{1}/text/{1}-{2}.csv",
+                EXPORT_DIRECTORY,
+                trial.Session.BehavioralTest.Project,
+                trial.Session.BehavioralTest);
+        }
+
         public void exportRun(Run run)
         {
             string headerRow = String.Join<String>("\t", 
@@ -21,10 +40,7 @@ namespace ObLib
             string dataRow = String.Join<String>("\t", 
                 fstRun(run));
 
-            string exportFilename = String.Format(@"../export/{0}-{1}-{2}.csv",
-                run.Trial.Session.BehavioralTest.Project,
-                run.Trial,
-                run.Subject);
+            string exportFilename = exportFile(run);
 
             string exportDirectory = Path.GetDirectoryName(exportFilename);
             if (!Directory.Exists(exportDirectory))
@@ -57,9 +73,7 @@ namespace ObLib
                 }
             }
 
-            string exportFilename = String.Format(@"../export/{0}-{1}.csv",
-                trial.Session.BehavioralTest.Project,
-                trial);
+            string exportFilename = exportFile(trial);
 
             string exportDirectory = Path.GetDirectoryName(exportFilename);
             if (!Directory.Exists(exportDirectory))

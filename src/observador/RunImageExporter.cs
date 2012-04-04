@@ -14,8 +14,23 @@ namespace observador
     {
         private Color[] _colors =
             new Color[] { Color.Black, Color.DimGray, Color.Gainsboro, Color.DarkGray, Color.Black };
+        private string _FolderPath;
 
-        public string FolderPath { get; set; }
+        public string FolderPath
+        {
+            get
+            {
+                return _FolderPath;
+            }
+            set
+            {
+                if (!System.IO.Directory.Exists(value))
+                {
+                    System.IO.Directory.CreateDirectory(value);
+                }
+                _FolderPath = value;
+            }
+        }
 
         public int Export(Project project)
         {
@@ -55,7 +70,7 @@ namespace observador
             visualiser.UpdateInterval(run.Trial.Duration * 1000);
             visualiser.Stop(DateTime.Now);
 
-            string fileName = string.Format("{0}-{1}-{2}.png", run.Id, run.Trial, run.Subject);
+            string fileName = string.Format("{0}-{1}-{2}.png", run.Trial.Session.BehavioralTest.Project, run.Trial.Session.BehavioralTest, run.Subject);
 
             Control visualiserControl = visualiser as Control;
 
