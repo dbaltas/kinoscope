@@ -72,9 +72,16 @@ namespace observador
 
             if (cbBehavior.Items.Count == 0)
             {
-                MessageBox.Show("All behaviors have been assigned custom key strokes.", "No more behaviors");
-                Close();
+                // can not close form on onload event, thus handling this in the shown event
+                // code should be refactored to do the checks before on load.
+                this.Shown += new EventHandler(ResearcherBehaviorKeyStrokeForm_Shown);
             }
+        }
+
+        void ResearcherBehaviorKeyStrokeForm_Shown(object sender, EventArgs e)
+        {
+            this.Close();
+            MessageBox.Show("All behaviors have been assigned custom key strokes.", "No more behaviors");
         }
 
         private void bCancel_Click(object sender, EventArgs e)
