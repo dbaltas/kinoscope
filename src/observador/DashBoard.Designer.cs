@@ -44,6 +44,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
+            this.projectDashboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +67,7 @@
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.projectDashboardToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
             this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
@@ -74,7 +76,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -175,6 +177,13 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
+            // projectDashboardToolStripMenuItem
+            // 
+            this.projectDashboardToolStripMenuItem.Name = "projectDashboardToolStripMenuItem";
+            this.projectDashboardToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.projectDashboardToolStripMenuItem.Text = "Project Dashboard (Ctrl+D)";
+            this.projectDashboardToolStripMenuItem.Click += new System.EventHandler(this.projectDashboardToolStripMenuItem_Click);
+            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,5 +223,6 @@
         private System.Windows.Forms.ToolStripMenuItem trialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem behaviorKeyStrokesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem projectDashboardToolStripMenuItem;
     }
 }

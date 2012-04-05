@@ -25,18 +25,16 @@ namespace observador
             SubjectGroup emptySubjectGroup = new SubjectGroup();
             emptySubjectGroup.Id = -1;
             emptySubjectGroup.Name = "<None>";
-
             comboBoxSubjectGroups.Add(emptySubjectGroup);
             comboBoxSubjectGroups.AddRange(Researcher.Current.ActiveProject.SubjectGroups);
 
             cbSubjectGroup.DataSource = comboBoxSubjectGroups;
+            cbSex.SelectedIndex = 1;
         }
 
         public SubjectForm(Subject subject)
             : this()
         {
-            cbSex.SelectedIndex = 0;
-
             if (subject != null)
             {
                 _subject = subject;

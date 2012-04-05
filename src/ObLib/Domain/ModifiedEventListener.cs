@@ -20,12 +20,12 @@ namespace ObLib.Domain
             object _object = base.PerformSaveOrUpdate(@event);
             if (Researcher.Current != null && @event.Entity == Researcher.Current.ActiveProject )
             {
-                NHibernateHelper.OnActiveProjectModified(this, new EventArgs());
+                NHibernateHelper.OnActiveProjectModified(@event.Entity, new EventArgs());
             }
             // on project new/update/delete the researcher save is being called
             if (@event.Entity == Researcher.Current)
             {
-                NHibernateHelper.OnProjectModified(this, new EventArgs());
+                NHibernateHelper.OnProjectModified(@event.Entity, new EventArgs());
             }
 
             return _object;

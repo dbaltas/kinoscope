@@ -11,12 +11,14 @@ namespace ObLib.Domain
 {
     public delegate void ActiveProjectModifiedHandler(object sender, EventArgs e);
     public delegate void ProjectModifiedHandler(object sender, EventArgs e);
+    public delegate void ActiveProjectChangedHandler(object sender, EventArgs e);
 
     public class NHibernateHelper
     {
         private const string _DbFile = @"..\db\ob.db";
 
         public static event ActiveProjectModifiedHandler ActiveProjectModified;
+        public static event ActiveProjectChangedHandler ActiveProjectChanged;
         public static event ProjectModifiedHandler ProjectModified;
 
         private static FluentConfiguration _configuration = Fluently.Configure()
@@ -129,6 +131,14 @@ namespace ObLib.Domain
             if (ActiveProjectModified != null)
             {
                 ActiveProjectModified(sender, e);
+            }
+        }
+
+        public static void OnActiveProjectChanged(object sender, EventArgs e)
+        {
+            if (ActiveProjectChanged != null)
+            {
+                ActiveProjectChanged(sender, e);
             }
         }
 

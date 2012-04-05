@@ -25,7 +25,18 @@ namespace ObLib.Domain
             }
         }
 
-        public virtual Project ActiveProject { get; set; }
+        private Project _ActiveProject;
+        public virtual Project ActiveProject {
+            get
+            {
+                return _ActiveProject;
+            }
+            set
+            {
+                _ActiveProject = value;
+                NHibernateHelper.OnActiveProjectChanged(_ActiveProject, new EventArgs());
+            }
+        }
         public virtual bool IsAdmin
         {
             get
