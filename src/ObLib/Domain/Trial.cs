@@ -10,6 +10,7 @@ namespace ObLib.Domain
         public virtual Session Session { get; set; }
         public virtual string Name { get; set; }
         public virtual int Duration { get; set; }
+        [System.Xml.Serialization.XmlIgnore()]
         public virtual IList<Run> Runs { get; set; }
         public virtual int CompleteRunCount
         {

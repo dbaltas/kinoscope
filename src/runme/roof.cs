@@ -39,6 +39,10 @@ using DbMigrations;
                     case "b":
                         ListBehaviors();
                         break;
+                    case "s":
+                    case "serialize":
+                        SerializeTest(inputArgs);
+                        break;
                     case "insert":
                         InsertProject();
                         break;
@@ -70,6 +74,40 @@ using DbMigrations;
                         break;
                 }
             }
+        }
+
+        private static void SerializeTest(string[] args)
+        {
+            BehavioralTest test = new BehavioralTest();
+            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(test.GetType());
+            FileStream stream;
+
+            if (args.Length >= 2 && args[1] == "u")
+            {
+                stream = new FileStream("a.xml", FileMode.Open);
+                test = (BehavioralTest)x.Deserialize(stream);
+                foreach (Session s in test.SessionsForSerialization)
+                {
+                    test.Sessions.Add(s);
+                    foreach (Trial t in s.TrialsForSerialization)
+                    {
+                        s.Trials.Add(t);
+                    }
+                }
+                stream.Close();
+                return;
+            }
+            Project project = new Project();
+            test.BehavioralTestType = BehavioralTestType.Fst;
+            Session session = new Session();
+            Trial trial = new Trial();
+            trial.Duration = 360;
+            session.TrialsForSerialization.Add(trial);
+            test.SessionsForSerialization.Add(session);
+
+            stream = new FileStream("a.xml", FileMode.Create);
+            x.Serialize(stream, test);
+            stream.Close();
         }
 
         private static void Migrations(string[] args)
@@ -119,6 +157,7 @@ using DbMigrations;
             System.Console.WriteLine("  insert: insert a new researcher and project(with default values, not customizable)");
             System.Console.WriteLine("  find [id]: find a researcher from the database. ex: 'find 1' brings the researcher with id=1");
             System.Console.WriteLine("  auth: authenticate researcher, provide username, password");
+            System.Console.WriteLine("  serialize: serialize objects for later use");
             System.Console.WriteLine("  all: display all researchers");
             System.Console.WriteLine("  migrations: load db.migrator (alias m)");
             System.Console.WriteLine("*********************************");

@@ -9,11 +9,14 @@ namespace ObLib.Domain
     {
         public virtual BehavioralTest BehavioralTest { get; set; }
         public virtual string Name { get; set; }
+        [System.Xml.Serialization.XmlIgnore()]
         public virtual IList<Trial> Trials { get; set; }
+        public virtual List<Trial> TrialsForSerialization { get; set; }
 
         public Session()
         {
             Trials = new List<Trial>();
+            TrialsForSerialization = new List<Trial>();
         }
 
         public virtual void AddTrial(Trial trial)

@@ -7,14 +7,18 @@ namespace ObLib.Domain
 {
     public class BehavioralTest : ActiveRecordBase<BehavioralTest>
     {
+        [System.Xml.Serialization.XmlIgnore()]
         public virtual Project Project { get; set; }
         public virtual BehavioralTestType BehavioralTestType { get; set; }
         public virtual string Name { get; set; }
+        [System.Xml.Serialization.XmlIgnore()]
         public virtual IList<Session> Sessions { get; set; }
+        public virtual List<Session> SessionsForSerialization { get; set; }
 
         public BehavioralTest()
         {
             Sessions = new List<Session>();
+            SessionsForSerialization = new List<Session>();
         }
 
         public virtual void AddSession(Session session)
