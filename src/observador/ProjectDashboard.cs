@@ -35,6 +35,7 @@ namespace observador
                     control.Dispose();
                 }
             }
+            btnAddProject.Visible = false;
 
             if (project == null)
             {
@@ -62,23 +63,16 @@ namespace observador
                 tabIndex++;
             }
 
-
             button = new Button();
-            button.Location = new Point(40, 180);
-            button.Size = new System.Drawing.Size(200, 60);
+            button.Location = new Point(x-250, 180);
+            button.Size = new System.Drawing.Size(200, 40);
             button.TabIndex = tabIndex;
             button.Text = "add new subject";
+            button.Tag = new Subject();
             button.Click += new System.EventHandler(this.btnAddSubject_Click);
             panel1.Controls.Add(button);
 
-            button = new Button();
-            button.Location = new Point(290, 180);
-            button.Size = new System.Drawing.Size(200, 60);
-            button.TabIndex = tabIndex;
-            button.Click += new System.EventHandler(this.btnAddBehavioralTest_Click);
-            button.Text = "add new behavioral test";
-            panel1.Controls.Add(button);
-
+            this.Size = new Size(x + 30, this.Size.Height);
         }
 
         private void btnAddProject_Click(object sender, EventArgs e)
@@ -91,12 +85,6 @@ namespace observador
         {
             SubjectForm form = new SubjectForm();
             form.Show();
-        }
-
-
-        private void btnAddBehavioralTest_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Method not implemented");
         }
 
         private void btnBehavioralTest_Click(object sender, EventArgs e)

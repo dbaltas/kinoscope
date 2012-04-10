@@ -98,13 +98,17 @@ namespace ObLib.Domain
             SeedData.AddInitialData();
         }
 
-        public static void BuildSchema()
+        public static void CreateDatabaseDirectoryIfNotExist()
         {
             string dbDirectory = Path.GetDirectoryName(DbFile);
             if (!Directory.Exists(dbDirectory))
             {
                 Directory.CreateDirectory(dbDirectory);
             }
+        }
+        public static void BuildSchema()
+        {
+            CreateDatabaseDirectoryIfNotExist();
             if (DatabaseExists)
             {
                 DropDatabase();

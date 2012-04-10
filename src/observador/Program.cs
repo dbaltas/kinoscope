@@ -34,6 +34,7 @@ namespace observador
 
             if (!NHibernateHelper.DatabaseExists)
             {
+                NHibernateHelper.CreateDatabaseDirectoryIfNotExist();
                 if (MessageBox.Show("No Database Found. Click ok to Create new database. or cancel to exit.", GetTitle(), MessageBoxButtons.OKCancel) != DialogResult.OK)
                 {
                     return;

@@ -19,21 +19,21 @@ namespace observador
         public ProjectForm()
         {
             InitializeComponent();
+            if (_project == null)
+            {
+                cbTemplate.DataSource = BehavioralTestType.All();
+                bSave.Text = "Create Project";
+            }
         }
 
         public ProjectForm(Project project)
             : this()
         {
-            if (project != null)
+            _project = project;
+            if (_project != null)
             {
-                _project = project;
-                txtName.Text = project.Name;
+                txtName.Text = _project.Name;
                 cbTemplate.Enabled = false;
-            }
-            else
-            {
-                cbTemplate.DataSource = BehavioralTestType.All();
-                bSave.Text = "Create Project";
             }
         }
 

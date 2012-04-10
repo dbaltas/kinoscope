@@ -103,6 +103,7 @@ namespace ObLib
             headers.Add("TrialDuration");
             headers.Add("DateRun");
             headers.Add("TimeRun");
+            headers.Add("Number of Events");
 
             // Duration
             foreach (Behavior behavior in behavioralTest.GetBehaviors())
@@ -152,6 +153,7 @@ namespace ObLib
             data.Add(run.Trial.Duration.ToString());
             data.Add(run.TmCreated.ToString("dd/MM/yyyy"));
             data.Add(run.TmCreated.ToString("HH:mm:ss"));
+            data.Add(run.RunEvents.Count.ToString());
 
             List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
             sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
