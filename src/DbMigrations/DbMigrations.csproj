@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="001_InitialSchema.cs" />
+    <Compile Include="002_EntityTemplates.cs" />
     <Compile Include="MigrationManager.cs" />
     <Compile Include="MigratorConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
