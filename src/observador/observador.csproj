@@ -61,11 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\BehavioralTestTemplateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\BehavioralTestTemplateForm.Designer.cs">
+      <DependentUpon>BehavioralTestTemplateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ResearcherForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Admin\ResearcherForm.Designer.cs">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\BehavioralTestTemplateListForm.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="BehaviorColorAssigner.cs" />
     <Compile Include="BehaviorListEventVisualiser.cs">
@@ -151,6 +160,9 @@
     <Compile Include="TextEventVisualiser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <EmbeddedResource Include="Admin\BehavioralTestTemplateForm.resx">
+      <DependentUpon>BehavioralTestTemplateForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Admin\ResearcherForm.resx">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
     </EmbeddedResource>

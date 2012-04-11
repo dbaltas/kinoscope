@@ -98,9 +98,14 @@ namespace observador
                 if (Researcher.Current.IsAdmin)
                 {
                     adminToolStripMenuItem.Visible = true;
+                    projectDashboardToolStripMenuItem_Click(null, null);
+//                    templatesToolStripMenuItem_Click(null, null);
+                }
+                else
+                {
+                    projectDashboardToolStripMenuItem_Click(null, null);
                 }
                 DisplayActiveProject();
-                projectDashboardToolStripMenuItem_Click(null, null);
             }
         }
 
@@ -241,6 +246,11 @@ namespace observador
         {
             ProjectDashboard projectDashboard = new ProjectDashboard();
             projectDashboard.Show();
+        }
+
+        private void templatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new BehavioralTestTemplateListForm()).Show();
         }
 
     }

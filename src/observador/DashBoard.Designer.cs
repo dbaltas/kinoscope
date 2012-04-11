@@ -30,6 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectDashboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,7 +45,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
-            this.projectDashboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.templatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -72,6 +73,13 @@
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
             this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.homeToolStripMenuItem.Text = "Home";
+            // 
+            // projectDashboardToolStripMenuItem
+            // 
+            this.projectDashboardToolStripMenuItem.Name = "projectDashboardToolStripMenuItem";
+            this.projectDashboardToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.projectDashboardToolStripMenuItem.Text = "Project Dashboard (Ctrl+D)";
+            this.projectDashboardToolStripMenuItem.Click += new System.EventHandler(this.projectDashboardToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -135,7 +143,8 @@
             // adminToolStripMenuItem
             // 
             this.adminToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.researchersToolStripMenuItem});
+            this.researchersToolStripMenuItem,
+            this.templatesToolStripMenuItem});
             this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
             this.adminToolStripMenuItem.Size = new System.Drawing.Size(55, 20);
             this.adminToolStripMenuItem.Text = "Admin";
@@ -144,7 +153,7 @@
             // researchersToolStripMenuItem
             // 
             this.researchersToolStripMenuItem.Name = "researchersToolStripMenuItem";
-            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
             // 
@@ -177,12 +186,12 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
-            // projectDashboardToolStripMenuItem
+            // templatesToolStripMenuItem
             // 
-            this.projectDashboardToolStripMenuItem.Name = "projectDashboardToolStripMenuItem";
-            this.projectDashboardToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.projectDashboardToolStripMenuItem.Text = "Project Dashboard (Ctrl+D)";
-            this.projectDashboardToolStripMenuItem.Click += new System.EventHandler(this.projectDashboardToolStripMenuItem_Click);
+            this.templatesToolStripMenuItem.Name = "templatesToolStripMenuItem";
+            this.templatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.templatesToolStripMenuItem.Text = "Templates";
+            this.templatesToolStripMenuItem.Click += new System.EventHandler(this.templatesToolStripMenuItem_Click);
             // 
             // DashBoard
             // 
@@ -224,5 +233,6 @@
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem behaviorKeyStrokesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem projectDashboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem templatesToolStripMenuItem;
     }
 }
