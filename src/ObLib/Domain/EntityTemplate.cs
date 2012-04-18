@@ -34,20 +34,32 @@ namespace ObLib.Domain
 
         public virtual void SaveBehavioralTest(BehavioralTest behavioralTest)
         {
-            System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(behavioralTest.GetType());
-
-            string template;
-            using (System.IO.StringWriter stringWriter = new System.IO.StringWriter())
+            try
             {
-                x.Serialize(stringWriter, behavioralTest);
-                template = stringWriter.ToString();
+                System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(behavioralTest.GetType());
+
+                string template;
+
+                using (System.IO.StringWriter stringWriter = new System.IO.StringWriter())
+                {
+                    x.Serialize(stringWriter, behavioralTest);
+                    template = stringWriter.ToString();
+                }
+
+
+                Name = behavioralTest.Name;
+                Entity = EntityType.BehavioralTest;
+                Template = template;
+                Save();
             }
-
-
-            Name = behavioralTest.Name;
-            Entity = EntityType.BehavioralTest;
-            Template = template;
-            Save();
+            catch (Exception exc)
+            {
+                if (exc.InnerException != null)
+                {
+                    exc = exc.InnerException;
+                }
+                Logger.logError(exc);
+            }
         }
 
         public static EntityTemplate CreateSingleSessionSingleTrialTemplate(BehavioralTestType behavioralTestType, string name, int duration)
