@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 using ObLib.Domain;
@@ -45,6 +46,12 @@ namespace observador
 
         private void bSave_Click(object sender, EventArgs e)
         {
+            if (!ValidateChildren())
+            {
+                ShowInputError();
+                return;
+            }
+
             if (Save())
             {
                 Close();
@@ -74,6 +81,50 @@ namespace observador
             }
 
             return true;
+        }
+
+        private void txtName_Validating(object sender, CancelEventArgs e)
+        {
+            Control control = (Control)sender;
+            string text = control.Text;
+
+            if (text.Length == 0)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(control, "Name can not be empty.");
+                return;
+            }
+
+            if (!Regex.IsMatch(text, "^[a-zA-Z0-9_]*$"))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(control, "Name can only contain letters, numbers and underscores.");
+                return;
+            }
+
+            errorProvider.SetError(control, "");
+        }
+
+        private void txtDuration_Validating(object sender, CancelEventArgs e)
+        {
+            Control control = (Control)sender;
+            string text = control.Text;
+
+            int result;
+            if (!Int32.TryParse(text, out result))
+            {
+                e.Cancel = true;
+                errorProvider.SetError(control, "Please provide a valid number for duration.");
+                return;
+            }
+            if (result <= 0)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(control, "Please provide a positive number for duration.");
+                return;
+            }
+
+            errorProvider.SetError(control, "");
         }
 
     }

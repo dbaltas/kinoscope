@@ -84,6 +84,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(181, 20);
             this.txtName.TabIndex = 4;
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // label1
             // 
@@ -162,6 +163,7 @@
             this.txtDuration.Name = "txtDuration";
             this.txtDuration.Size = new System.Drawing.Size(56, 20);
             this.txtDuration.TabIndex = 12;
+            this.txtDuration.Validating += new System.ComponentModel.CancelEventHandler(this.txtDuration_Validating);
             // 
             // cmbTrialCount
             // 
