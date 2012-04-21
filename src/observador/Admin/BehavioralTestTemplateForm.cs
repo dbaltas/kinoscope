@@ -19,7 +19,25 @@ namespace observador
         public BehavioralTestTemplateForm()
         {            
             InitializeComponent();
-            cmbBehavioralTestType.DataSource = BehavioralTestType.All();
+
+            List<BehavioralTestType> cbBehavioralTestTypes = new List<BehavioralTestType>();
+
+            BehavioralTestType emptyBehavioralTestType = new BehavioralTestType();
+            emptyBehavioralTestType.Id = -1;
+            emptyBehavioralTestType.Name = "[Please Select]";
+
+            cbBehavioralTestTypes.Add(emptyBehavioralTestType);
+
+            // code below throws following exception thus the foreach
+            // Unable to cast object of type 'System.Collections.ArrayList' to type 'System.Collections.Generic.List`1[ObLib.Domain.BehavioralTestType]'
+            // List<BehavioralTestType> allBehavioralTestTypes = (List<BehavioralTestType>)(BehavioralTestType.All());
+            // cbBehavioralTestTypes.AddRange(allBehavioralTestTypes);
+            foreach (BehavioralTestType type in BehavioralTestType.All())
+            {
+                cbBehavioralTestTypes.Add(type);
+            }
+            cmbBehavioralTestType.DataSource = cbBehavioralTestTypes;
+
             cmbBehavioralTestType.SelectedIndex = 0;
             cmbSessionCount.SelectedIndex = 0;
             cmbTrialCount.SelectedIndex = 0;
@@ -29,11 +47,11 @@ namespace observador
             : this()
         {
             _entityTemplate = entityTemplate;
-            if (entityTemplate != null)
+            if (_entityTemplate != null)
             {
-                txtName.Text = entityTemplate.Name;
+                txtName.Text = _entityTemplate.Name;
                 // deserialize template and read duration txtDuration.Text = entityTemplate.
-                BehavioralTest behavioralTest = EntityTemplate.GetAsBehavioralTest(entityTemplate);
+                BehavioralTest behavioralTest = EntityTemplate.GetAsBehavioralTest(_entityTemplate);
                 txtDuration.Text = behavioralTest.Sessions[0].Trials[0].Duration.ToString();
                 cmbBehavioralTestType.SelectedItem = behavioralTest.BehavioralTestType;
             }
@@ -121,6 +139,21 @@ namespace observador
             {
                 e.Cancel = true;
                 errorProvider.SetError(control, "Please provide a positive number for duration.");
+                return;
+            }
+
+            errorProvider.SetError(control, "");
+        }
+
+        private void cmbBehavioralTestType_Validating(object sender, CancelEventArgs e)
+        {
+            ComboBox control = (ComboBox)sender;
+            int index = control.SelectedIndex;
+
+            if (index == 0)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(control, "Please select a behavioral test type.");
                 return;
             }
 

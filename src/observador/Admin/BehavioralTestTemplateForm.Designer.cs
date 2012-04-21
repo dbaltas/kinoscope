@@ -45,6 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cmbBehavioralTestType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -84,6 +85,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(181, 20);
             this.txtName.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.txtName, "Name as will be displayed to the researcher");
             this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // label1
@@ -193,6 +195,7 @@
             this.cmbBehavioralTestType.Name = "cmbBehavioralTestType";
             this.cmbBehavioralTestType.Size = new System.Drawing.Size(169, 21);
             this.cmbBehavioralTestType.TabIndex = 2;
+            this.cmbBehavioralTestType.Validating += new System.ComponentModel.CancelEventHandler(this.cmbBehavioralTestType_Validating);
             // 
             // label6
             // 
@@ -202,6 +205,10 @@
             this.label6.Size = new System.Drawing.Size(105, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "BehavioralTest Type";
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // BehavioralTestTemplateForm
             // 
@@ -252,5 +259,6 @@
         private System.Windows.Forms.TextBox txtDuration;
         private System.Windows.Forms.ComboBox cmbBehavioralTestType;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
