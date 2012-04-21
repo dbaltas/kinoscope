@@ -33,7 +33,14 @@ namespace ObLib.Domain
 
         public override string ToString()
         {
-            return Name;
+            if (Session.Trials.Count > 1)
+            {
+                return String.Format("{0}:{1}", Session, Name);
+            }
+            else
+            {
+                return String.Format("{0}", Session);
+            }
         }
 
         /// <summary>

@@ -27,7 +27,14 @@ namespace ObLib.Domain
 
         public override string ToString()
         {
-            return String.Format("{0}: {1}", BehavioralTest.Name, Name);
+            if (BehavioralTest.Sessions.Count > 1)
+            {
+                return String.Format("{0}:{1}", BehavioralTest.Name, Name);
+            }
+            else
+            {
+                return String.Format("{0}", BehavioralTest.Name);
+            }
         }
     }
 }

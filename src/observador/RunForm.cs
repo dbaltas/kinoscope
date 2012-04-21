@@ -28,25 +28,20 @@ namespace observador
         private int _durationMilliseconds;
         private BehaviorColorAssigner _behaviorColorAssigner;
 
-        public RunForm(Run run)
+        public RunForm(Run run = null)
         {
-            _run = run;
-            _durationMilliseconds = run.Trial.Duration * 1000;
-
-            InitializeAllowedBehaviors();
-
-            _behaviorColorAssigner = new BehaviorColorAssigner(_allowedBehaviors,
-                new Color[] { Color.Coral, Color.MediumSeaGreen, Color.PaleGoldenrod, Color.DarkSeaGreen, Color.Gray });
-
             InitializeComponent();
+            panel1.Location = eventVisualiserBehaviorList.Location;
+            panel1.Anchor = eventVisualiserBehaviorList.Anchor;
 
-            InitializeEventVisualisers();
-
-            RefreshStateBehaviorLabel(null);
-
-            lblSubjectCode.Text = run.Subject.Code;
-
-            SetStatus(RunStatus.Ready);
+            if (run != null)
+            {
+                OnRunSelect(run);
+            }
+            else
+            {
+                InitializeNoRunControls();
+            }
         }
 
         #region Control initialization methods
@@ -70,9 +65,47 @@ namespace observador
             }
         }
 
+        private void InitializeNoRunControls()
+        {
+            ShowHideControlsOnIsRunActive(false);
+            cbTrial.DataSource = Researcher.Current.ActiveProject.Trials;
+        }
+
+        private void ShowHideControlsOnIsRunActive(bool isRunActive)
+        {
+            eventVisualiserBehaviorList.Visible = isRunActive;
+            panel1.Visible = !isRunActive;
+            bSave.Visible = isRunActive;
+            bClear.Visible = isRunActive;
+            bCancel.Text = isRunActive ? "Discard" : "Cancel";
+        }
+
         #endregion
 
         #region Events
+
+        protected void OnRunSelect(Run run)
+        {
+            ShowHideControlsOnIsRunActive(true);
+
+            _run = run;
+            _durationMilliseconds = run.Trial.Duration * 1000;
+
+            InitializeAllowedBehaviors();
+
+            _behaviorColorAssigner = new BehaviorColorAssigner(_allowedBehaviors,
+                new Color[] { Color.Coral, Color.MediumSeaGreen, Color.PaleGoldenrod, Color.DarkSeaGreen, Color.Gray });
+
+            InitializeEventVisualisers();
+
+            RefreshStateBehaviorLabel(null);
+
+            lblSubjectCode.Text = run.Subject.Code;
+            Text = String.Format("Project: {2} - Scoring Subject: {0} for Trial: {1}",
+                run.Subject, run.Trial, run.Trial.Session.BehavioralTest.Project);
+
+            SetStatus(RunStatus.Ready);
+        }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
@@ -337,5 +370,62 @@ namespace observador
         }
 
         #endregion
+
+        private void cbTrial_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Trial trial = (Trial)(cbTrial.SelectedItem);
+            trial.PopulateWithRuns();
+
+            List<Run> runs = new List<Run>();
+            Run emptyRun = new Run();
+            emptyRun.Id = -1;
+            emptyRun.Trial = trial;
+            runs.Add(emptyRun);
+            foreach (Run run in trial.Runs)
+            {
+                runs.Add(run);
+            }
+            cbRun.DataSource = runs;
+            cbRun.DisplayMember = "DisplayForTrial";
+        }
+
+        private void cbRun_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbRun.SelectedIndex == 0)
+            {
+                return;
+            }
+            Run run = (Run)(cbRun.SelectedItem);
+            String message = String.Format("Score\nSubject: {0}\nTrial: {1}\nProject: {2}",
+                run.Subject, run.Trial, run.Trial.Session.BehavioralTest.Project);
+            MessageBoxIcon messageBoxIcon = MessageBoxIcon.Information;
+
+            if (run.Status == Run.RunStatus.Complete) 
+            {
+                message = String.Format("This subject has already been scored. Are you sure you wish to overwrite the existing scoring?\n{0}", message);
+                messageBoxIcon = MessageBoxIcon.Exclamation;
+            }
+
+            DialogResult dialogResult = MessageBox.Show(message, "Score Run", MessageBoxButtons.YesNo, messageBoxIcon);
+
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                OnRunSelect(run);
+            }
+        }
+
+        public override void Refresh()
+        {
+            base.Refresh();
+
+            if (_run != null)
+            {
+                OnRunSelect(_run);
+            }
+            else
+            {
+                InitializeNoRunControls();
+            }
+        }
     }
 }

@@ -35,6 +35,17 @@ namespace ObLib.Domain
                 return Status == RunStatus.NotRun ? "Not Run" : Status.ToString();
             }
         }
+        public virtual string DisplayForTrial
+        {
+            get
+            {
+                if (Id == -1)
+                {
+                    return "[please select]";
+                }
+                return String.Format("{0} ({1})", Subject, StatusDescription);
+            }
+        }
 
         public Run()
         {

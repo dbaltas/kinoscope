@@ -89,6 +89,7 @@ namespace observador
             {
                 tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
                 NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
+                NHibernateHelper.ActiveProjectChanged += new ActiveProjectChangedHandler(NHibernateHelper_ActiveProjectChanged);
                 if (Researcher.Current.ActiveProject != null)
                 {
                     NHibernateHelper.ActiveProjectModified += new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
@@ -98,8 +99,9 @@ namespace observador
                 if (Researcher.Current.IsAdmin)
                 {
                     adminToolStripMenuItem.Visible = true;
-                    projectDashboardToolStripMenuItem_Click(null, null);
-//                    templatesToolStripMenuItem_Click(null, null);
+                    scoreToolStripMenuItem_Click(null, null);
+//                    projectDashboardToolStripMenuItem_Click(null, null);
+                    //templatesToolStripMenuItem_Click(null, null);
                 }
                 else
                 {
@@ -209,6 +211,9 @@ namespace observador
                 case Keys.Control | Keys.T:
                     trialsToolStripMenuItem_Click(this, null);
                     break;
+                case Keys.Control | Keys.R:
+                    scoreToolStripMenuItem_Click(this, null);
+                    break;
                 case Keys.Control | Keys.S:
                     subjectsToolStripMenuItem_Click(this, null);
                     break;
@@ -236,6 +241,14 @@ namespace observador
             }
         }
 
+        void NHibernateHelper_ActiveProjectChanged(object sender, EventArgs e)
+        {
+            foreach (Form f in MdiChildren)
+            {
+                f.Refresh();
+            }
+        }
+
         private void NHibernateHelper_ProjectModified(object sender, EventArgs e)
         {
             FillProjectsMenu();
@@ -251,6 +264,11 @@ namespace observador
         private void templatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             (new BehavioralTestTemplateListForm()).Show();
+        }
+
+        private void scoreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            (new RunForm()).Show();
         }
 
     }
