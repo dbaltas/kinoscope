@@ -76,6 +76,12 @@
     <Compile Include="Admin\BehavioralTestTemplateListForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="BehavioralTestTemplateSessionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BehavioralTestTemplateSessionControl.Designer.cs">
+      <DependentUpon>BehavioralTestTemplateSessionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="BehaviorColorAssigner.cs" />
     <Compile Include="BehaviorListEventVisualiser.cs">
       <SubType>Component</SubType>
@@ -165,6 +171,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\ResearcherForm.resx">
       <DependentUpon>ResearcherForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BehavioralTestTemplateSessionControl.resx">
+      <DependentUpon>BehavioralTestTemplateSessionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectDashboard.resx">
       <DependentUpon>ProjectDashboard.cs</DependentUpon>

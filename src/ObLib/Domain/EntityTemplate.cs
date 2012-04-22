@@ -22,16 +22,6 @@ namespace ObLib.Domain
             return Name;
         }
 
-        public virtual void UpdateAndSave(BehavioralTestType behavioralTestType, string name, int duration)
-        {
-            BehavioralTest behavioralTest = GetAsBehavioralTest(this);
-            behavioralTest.BehavioralTestType = behavioralTestType;
-            behavioralTest.Name = name;
-            behavioralTest.Sessions[0].Trials[0].Duration = duration;
-
-            SaveBehavioralTest(behavioralTest);
-        }
-
         public virtual void SaveBehavioralTest(BehavioralTest behavioralTest)
         {
             try
@@ -39,6 +29,16 @@ namespace ObLib.Domain
                 System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(behavioralTest.GetType());
 
                 string template;
+
+                behavioralTest.SessionsForSerialization.Clear();
+                foreach (Session session in behavioralTest.Sessions)
+                {
+                    behavioralTest.SessionsForSerialization.Add(session);
+                    foreach (Trial trial in session.Trials)
+                    {
+                        session.TrialsForSerialization.Add(trial);
+                    }
+                }
 
                 using (System.IO.StringWriter stringWriter = new System.IO.StringWriter())
                 {
@@ -60,23 +60,6 @@ namespace ObLib.Domain
                 }
                 Logger.logError(exc);
             }
-        }
-
-        public static EntityTemplate CreateSingleSessionSingleTrialTemplate(BehavioralTestType behavioralTestType, string name, int duration)
-        {
-            BehavioralTest test = new BehavioralTest();
-            Session session = new Session();
-            Trial trial = new Trial();
-
-            test.BehavioralTestType = behavioralTestType;
-            test.Name = name;
-            trial.Duration = duration;
-            session.TrialsForSerialization.Add(trial);
-            test.SessionsForSerialization.Add(session);
-
-            EntityTemplate entityTemplate = new EntityTemplate();
-            entityTemplate.SaveBehavioralTest(test);
-            return entityTemplate;
         }
 
         public static BehavioralTest GetAsBehavioralTest(EntityTemplate entityTemplate)

@@ -15,10 +15,12 @@ namespace observador
     public partial class BehavioralTestTemplateForm : ObWin.Form
     {
         private EntityTemplate _entityTemplate = null;
+        private BehavioralTest _BehavioralTestTemplate;
 
-        public BehavioralTestTemplateForm()
+        public BehavioralTestTemplateForm(EntityTemplate entityTemplate = null)
         {            
             InitializeComponent();
+            flowLayoutPanel1.HorizontalScroll.Visible = false;
 
             List<BehavioralTestType> cbBehavioralTestTypes = new List<BehavioralTestType>();
 
@@ -28,10 +30,6 @@ namespace observador
 
             cbBehavioralTestTypes.Add(emptyBehavioralTestType);
 
-            // code below throws following exception thus the foreach
-            // Unable to cast object of type 'System.Collections.ArrayList' to type 'System.Collections.Generic.List`1[ObLib.Domain.BehavioralTestType]'
-            // List<BehavioralTestType> allBehavioralTestTypes = (List<BehavioralTestType>)(BehavioralTestType.All());
-            // cbBehavioralTestTypes.AddRange(allBehavioralTestTypes);
             foreach (BehavioralTestType type in BehavioralTestType.All())
             {
                 cbBehavioralTestTypes.Add(type);
@@ -39,22 +37,29 @@ namespace observador
             cmbBehavioralTestType.DataSource = cbBehavioralTestTypes;
 
             cmbBehavioralTestType.SelectedIndex = 0;
-            cmbSessionCount.SelectedIndex = 0;
-            cmbTrialCount.SelectedIndex = 0;
-        }
 
-        public BehavioralTestTemplateForm(EntityTemplate entityTemplate)
-            : this()
-        {
-            _entityTemplate = entityTemplate;
-            if (_entityTemplate != null)
+            _BehavioralTestTemplate = new BehavioralTest();
+
+            if (entityTemplate != null)
             {
+                _entityTemplate = entityTemplate;
                 txtName.Text = _entityTemplate.Name;
+                textBox1.Text = _entityTemplate.Template;
+
                 // deserialize template and read duration txtDuration.Text = entityTemplate.
                 BehavioralTest behavioralTest = EntityTemplate.GetAsBehavioralTest(_entityTemplate);
-                txtDuration.Text = behavioralTest.Sessions[0].Trials[0].Duration.ToString();
+                _BehavioralTestTemplate = behavioralTest;
                 cmbBehavioralTestType.SelectedItem = behavioralTest.BehavioralTestType;
+
+                for (int index = 0; index < behavioralTest.Sessions.Count; index++)
+                {
+                    Session session = behavioralTest.Sessions[index];
+                    AddSessionControl(session, index);
+                }
             }
+
+            cmbSessionCount.SelectedItem = _BehavioralTestTemplate.Sessions.Count.ToString();
+
         }
 
         private void bCancel_Click(object sender, EventArgs e)
@@ -81,18 +86,27 @@ namespace observador
             EntityTemplate entityTemplate;
             if (_entityTemplate == null)
             {
-                entityTemplate = EntityTemplate.CreateSingleSessionSingleTrialTemplate(
-                    (BehavioralTestType)cmbBehavioralTestType.SelectedItem,
-                    txtName.Text,
-                    Int32.Parse(txtDuration.Text));
+
+                entityTemplate = new EntityTemplate();
             }
             else
             {
                 entityTemplate = _entityTemplate;
-                entityTemplate.UpdateAndSave((BehavioralTestType)cmbBehavioralTestType.SelectedItem,
-                    txtName.Text,
-                    Int32.Parse(txtDuration.Text));
             }
+
+            for (int ix = flowLayoutPanel1.Controls.Count - 1; ix >= 0; ix--)
+            {
+                Control c = flowLayoutPanel1.Controls[ix];
+                if (c is BehavioralTestTemplateSessionControl)
+                {
+                    BehavioralTestTemplateSessionControl bc = (BehavioralTestTemplateSessionControl)c;
+                    bc.Save();
+                }
+            }
+
+            _BehavioralTestTemplate.Name = txtName.Text;
+            _BehavioralTestTemplate.BehavioralTestType = (BehavioralTestType)(cmbBehavioralTestType.SelectedItem);
+            entityTemplate.SaveBehavioralTest(_BehavioralTestTemplate);
             if (CallerForm is ListForm<EntityTemplate>)
             {
                 (CallerForm as ListForm<EntityTemplate>).OrderRefresh(entityTemplate);
@@ -113,32 +127,10 @@ namespace observador
                 return;
             }
 
-            if (!Regex.IsMatch(text, "^[a-zA-Z0-9_]*$"))
+            if (!Regex.IsMatch(text, "^[a-zA-Z0-9_ ]*$"))
             {
                 e.Cancel = true;
-                errorProvider.SetError(control, "Name can only contain letters, numbers and underscores.");
-                return;
-            }
-
-            errorProvider.SetError(control, "");
-        }
-
-        private void txtDuration_Validating(object sender, CancelEventArgs e)
-        {
-            Control control = (Control)sender;
-            string text = control.Text;
-
-            int result;
-            if (!Int32.TryParse(text, out result))
-            {
-                e.Cancel = true;
-                errorProvider.SetError(control, "Please provide a valid number for duration.");
-                return;
-            }
-            if (result <= 0)
-            {
-                e.Cancel = true;
-                errorProvider.SetError(control, "Please provide a positive number for duration.");
+                errorProvider.SetError(control, "Name can only contain letters, numbers spaces and underscores.");
                 return;
             }
 
@@ -160,5 +152,76 @@ namespace observador
             errorProvider.SetError(control, "");
         }
 
+        private void cmbSessionCount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox control = (ComboBox)sender;
+            int sessionCount = Int32.Parse(control.SelectedItem.ToString());
+
+            RemoveSessionControls();
+            if (sessionCount == 0)
+            {
+                return;
+            }
+
+            for (int i = 0; i < sessionCount; i++)
+            {
+                Session session = new Session();
+                if (_BehavioralTestTemplate != null)
+                {
+                    if (_BehavioralTestTemplate.Sessions.Count > i)
+                    {
+                        session = _BehavioralTestTemplate.Sessions[i];
+                    }
+                    else
+                    {
+                        Trial trial = new Trial();
+                        session.Trials.Add(trial);
+                        _BehavioralTestTemplate.Sessions.Add(session);
+                    }
+                }
+                else
+                {
+                    Trial trial = new Trial();
+                    session.Trials.Add(trial);
+                    _BehavioralTestTemplate.Sessions.Add(session);
+                }
+
+                AddSessionControl(session, i);
+            }
+
+            if (_BehavioralTestTemplate.Sessions.Count > sessionCount)
+            {
+                for (int i = sessionCount; i < _BehavioralTestTemplate.Sessions.Count; i++)
+                {
+                    _BehavioralTestTemplate.Sessions.RemoveAt(i);
+                }
+            }
+        }
+
+        void AddSessionControl(Session session, int index)
+        {
+            BehavioralTestTemplateSessionControl session1 = new BehavioralTestTemplateSessionControl(session, errorProvider);
+
+            int y = 134;
+            y += index * 200; 
+            //session1.Location = new System.Drawing.Point(35, y);
+            session1.Name = String.Format("session {0}", index+1);
+            session1.Size = new System.Drawing.Size(340, 173);
+            session1.TabIndex = 61;
+            session1.Tag = session;
+            flowLayoutPanel1.Controls.Add(session1);
+        }
+
+        void RemoveSessionControls()
+        {
+            for (int ix = flowLayoutPanel1.Controls.Count - 1; ix >= 0; ix--)
+            {
+                Control c = flowLayoutPanel1.Controls[ix];
+                if (c is BehavioralTestTemplateSessionControl)
+                {
+                    c.Dispose();
+                }
+            }
+        }
     }
 }

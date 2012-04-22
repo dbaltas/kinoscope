@@ -97,8 +97,12 @@ namespace observador
                 if (Researcher.Current.IsAdmin)
                 {
                     adminToolStripMenuItem.Visible = true;
+                    templatesToolStripMenuItem_Click(null, null);
                 }
-                scoreToolStripMenuItem_Click(null, null);
+                else
+                {
+                    scoreToolStripMenuItem_Click(null, null);
+                }
             }
         }
 
