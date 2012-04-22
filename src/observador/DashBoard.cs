@@ -40,9 +40,8 @@ namespace observador
 
         private void trialsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Researcher.Current.ActiveProject == null)
+            if (!RequireActiveProject() || !RequireSubjects())
             {
-                MessageBox.Show("Please create a project first.", "Cannot display trials");
                 return;
             }
 
@@ -51,9 +50,8 @@ namespace observador
 
         private void subjectGroupsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Researcher.Current.ActiveProject == null)
+            if (!RequireActiveProject())
             {
-                MessageBox.Show("Please create a project first.", "Cannot display subject groups");
                 return;
             }
 
@@ -62,9 +60,8 @@ namespace observador
 
         private void subjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Researcher.Current.ActiveProject == null)
+            if (!RequireActiveProject())
             {
-                MessageBox.Show("Please create a project first.", "Cannot display subjects");
                 return;
             }
 
@@ -87,6 +84,7 @@ namespace observador
             }
             if (Researcher.Current != null)
             {
+                DisplayActiveProject();
                 tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
                 NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
                 NHibernateHelper.ActiveProjectChanged += new ActiveProjectChangedHandler(NHibernateHelper_ActiveProjectChanged);
@@ -99,15 +97,8 @@ namespace observador
                 if (Researcher.Current.IsAdmin)
                 {
                     adminToolStripMenuItem.Visible = true;
-                    scoreToolStripMenuItem_Click(null, null);
-//                    projectDashboardToolStripMenuItem_Click(null, null);
-                    //templatesToolStripMenuItem_Click(null, null);
                 }
-                else
-                {
-                    projectDashboardToolStripMenuItem_Click(null, null);
-                }
-                DisplayActiveProject();
+                scoreToolStripMenuItem_Click(null, null);
             }
         }
 
@@ -165,9 +156,8 @@ namespace observador
 
         private void exportRunImagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Researcher.Current.ActiveProject == null)
+            if (!RequireActiveProject() || !RequireSubjects())
             {
-                MessageBox.Show("Please create a project first.", "Cannot extract run images");
                 return;
             }
 
@@ -268,8 +258,40 @@ namespace observador
 
         private void scoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!RequireActiveProject() || !RequireSubjects())
+            {
+                return;
+            }
+
             (new RunForm()).Show();
         }
 
+        private bool RequireActiveProject()
+        {
+            if (Researcher.Current.ActiveProject == null)
+            {
+                DialogResult dialogResult = MessageBox.Show("Do you wish to create a project now?", "No Project found", MessageBoxButtons.YesNo);
+                if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+                {
+                    (new ProjectForm()).Show();
+                }
+                return false;
+            }
+            return true;
+        }
+
+        private bool RequireSubjects()
+        {
+            if (Researcher.Current.ActiveProject.Subjects.Count == 0)
+            {
+                DialogResult dialogResult = MessageBox.Show("The project does not have any subjects.\nDo you wish to create a subject now?", "No Subjects found", MessageBoxButtons.YesNo);
+                if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+                {
+                    (new SubjectForm()).Show();
+                }
+                return false;
+            }
+            return true;
+        }
     }
 }

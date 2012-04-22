@@ -21,7 +21,10 @@ namespace ObLib.Domain
             set
             {
                 _projects = value;
-                ActiveProject = Projects.Count == 0 ? null : Projects[0];
+                if (this == Researcher.Current)
+                {
+                    ActiveProject = Projects.Count == 0 ? null : Projects[0];
+                }
             }
         }
 
@@ -29,6 +32,10 @@ namespace ObLib.Domain
         public virtual Project ActiveProject {
             get
             {
+                if (_ActiveProject == null && Projects.Count > 0)
+                {
+                    _ActiveProject = Projects[0];
+                }
                 return _ActiveProject;
             }
             set
