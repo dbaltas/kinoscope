@@ -16,16 +16,16 @@ namespace observador
         private ErrorProvider _ErrorProvider;
         private Session _Session;
 
-        public BehavioralTestTemplateSessionControl(Session session, ErrorProvider errorProvider)
+        public BehavioralTestTemplateSessionControl(BehavioralTest behavioralTest, int sessionIndex, ErrorProvider errorProvider)
         {
             InitializeComponent();
             _ErrorProvider = errorProvider;
             cmbTrialCount.SelectedIndex = 0;
-            if (session != null)
-            {
-                txtDuration.Text = session.Trials[0].Duration.ToString();
-                _Session = session;
-            }
+            _Session = behavioralTest.Sessions[sessionIndex];
+            txtDuration.Text = _Session.Trials[0].Duration.ToString();
+            groupBox1.Text = String.Format("Session: {0}", _Session.Name);
+            txtName.Text = _Session.Name;
+            txtName.Enabled = (behavioralTest.Sessions.Count == 1) ? false : true;
         }
 
         private void txtDuration_Validating(object sender, CancelEventArgs e)
@@ -54,6 +54,23 @@ namespace observador
         public void Save()
         {
             _Session.Trials[0].Duration = Int32.Parse(txtDuration.Text);
+            _Session.Name = txtName.Text;
+        }
+
+        private void txtName_Validating(object sender, CancelEventArgs e)
+        {
+            Control control = (Control)sender;
+            ErrorProvider errorProvider = _ErrorProvider;
+            string text = control.Text;
+
+            if (text.Length == 0)
+            {
+                e.Cancel = true;
+                errorProvider.SetError(control, "Name can not be empty.");
+                return;
+            }
+
+            errorProvider.SetError(control, "");
         }
     }
 }

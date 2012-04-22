@@ -39,7 +39,6 @@
             this.cmbBehavioralTestType = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
@@ -49,7 +48,7 @@
             this.bCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.bCancel.CausesValidation = false;
             this.bCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bCancel.Location = new System.Drawing.Point(154, 498);
+            this.bCancel.Location = new System.Drawing.Point(154, 483);
             this.bCancel.Name = "bCancel";
             this.bCancel.Size = new System.Drawing.Size(75, 23);
             this.bCancel.TabIndex = 60;
@@ -60,7 +59,7 @@
             // bSave
             // 
             this.bSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.bSave.Location = new System.Drawing.Point(51, 498);
+            this.bSave.Location = new System.Drawing.Point(51, 483);
             this.bSave.Name = "bSave";
             this.bSave.Size = new System.Drawing.Size(75, 23);
             this.bSave.TabIndex = 50;
@@ -144,22 +143,16 @@
             // 
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(944, 87);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(227, 286);
-            this.textBox1.TabIndex = 61;
-            // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(12, 114);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(824, 365);
-            this.flowLayoutPanel1.TabIndex = 62;
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(773, 350);
+            this.flowLayoutPanel1.TabIndex = 20;
             // 
             // BehavioralTestTemplateForm
             // 
@@ -168,9 +161,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
-            this.ClientSize = new System.Drawing.Size(1183, 546);
+            this.ClientSize = new System.Drawing.Size(810, 531);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.cmbBehavioralTestType);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cmbSessionCount);
@@ -201,7 +193,6 @@
         private System.Windows.Forms.ComboBox cmbBehavioralTestType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }

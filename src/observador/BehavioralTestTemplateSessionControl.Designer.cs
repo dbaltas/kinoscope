@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtName = new System.Windows.Forms.TextBox();
+            this.lblName = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -41,6 +43,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtName);
+            this.groupBox1.Controls.Add(this.lblName);
             this.groupBox1.Controls.Add(this.groupBox2);
             this.groupBox1.Controls.Add(this.cmbTrialCount);
             this.groupBox1.Controls.Add(this.label3);
@@ -50,6 +54,23 @@
             this.groupBox1.TabIndex = 14;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Session 1";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(73, 31);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(101, 20);
+            this.txtName.TabIndex = 13;
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
+            // 
+            // lblName
+            // 
+            this.lblName.AutoSize = true;
+            this.lblName.Location = new System.Drawing.Point(21, 35);
+            this.lblName.Name = "lblName";
+            this.lblName.Size = new System.Drawing.Size(35, 13);
+            this.lblName.TabIndex = 17;
+            this.lblName.Text = "Name";
             // 
             // groupBox2
             // 
@@ -91,19 +112,20 @@
             // 
             // cmbTrialCount
             // 
+            this.cmbTrialCount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTrialCount.Enabled = false;
             this.cmbTrialCount.FormattingEnabled = true;
             this.cmbTrialCount.Items.AddRange(new object[] {
-            "One Trial"});
-            this.cmbTrialCount.Location = new System.Drawing.Point(96, 28);
+            "1"});
+            this.cmbTrialCount.Location = new System.Drawing.Point(251, 31);
             this.cmbTrialCount.Name = "cmbTrialCount";
-            this.cmbTrialCount.Size = new System.Drawing.Size(181, 21);
+            this.cmbTrialCount.Size = new System.Drawing.Size(46, 21);
             this.cmbTrialCount.TabIndex = 10;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(25, 31);
+            this.label3.Location = new System.Drawing.Point(191, 35);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 14;
@@ -133,6 +155,8 @@
         public System.Windows.Forms.TextBox txtDuration;
         public System.Windows.Forms.ComboBox cmbTrialCount;
         private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblName;
 
     }
 }

@@ -44,7 +44,6 @@ namespace observador
             {
                 _entityTemplate = entityTemplate;
                 txtName.Text = _entityTemplate.Name;
-                textBox1.Text = _entityTemplate.Template;
 
                 // deserialize template and read duration txtDuration.Text = entityTemplate.
                 BehavioralTest behavioralTest = EntityTemplate.GetAsBehavioralTest(_entityTemplate);
@@ -166,6 +165,7 @@ namespace observador
             for (int i = 0; i < sessionCount; i++)
             {
                 Session session = new Session();
+                session.Name = String.Format("S{0}", i+1);
                 if (_BehavioralTestTemplate != null)
                 {
                     if (_BehavioralTestTemplate.Sessions.Count > i)
@@ -185,8 +185,6 @@ namespace observador
                     session.Trials.Add(trial);
                     _BehavioralTestTemplate.Sessions.Add(session);
                 }
-
-                AddSessionControl(session, i);
             }
 
             if (_BehavioralTestTemplate.Sessions.Count > sessionCount)
@@ -196,16 +194,21 @@ namespace observador
                     _BehavioralTestTemplate.Sessions.RemoveAt(i);
                 }
             }
+
+            for (int i = 0; i < _BehavioralTestTemplate.Sessions.Count; i++)
+            {
+                AddSessionControl(_BehavioralTestTemplate.Sessions[i], i);
+            }
+
         }
 
         void AddSessionControl(Session session, int index)
         {
-            BehavioralTestTemplateSessionControl session1 = new BehavioralTestTemplateSessionControl(session, errorProvider);
+            BehavioralTestTemplateSessionControl session1 = new BehavioralTestTemplateSessionControl(_BehavioralTestTemplate, index, errorProvider);
 
             int y = 134;
             y += index * 200; 
             //session1.Location = new System.Drawing.Point(35, y);
-            session1.Name = String.Format("session {0}", index+1);
             session1.Size = new System.Drawing.Size(340, 173);
             session1.TabIndex = 61;
             session1.Tag = session;
