@@ -165,7 +165,7 @@ namespace ObLib
                 if (behavior.Type == Behavior.BehaviorType.State)
                 {
                     stateBehaviorTotalDuration.Add(behavior, 0.0);
-                    stateBehaviorLatency.Add(behavior, 0.0);
+                    stateBehaviorLatency.Add(behavior, null);
                 }
             }
 
@@ -233,7 +233,12 @@ namespace ObLib
 
             foreach (var behaviorTime in stateBehaviorLatency)
             {
-                data.Add(behaviorTime.Value.Value.ToString("F3"));
+                double? latency = stateBehaviorLatency[behaviorTime.Key];
+                if (latency == null)
+                {
+                    latency = run.Trial.Duration;
+                }
+                data.Add(latency.Value.ToString("F3"));
             }
 
             return data;

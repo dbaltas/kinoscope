@@ -191,7 +191,7 @@ namespace observador
             {
                 for (int i = sessionCount; i < _BehavioralTestTemplate.Sessions.Count; i++)
                 {
-                    _BehavioralTestTemplate.Sessions.RemoveAt(i);
+                    _BehavioralTestTemplate.Sessions.Remove(_BehavioralTestTemplate.Sessions[i]);
                 }
             }
 
