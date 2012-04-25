@@ -73,7 +73,7 @@ namespace ObLib.Domain
                 version.Major,
                 version.Minor,
                 version.Build);
-            File.Copy(DbFile, Path.Combine(dbBackupDirectory, backupFile));
+            File.Copy(DbFile, Path.Combine(dbBackupDirectory, backupFile), false);
         }
 
         public static bool DatabaseExists

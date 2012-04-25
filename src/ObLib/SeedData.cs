@@ -76,7 +76,7 @@ namespace ObLib
 
             var behavior = new Behavior
             {
-                Name = "Right Object",
+                Name = "Object A",
                 DefaultKeyStroke = "1",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -85,7 +85,7 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Left Object",
+                Name = "Object B",
                 DefaultKeyStroke = "2",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -305,7 +305,7 @@ namespace ObLib
 
             var test = new BehavioralTest
             {
-                Name = "test",
+                Name = "Test1",
                 BehavioralTestType = BehavioralTestType.ObjectRecognition,
             };
 
@@ -322,21 +322,21 @@ namespace ObLib
             var testTrial = new Trial
             {
                 Name = "T1",
-                Duration = 3,
+                Duration = 300,
             };
             testSession.AddTrial(testTrial);
 
             testTrial = new Trial
             {
                 Name = "T2",
-                Duration = 3,
+                Duration = 300,
             };
             testSession.AddTrial(testTrial);
 
             testTrial = new Trial
             {
                 Name = "T3",
-                Duration = 3,
+                Duration = 300,
             };
             testSession.AddTrial(testTrial);
 
@@ -349,21 +349,21 @@ namespace ObLib
             testTrial = new Trial
             {
                 Name = "T1",
-                Duration = 3,
+                Duration = 300,
             };
             testSession.AddTrial(testTrial);
 
             testTrial = new Trial
             {
                 Name = "T2",
-                Duration = 3,
+                Duration = 300,
             };
             testSession.AddTrial(testTrial);
 
             testTrial = new Trial
             {
                 Name = "T3",
-                Duration = 3,
+                Duration = 300,
             };
             testSession.AddTrial(testTrial);
 

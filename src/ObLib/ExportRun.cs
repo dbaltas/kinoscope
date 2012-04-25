@@ -18,19 +18,27 @@ namespace ObLib
 
         private string exportFile(Run run)
         {
-            return String.Format("{0}/{1}/text/{1}-{2}-{3}.csv",
-                EXPORT_DIRECTORY,
+            string filename = String.Format("{0}-{1}-{2}.csv",
                 run.Trial.Session.BehavioralTest.Project,
-                run.Trial.Session.BehavioralTest,
+                run.Trial,
                 run.Subject);
+
+            return String.Format("{0}/{1}/text/{2}",
+                EXPORT_DIRECTORY,
+                ToFriendlyFilename(run.Trial.Session.BehavioralTest.Project.ToString()),
+                ToFriendlyFilename(filename));
         }
 
         private string exportFile(Trial trial)
         {
-            return String.Format("{0}/{1}/text/{1}-{2}.csv",
-                EXPORT_DIRECTORY,
+            string filename = String.Format("{0}-{1}.csv",
                 trial.Session.BehavioralTest.Project,
-                trial.Session.BehavioralTest);
+                trial);
+
+            return String.Format("{0}/{1}/text/{2}",
+                EXPORT_DIRECTORY,
+                ToFriendlyFilename(trial.Session.BehavioralTest.Project.ToString()),
+                ToFriendlyFilename(filename));
         }
 
         public void exportRun(Run run)
@@ -244,5 +252,10 @@ namespace ObLib
             return data;
         }
 
+        public string ToFriendlyFilename(string filename)
+        {
+            string result = filename.Replace(':', '-');
+            return System.Text.RegularExpressions.Regex.Replace(filename, @"[^\w\.-]", "_");
+        }
     }
 }

@@ -67,12 +67,6 @@ Please upgrade {0}. The application will now exit", Application.ProductName),
                 }
             }
 
-            // hack to seed epm behaviors on test type on databases < 0.1.6
-            if (BehavioralTestType.Epm == null)
-            {
-                ObLib.SeedData.PlusMazeBehavioralTestTypeAndBehaviors();
-            }
-
             Application.Run(new DashBoard());
         }
     }
