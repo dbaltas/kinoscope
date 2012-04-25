@@ -59,7 +59,11 @@ namespace observador
                     {
                         project = SeedData.CreateDefaultEpm(Researcher.Current, txtName.Text);
                     }
-                    else 
+                    else if (cbTemplate.SelectedItem == BehavioralTestType.ObjectRecognition)
+                    {
+                        project = SeedData.CreateDefaultObjectRecognition(Researcher.Current, txtName.Text);
+                    }
+                    else
                     {
                         project = SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
                     }

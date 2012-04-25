@@ -12,6 +12,7 @@ namespace ObLib
         static public void AddInitialData()
         {
             _FstBehavioralTestTypeAndBehaviors();
+            ObjectRecognitionBehavioralTestTypeAndBehaviors();
             PlusMazeBehavioralTestTypeAndBehaviors();
             var researcher = new Researcher { Username = "admin", Password = "123" };
             researcher.Save();
@@ -68,14 +69,14 @@ namespace ObLib
             behavior.Save();
         }
 
-        public static void PlusMazeBehavioralTestTypeAndBehaviors()
+        public static void ObjectRecognitionBehavioralTestTypeAndBehaviors()
         {
-            var behavioralTestType = new BehavioralTestType { Name = "EPM", Description = "Elevated Plus Maze" };
+            var behavioralTestType = new BehavioralTestType { Name = "Object Recognition", Description = "Object Recognition" };
             behavioralTestType.Save();
 
             var behavior = new Behavior
             {
-                Name = "Rat entry in open arm 1",
+                Name = "Right Object",
                 DefaultKeyStroke = "1",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -84,7 +85,7 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Rat entry in open arm 2",
+                Name = "Left Object",
                 DefaultKeyStroke = "2",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -93,7 +94,40 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Rat entry in closed arm 1",
+                Name = "General Area",
+                DefaultKeyStroke = "3",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+        }
+
+        public static void PlusMazeBehavioralTestTypeAndBehaviors()
+        {
+            var behavioralTestType = new BehavioralTestType { Name = "EPM", Description = "Elevated Plus Maze" };
+            behavioralTestType.Save();
+
+            var behavior = new Behavior
+            {
+                Name = "North Entry",
+                DefaultKeyStroke = "1",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "South Entry",
+                DefaultKeyStroke = "2",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "West Entry",
                 DefaultKeyStroke = "3",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -102,7 +136,7 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Rat entry in closed arm 1",
+                Name = "East Entry",
                 DefaultKeyStroke = "4",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -111,7 +145,7 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Rat entry in center",
+                Name = "Center Entry",
                 DefaultKeyStroke = "5",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.State
@@ -120,7 +154,7 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Attempt to enter open",
+                Name = "Incomplete Closed Entry",
                 DefaultKeyStroke = "6",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.Instant
@@ -129,8 +163,35 @@ namespace ObLib
 
             behavior = new Behavior
             {
-                Name = "Attempt to enter close",
+                Name = "Incomplete Open Entry",
                 DefaultKeyStroke = "7",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.Instant
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Incomplete Center Entry",
+                DefaultKeyStroke = "8",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.Instant
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Protected Head Dip",
+                DefaultKeyStroke = "9",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.Instant
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Unprotected Head Dip",
+                DefaultKeyStroke = "0",
                 BehavioralTestType = behavioralTestType,
                 Type = Behavior.BehaviorType.Instant
             };
@@ -226,6 +287,86 @@ namespace ObLib
                 Duration = 300,
             };
             testSession.AddTrial(testTrial);
+
+            Researcher.Current.Save();
+
+            return project;
+        }
+
+        public static Project CreateDefaultObjectRecognition(Researcher researcher, String name)
+        {
+            if (researcher == null)
+            {
+                Logger.logError("Invalid Researcher");
+                return null;
+            }
+
+            var project = new Project { Name = name };
+
+            var test = new BehavioralTest
+            {
+                Name = "test",
+                BehavioralTestType = BehavioralTestType.ObjectRecognition,
+            };
+
+            project.AddBehavioralTest(test);
+
+            Researcher.Current.AddProject(project);
+
+            var testSession = new Session
+            {
+                Name = "S1",
+            };
+            test.AddSession(testSession);
+
+            var testTrial = new Trial
+            {
+                Name = "T1",
+                Duration = 3,
+            };
+            testSession.AddTrial(testTrial);
+
+            testTrial = new Trial
+            {
+                Name = "T2",
+                Duration = 3,
+            };
+            testSession.AddTrial(testTrial);
+
+            testTrial = new Trial
+            {
+                Name = "T3",
+                Duration = 3,
+            };
+            testSession.AddTrial(testTrial);
+
+            testSession = new Session
+            {
+                Name = "S2",
+            };
+            test.AddSession(testSession);
+
+            testTrial = new Trial
+            {
+                Name = "T1",
+                Duration = 3,
+            };
+            testSession.AddTrial(testTrial);
+
+            testTrial = new Trial
+            {
+                Name = "T2",
+                Duration = 3,
+            };
+            testSession.AddTrial(testTrial);
+
+            testTrial = new Trial
+            {
+                Name = "T3",
+                Duration = 3,
+            };
+            testSession.AddTrial(testTrial);
+
 
             Researcher.Current.Save();
 

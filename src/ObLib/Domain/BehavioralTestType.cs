@@ -13,6 +13,7 @@ namespace ObLib.Domain
         public virtual string Description { get; set; }
         private static BehavioralTestType _fst;
         private static BehavioralTestType _epm;
+        private static BehavioralTestType _objectRecognition;
 
         public static BehavioralTestType Fst
         {
@@ -58,12 +59,36 @@ namespace ObLib.Domain
             }
         }
 
+        public static BehavioralTestType ObjectRecognition
+        {
+            get
+            {
+                if (_objectRecognition == null)
+                {
+                    BehavioralTestType behavioralTestType = NHibernateHelper.OpenSession()
+                            .CreateCriteria(typeof(BehavioralTestType))
+                            .Add(Restrictions.Eq("Name", _OBJECT_RECOGNITION))
+                            .UniqueResult<BehavioralTestType>();
+
+                    if (behavioralTestType == null)
+                    {
+                        Logger.logError("NO Object Recognition behavioral test type found");
+                    }
+                    _objectRecognition = behavioralTestType;
+                }
+
+                return _objectRecognition;
+            }
+        }
+
         private const string _FST = "FST";
         private const string _EPM = "EPM";
+        private const string _OBJECT_RECOGNITION = "Object Recognition";
 
         public override string ToString()
         {
             return Name;
         }
+
     }
 }
