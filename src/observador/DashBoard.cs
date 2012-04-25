@@ -97,12 +97,11 @@ namespace observador
                 if (Researcher.Current.IsAdmin)
                 {
                     adminToolStripMenuItem.Visible = true;
-                    scoreToolStripMenuItem_Click(null, null);
 //                    templatesToolStripMenuItem_Click(null, null);
                 }
                 else
                 {
-                    scoreToolStripMenuItem_Click(null, null);
+//                    scoreToolStripMenuItem_Click(null, null);
                 }
             }
         }
@@ -200,9 +199,6 @@ namespace observador
         {
             switch (keys)
             {
-                case Keys.Control | Keys.D:
-                    projectDashboardToolStripMenuItem_Click(this, null);
-                    break;
                 case Keys.Control | Keys.T:
                     trialsToolStripMenuItem_Click(this, null);
                     break;
@@ -248,12 +244,6 @@ namespace observador
         {
             FillProjectsMenu();
             DisplayActiveProject();
-        }
-
-        private void projectDashboardToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ProjectDashboard projectDashboard = new ProjectDashboard();
-            projectDashboard.Show();
         }
 
         private void templatesToolStripMenuItem_Click(object sender, EventArgs e)

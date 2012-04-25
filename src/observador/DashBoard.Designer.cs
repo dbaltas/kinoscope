@@ -30,9 +30,9 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.homeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.projectDashboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myProjectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.behaviorKeyStrokesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.entitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +46,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
-            this.scoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -70,23 +69,15 @@
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.projectDashboardToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
             this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.homeToolStripMenuItem.Text = "Home";
             // 
-            // projectDashboardToolStripMenuItem
-            // 
-            this.projectDashboardToolStripMenuItem.Name = "projectDashboardToolStripMenuItem";
-            this.projectDashboardToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.projectDashboardToolStripMenuItem.Text = "Project Dashboard (Ctrl+D)";
-            this.projectDashboardToolStripMenuItem.Click += new System.EventHandler(this.projectDashboardToolStripMenuItem_Click);
-            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -95,6 +86,14 @@
             this.myProjectsToolStripMenuItem.Name = "myProjectsToolStripMenuItem";
             this.myProjectsToolStripMenuItem.Size = new System.Drawing.Size(81, 20);
             this.myProjectsToolStripMenuItem.Text = "My Projects";
+            // 
+            // scoreToolStripMenuItem
+            // 
+            this.scoreToolStripMenuItem.Name = "scoreToolStripMenuItem";
+            this.scoreToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.scoreToolStripMenuItem.Text = "Score";
+            this.scoreToolStripMenuItem.ToolTipText = "Ctrl+R";
+            this.scoreToolStripMenuItem.Click += new System.EventHandler(this.scoreToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -195,14 +194,6 @@
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
             // 
-            // scoreToolStripMenuItem
-            // 
-            this.scoreToolStripMenuItem.Name = "scoreToolStripMenuItem";
-            this.scoreToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
-            this.scoreToolStripMenuItem.Text = "Score";
-            this.scoreToolStripMenuItem.ToolTipText = "Ctrl+R";
-            this.scoreToolStripMenuItem.Click += new System.EventHandler(this.scoreToolStripMenuItem_Click);
-            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -242,7 +233,6 @@
         private System.Windows.Forms.ToolStripMenuItem trialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem behaviorKeyStrokesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem projectDashboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem templatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scoreToolStripMenuItem;
     }
