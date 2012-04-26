@@ -175,6 +175,7 @@ namespace observador
                     else
                     {
                         Trial trial = new Trial();
+                        trial.Name = String.Format("T{0}", 1);
                         session.Trials.Add(trial);
                         _BehavioralTestTemplate.Sessions.Add(session);
                     }
@@ -182,6 +183,7 @@ namespace observador
                 else
                 {
                     Trial trial = new Trial();
+                    trial.Name = String.Format("T{0}", 1);
                     session.Trials.Add(trial);
                     _BehavioralTestTemplate.Sessions.Add(session);
                 }
@@ -206,10 +208,6 @@ namespace observador
         {
             BehavioralTestTemplateSessionControl session1 = new BehavioralTestTemplateSessionControl(_BehavioralTestTemplate, index, errorProvider);
 
-            int y = 134;
-            y += index * 200; 
-            //session1.Location = new System.Drawing.Point(35, y);
-            session1.Size = new System.Drawing.Size(340, 173);
             session1.TabIndex = 61;
             session1.Tag = session;
             flowLayoutPanel1.Controls.Add(session1);
