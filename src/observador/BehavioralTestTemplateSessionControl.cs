@@ -101,6 +101,9 @@ namespace observador
                 return;
             }
 
+            int increment = 61 * trialCount;
+            this.Size = new Size(this.Size.Width, 65 + increment);
+
             List<Trial> lastTrials = new List<Trial>();
             lastTrials.AddRange(_Session.Trials);
 
