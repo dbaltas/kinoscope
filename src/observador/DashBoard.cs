@@ -94,6 +94,8 @@ namespace observador
 
             SetTitle();
             tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
+            activeProjectToolStripMenuItem.Text = Researcher.Current.ActiveProject != null ? Researcher.Current.ActiveProject.ToString() : "(Project)";
+
             NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
             NHibernateHelper.ActiveProjectChanged += new ActiveProjectChangedHandler(NHibernateHelper_ActiveProjectChanged);
             if (Researcher.Current.ActiveProject != null)
@@ -104,12 +106,15 @@ namespace observador
             FillProjectsMenu();
             if (Researcher.Current.IsAdmin)
             {
-                adminToolStripMenuItem.Visible = true;
+                templatesToolStripMenuItem.Visible = true;
+                researchersToolStripMenuItem.Visible = true;
 //                    templatesToolStripMenuItem_Click(null, null);
             }
             else
             {
-//                    scoreToolStripMenuItem_Click(null, null);
+                templatesToolStripMenuItem.Visible = false;
+                researchersToolStripMenuItem.Visible = false;
+                //                    scoreToolStripMenuItem_Click(null, null);
             }
         }
 
@@ -128,16 +133,7 @@ namespace observador
 
         private void FillProjectsMenu()
         {
-            myProjectsToolStripMenuItem.DropDownItems.Clear();
-
-            ToolStripMenuItem manageProjectsToolStripMenuItem = new ToolStripMenuItem();
-            manageProjectsToolStripMenuItem.Text = "Manage Projects (Ctrl+P)";
-            manageProjectsToolStripMenuItem.Click += manageProjectsToolStripMenuItem_Click;
-
-            ToolStripMenuItem exportRunImagesToolStripMenuItem = new ToolStripMenuItem();
-            exportRunImagesToolStripMenuItem.Text = "Export Run Images";
-            exportRunImagesToolStripMenuItem.Click += exportRunImagesToolStripMenuItem_Click;
-
+            setActiveProjectToolStripMenuItem.DropDownItems.Clear();
 
             foreach (Project project in Researcher.Current.Projects)
             {
@@ -146,18 +142,14 @@ namespace observador
                 projectToolStripMenuItem.Click += projectItem_Click;
                 projectToolStripMenuItem.Tag = project;
                 setActiveProjectToolStripMenuItem.DropDownItems.Add(projectToolStripMenuItem);
-                homeToolStripMenuItem.DropDownItems.Add(projectToolStripMenuItem);
-                myProjectsToolStripMenuItem.DropDownItems.Add(projectToolStripMenuItem);
             }
 
-            if (Researcher.Current.Projects.Count > 0)
+            if (Researcher.Current.Projects.Count == 0)
             {
-                setActiveProjectToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
-                myProjectsToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+                ToolStripMenuItem noProjectToolStripMenuItem = new ToolStripMenuItem("no projects found");
+                noProjectToolStripMenuItem.Enabled = false;
+                setActiveProjectToolStripMenuItem.DropDownItems.Add(noProjectToolStripMenuItem);
             }
-
-            myProjectsToolStripMenuItem.DropDownItems.Add(manageProjectsToolStripMenuItem);
-            myProjectsToolStripMenuItem.DropDownItems.Add(exportRunImagesToolStripMenuItem);
         }
 
         private void manageProjectsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -244,6 +236,7 @@ namespace observador
 
         void NHibernateHelper_ActiveProjectChanged(object sender, EventArgs e)
         {
+            activeProjectToolStripMenuItem.Text = Researcher.Current.ActiveProject != null ? Researcher.Current.ActiveProject.ToString() : "(Project)";
             foreach (Form f in MdiChildren)
             {
                 f.Refresh();
@@ -254,6 +247,7 @@ namespace observador
         {
             FillProjectsMenu();
             SetTitle();
+            activeProjectToolStripMenuItem.Text = Researcher.Current.ActiveProject != null ? Researcher.Current.ActiveProject.ToString() : "(Project)";
         }
 
         private void templatesToolStripMenuItem_Click(object sender, EventArgs e)
