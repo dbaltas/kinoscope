@@ -134,7 +134,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Label lblName;
-        private BehavioralTestTemplateTrialControl behavioralTestTemplateTrialControl;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 
     }

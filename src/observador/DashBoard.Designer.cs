@@ -46,6 +46,8 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tssResearcher = new System.Windows.Forms.ToolStripStatusLabel();
+            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setActiveProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -69,6 +71,8 @@
             // homeToolStripMenuItem
             // 
             this.homeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.setActiveProjectToolStripMenuItem,
+            this.logoutToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.homeToolStripMenuItem.Name = "homeToolStripMenuItem";
             this.homeToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
@@ -154,14 +158,14 @@
             // researchersToolStripMenuItem
             // 
             this.researchersToolStripMenuItem.Name = "researchersToolStripMenuItem";
-            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.researchersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.researchersToolStripMenuItem.Text = "Researchers";
             this.researchersToolStripMenuItem.Click += new System.EventHandler(this.researchersToolStripMenuItem_Click);
             // 
             // templatesToolStripMenuItem
             // 
             this.templatesToolStripMenuItem.Name = "templatesToolStripMenuItem";
-            this.templatesToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.templatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.templatesToolStripMenuItem.Text = "Templates";
             this.templatesToolStripMenuItem.Click += new System.EventHandler(this.templatesToolStripMenuItem_Click);
             // 
@@ -193,6 +197,19 @@
             // 
             this.tssResearcher.Name = "tssResearcher";
             this.tssResearcher.Size = new System.Drawing.Size(0, 17);
+            // 
+            // logoutToolStripMenuItem
+            // 
+            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
+            // 
+            // setActiveProjectToolStripMenuItem
+            // 
+            this.setActiveProjectToolStripMenuItem.Name = "setActiveProjectToolStripMenuItem";
+            this.setActiveProjectToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.setActiveProjectToolStripMenuItem.Text = "Set Active Project";
             // 
             // DashBoard
             // 
@@ -235,5 +252,7 @@
         private System.Windows.Forms.ToolStripMenuItem behaviorKeyStrokesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem templatesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scoreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setActiveProjectToolStripMenuItem;
     }
 }

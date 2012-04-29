@@ -28,6 +28,14 @@ namespace observador
             Application.Exit();
         }
 
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Researcher.Current = null;
+            tssResearcher.Text = "";
+            SetTitle();
+            DashBoard_Load(this, null);
+        }
+
         private void bQuit_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -81,34 +89,33 @@ namespace observador
             if (!login.IsUserAuthenticated)
             {
                 Application.Exit();
+                return;
             }
-            if (Researcher.Current != null)
-            {
-                DisplayActiveProject();
-                tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
-                NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
-                NHibernateHelper.ActiveProjectChanged += new ActiveProjectChangedHandler(NHibernateHelper_ActiveProjectChanged);
-                if (Researcher.Current.ActiveProject != null)
-                {
-                    NHibernateHelper.ActiveProjectModified += new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
-                }
 
-                FillProjectsMenu();
-                if (Researcher.Current.IsAdmin)
-                {
-                    adminToolStripMenuItem.Visible = true;
+            SetTitle();
+            tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
+            NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
+            NHibernateHelper.ActiveProjectChanged += new ActiveProjectChangedHandler(NHibernateHelper_ActiveProjectChanged);
+            if (Researcher.Current.ActiveProject != null)
+            {
+                NHibernateHelper.ActiveProjectModified += new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
+            }
+
+            FillProjectsMenu();
+            if (Researcher.Current.IsAdmin)
+            {
+                adminToolStripMenuItem.Visible = true;
 //                    templatesToolStripMenuItem_Click(null, null);
-                }
-                else
-                {
+            }
+            else
+            {
 //                    scoreToolStripMenuItem_Click(null, null);
-                }
             }
         }
 
-        private void DisplayActiveProject()
+        private void SetTitle()
         {
-            Project activeProject = Researcher.Current.ActiveProject;
+            Project activeProject = Researcher.Current != null ? Researcher.Current.ActiveProject : null;
 
             // Set text in main window's Title Bar
             Text = string.Format(
@@ -138,11 +145,14 @@ namespace observador
                 projectToolStripMenuItem.Checked = project == Researcher.Current.ActiveProject;
                 projectToolStripMenuItem.Click += projectItem_Click;
                 projectToolStripMenuItem.Tag = project;
+                setActiveProjectToolStripMenuItem.DropDownItems.Add(projectToolStripMenuItem);
+                homeToolStripMenuItem.DropDownItems.Add(projectToolStripMenuItem);
                 myProjectsToolStripMenuItem.DropDownItems.Add(projectToolStripMenuItem);
             }
 
             if (Researcher.Current.Projects.Count > 0)
             {
+                setActiveProjectToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
                 myProjectsToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
             }
 
@@ -155,7 +165,7 @@ namespace observador
             _listFormCreator.CreateProjectListForm().Show();
 
             FillProjectsMenu();
-            DisplayActiveProject();
+            SetTitle();
         }
 
         private void exportRunImagesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -189,7 +199,7 @@ namespace observador
                 Researcher.Current.ActiveProject = selectedProject;
                 NHibernateHelper.ActiveProjectModified +=new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
                 FillProjectsMenu();
-                DisplayActiveProject();
+                SetTitle();
             }
         }
 
@@ -243,7 +253,7 @@ namespace observador
         private void NHibernateHelper_ProjectModified(object sender, EventArgs e)
         {
             FillProjectsMenu();
-            DisplayActiveProject();
+            SetTitle();
         }
 
         private void templatesToolStripMenuItem_Click(object sender, EventArgs e)

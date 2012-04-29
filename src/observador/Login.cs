@@ -34,9 +34,9 @@ namespace observador
         private void SubmitForm()
         {
             Cursor.Current = Cursors.WaitCursor;
-            Researcher.Authenticate(txtUsername.Text, txtPassword.Text);
+            Researcher authenticatedResearcher = Researcher.Authenticate(txtUsername.Text, txtPassword.Text);
             IsUserAuthenticated = true;
-            if (Researcher.Current == null)
+            if (authenticatedResearcher == null)
             {
                 MessageBox.Show("Invalid username or password.", "Login failed");
                 txtUsername.Focus();
