@@ -18,10 +18,12 @@ namespace ObLib
 
         private string exportFile(Run run)
         {
-            string filename = String.Format("{0}-{1}-{2}.csv",
+            string filename = String.Format("{0}-{1}-{2}-{3}.csv",
                 run.Trial.Session.BehavioralTest.Project,
                 run.Trial,
-                run.Subject);
+                run.Subject,
+                DateTime.Now.ToString("yyyyMMddHHmmss"));
+
 
             return String.Format("{0}/{1}/text/{2}",
                 EXPORT_DIRECTORY,
@@ -31,9 +33,10 @@ namespace ObLib
 
         private string exportFile(Trial trial)
         {
-            string filename = String.Format("{0}-{1}.csv",
+            string filename = String.Format("{0}-{1}-{2}.csv",
                 trial.Session.BehavioralTest.Project,
-                trial);
+                trial,
+                DateTime.Now.ToString("yyyyMMddHHmmss"));
 
             return String.Format("{0}/{1}/text/{2}",
                 EXPORT_DIRECTORY,
@@ -202,7 +205,12 @@ namespace ObLib
                         {
                             if (stateBehaviorLatency[lastStateRunEvent.Behavior] == null)
                             {
-                                stateBehaviorLatency[lastStateRunEvent.Behavior] = lastStateRunEvent.TimeTrackedInSeconds;
+                                double latencyNoticedAt = lastStateRunEvent.TimeTrackedInSeconds;
+                                if (lastStateRunEvent.TimeTrackedInSeconds < _LATENCY_TIME_TO_IGNORE_IN_SECONDS)
+                                {
+                                    latencyNoticedAt = _LATENCY_TIME_TO_IGNORE_IN_SECONDS;
+                                }
+                                stateBehaviorLatency[lastStateRunEvent.Behavior] = latencyNoticedAt;
                             }
                         }
                     }
