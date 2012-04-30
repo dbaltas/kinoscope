@@ -322,6 +322,7 @@ namespace observador
         {
             KeysConverter kc = new KeysConverter();
             string keyChar = kc.ConvertToString(keyCode);
+            keyChar = keyChar.Replace("NumPad", "");
             return _allowedBehaviors.Find((behavior) => behavior.KeyStroke == keyChar);
         }
 

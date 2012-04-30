@@ -50,7 +50,7 @@ namespace observador
 
             if (_researcherBehaviorKeyStroke != null)
             {
-                txtKeyStroke.Text = _researcherBehaviorKeyStroke.KeyStroke;
+                _SetTextToKeyStroke(_researcherBehaviorKeyStroke.KeyStroke);
             }
         }
 
@@ -96,20 +96,43 @@ namespace observador
 
         private void txtKeyStroke_KeyDown(object sender, KeyEventArgs e)
         {
-            txtKeyStroke.Text = _keysConverter.ConvertToString(e.KeyCode);
+            _SetTextToKeyStroke(_keysConverter.ConvertToString(e.KeyCode));
+        }
+
+        private void _SetTextToKeyStroke(string text)
+        {
+            if (text.StartsWith("NumPad"))
+            {
+                text = text.Replace("NumPad", "");
+            }
+            txtKeyStroke.Text = text;
         }
 
         private void txtKeyStroke_Validating(object sender, CancelEventArgs e)
         {
+            string keyStroke = txtKeyStroke.Text;
             if (txtKeyStroke.Text == "")
             {
                 e.Cancel = true;
                 errorProvider.SetError(txtKeyStroke, "Key stroke is required.");
+                return;
             }
-            else
+
+            foreach (ResearcherBehaviorKeyStroke researcherBehaviorKeyStroke in ResearcherBehaviorKeyStroke.AllForListForm())
             {
-                errorProvider.SetError(txtKeyStroke, "");
+                if (researcherBehaviorKeyStroke.Behavior.BehavioralTestType == _researcherBehaviorKeyStroke.Behavior.BehavioralTestType &&
+                    _researcherBehaviorKeyStroke.Behavior != researcherBehaviorKeyStroke.Behavior)
+                {
+                    if (keyStroke == researcherBehaviorKeyStroke.KeyStroke)
+                    {
+                        e.Cancel = true;
+                        errorProvider.SetError(txtKeyStroke, "Key stroke is already in use in this behavioral test type. Please press another keystroke");
+                        return;
+                    }
+                }
             }
+
+            errorProvider.SetError(txtKeyStroke, "");
         }
     }
 }
