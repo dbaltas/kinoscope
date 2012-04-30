@@ -33,9 +33,9 @@
             this.bSave = new System.Windows.Forms.Button();
             this.lblKeyStroke = new System.Windows.Forms.Label();
             this.txtKeyStroke = new System.Windows.Forms.TextBox();
-            this.cbBehavior = new System.Windows.Forms.ComboBox();
             this.lblBehavior = new System.Windows.Forms.Label();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.txtBehavior = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
@@ -82,17 +82,6 @@
             this.txtKeyStroke.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtKeyStroke_KeyDown);
             this.txtKeyStroke.Validating += new System.ComponentModel.CancelEventHandler(this.txtKeyStroke_Validating);
             // 
-            // cbBehavior
-            // 
-            this.cbBehavior.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbBehavior.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBehavior.FormattingEnabled = true;
-            this.cbBehavior.Location = new System.Drawing.Point(72, 12);
-            this.cbBehavior.Name = "cbBehavior";
-            this.cbBehavior.Size = new System.Drawing.Size(180, 21);
-            this.cbBehavior.TabIndex = 1;
-            // 
             // lblBehavior
             // 
             this.lblBehavior.AutoSize = true;
@@ -106,6 +95,14 @@
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // txtBehavior
+            // 
+            this.txtBehavior.Location = new System.Drawing.Point(72, 12);
+            this.txtBehavior.Name = "txtBehavior";
+            this.txtBehavior.ReadOnly = true;
+            this.txtBehavior.Size = new System.Drawing.Size(180, 20);
+            this.txtBehavior.TabIndex = 6;
+            // 
             // ResearcherBehaviorKeyStrokeForm
             // 
             this.AcceptButton = this.bSave;
@@ -114,7 +111,7 @@
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.CancelButton = this.bCancel;
             this.ClientSize = new System.Drawing.Size(277, 102);
-            this.Controls.Add(this.cbBehavior);
+            this.Controls.Add(this.txtBehavior);
             this.Controls.Add(this.lblBehavior);
             this.Controls.Add(this.lblKeyStroke);
             this.Controls.Add(this.txtKeyStroke);
@@ -137,8 +134,8 @@
         private System.Windows.Forms.Button bSave;
         private System.Windows.Forms.Label lblKeyStroke;
         private System.Windows.Forms.TextBox txtKeyStroke;
-        private System.Windows.Forms.ComboBox cbBehavior;
         private System.Windows.Forms.Label lblBehavior;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.TextBox txtBehavior;
     }
 }

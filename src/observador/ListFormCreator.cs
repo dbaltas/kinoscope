@@ -63,22 +63,5 @@ namespace observador
                 () => (IList)Researcher.Current.ActiveProject.Subjects,
                 (item) => new SubjectForm(item)) { ItemTypeDescription = "subject", Text = "Subjects", Width = 900 };
         }
-
-        public Form CreateResearcherBehaviorKeyStrokeListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Behavior", HeaderText = "Behavior" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "BehavioralTestType", HeaderText = "Behavioral Test Type" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "KeyStroke", HeaderText = "Key Stroke" }};
-
-            return new ListForm<ResearcherBehaviorKeyStroke>(
-                columns,
-                () => (IList)Researcher.Current.ResearcherBehaviorKeyStrokes,
-                (item) => new ResearcherBehaviorKeyStrokeForm(item))
-                {
-                    ItemTypeDescription = "key stroke",
-                    Text = "Behavior Key Strokes"
-                };
-        }
     }
 }

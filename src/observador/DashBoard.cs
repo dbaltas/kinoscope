@@ -223,7 +223,7 @@ namespace observador
 
         private void behaviorKeyStrokesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _listFormCreator.CreateResearcherBehaviorKeyStrokeListForm().Show();
+            (new ResearcherBehaviorKeyStrokeListForm()).Show();
         }
 
         private void NHibernateHelper_ActiveProjectModified(object sender, EventArgs e)

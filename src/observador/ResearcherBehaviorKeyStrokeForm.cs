@@ -44,44 +44,14 @@ namespace observador
 
         private void ResearcherBehaviorKeyStrokeForm_Load(object sender, EventArgs e)
         {
-            List<VerboseBehavior> verboseBehaviors = new List<VerboseBehavior>();
-            foreach (Behavior behavior in Behavior.All())
-            {
-                // Show only behaviors that the user hasn't assigned yet, except for the edited behavior, if any.
-                if ((_researcherBehaviorKeyStroke != null && _researcherBehaviorKeyStroke.Behavior.Id == behavior.Id)
-                    || !Researcher.Current.ResearcherBehaviorKeyStrokes.Any((item) => item.Behavior.Id == behavior.Id))
-                {
-                    verboseBehaviors.Add(new VerboseBehavior() { Behavior = behavior });
-                }
-            }
+            VerboseBehavior verboseBehavior = new VerboseBehavior() { Behavior = _researcherBehaviorKeyStroke.Behavior };
 
-            cbBehavior.DataSource = verboseBehaviors;
+            txtBehavior.Text = verboseBehavior.ToString();
 
             if (_researcherBehaviorKeyStroke != null)
             {
-                foreach (object cbBehaviorItem in cbBehavior.Items)
-                {
-                    if (((VerboseBehavior)cbBehaviorItem).Behavior.Id == _researcherBehaviorKeyStroke.Behavior.Id)
-                    {
-                        cbBehavior.SelectedItem = cbBehaviorItem;
-                        break;
-                    }
-                }
                 txtKeyStroke.Text = _researcherBehaviorKeyStroke.KeyStroke;
             }
-
-            if (cbBehavior.Items.Count == 0)
-            {
-                // can not close form on onload event, thus handling this in the shown event
-                // code should be refactored to do the checks before on load.
-                this.Shown += new EventHandler(ResearcherBehaviorKeyStrokeForm_Shown);
-            }
-        }
-
-        void ResearcherBehaviorKeyStrokeForm_Shown(object sender, EventArgs e)
-        {
-            this.Close();
-            MessageBox.Show("All behaviors have been assigned custom key strokes.", "No more behaviors");
         }
 
         private void bCancel_Click(object sender, EventArgs e)
@@ -99,27 +69,22 @@ namespace observador
                     return;
                 }
 
-                ResearcherBehaviorKeyStroke researcherBehaviorKeyStroke =
-                    _researcherBehaviorKeyStroke ?? new ResearcherBehaviorKeyStroke();
+                _researcherBehaviorKeyStroke.KeyStroke = txtKeyStroke.Text;
 
-                researcherBehaviorKeyStroke.Behavior = ((VerboseBehavior)cbBehavior.SelectedItem).Behavior;
-                researcherBehaviorKeyStroke.KeyStroke = txtKeyStroke.Text;
-
-                if (_researcherBehaviorKeyStroke == null)
+                if (_researcherBehaviorKeyStroke.Id == 0) // not persisted in database
                 {
-                    Researcher.Current.AddResearcherBehaviorKeyStroke(researcherBehaviorKeyStroke);
+                    Researcher.Current.AddResearcherBehaviorKeyStroke(_researcherBehaviorKeyStroke);
                     Researcher.Current.Save();
-                    if (CallerForm is ListForm<ResearcherBehaviorKeyStroke>)
-                    {
-                        (CallerForm as ListForm<ResearcherBehaviorKeyStroke>).OrderRefresh(researcherBehaviorKeyStroke);
-                    }
-
                 }
                 else
                 {
                     _researcherBehaviorKeyStroke.Save();
                 }
 
+                if (CallerForm is ListForm<ResearcherBehaviorKeyStroke>)
+                {
+                    (CallerForm as ListForm<ResearcherBehaviorKeyStroke>).OrderRefresh(_researcherBehaviorKeyStroke);
+                }
 
                 this.Close();
             }
