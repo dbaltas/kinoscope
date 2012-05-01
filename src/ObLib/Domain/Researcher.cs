@@ -99,6 +99,7 @@ namespace ObLib.Domain
             if (researcher != null)
             {
                 Current = researcher;
+                Settings.lastLoggedInResearcher = researcher;
             }
             return researcher;
         }

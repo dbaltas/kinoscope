@@ -48,6 +48,10 @@ namespace observador
         private void Login_Load(object sender, EventArgs e)
         {
             Text = string.Format("{0} - Login", Program.GetTitle());
+            if (Settings.lastLoggedInResearcher != null)
+            {
+                txtUsername.Text = Settings.lastLoggedInResearcher.Username;
+            }
         }
     }
 }

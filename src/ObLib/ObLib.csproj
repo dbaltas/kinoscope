@@ -52,8 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Settings.cs" />
     <Compile Include="Domain\EntityTemplate.cs" />
     <Compile Include="Domain\ModifiedEventListener.cs" />
+    <Compile Include="Mappings\SettingsMap.cs" />
     <Compile Include="Mappings\EntityTemplateMap.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="ExportRun.cs" />
