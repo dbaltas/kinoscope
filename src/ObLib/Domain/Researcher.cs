@@ -34,13 +34,15 @@ namespace ObLib.Domain
             {
                 if (_ActiveProject == null && Projects.Count > 0)
                 {
-                    _ActiveProject = Projects[0];
+                    _ActiveProject = Settings.getLastActiveProjectForResearcher(this);
+                    _ActiveProject = _ActiveProject ?? Projects[0];
                 }
                 return _ActiveProject;
             }
             set
             {
                 _ActiveProject = value;
+                Settings.setLastActiveProjectForResearcher(this, _ActiveProject);
                 NHibernateHelper.OnActiveProjectChanged(_ActiveProject, new EventArgs());
             }
         }

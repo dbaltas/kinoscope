@@ -28,6 +28,8 @@ namespace observador
         private int _durationMilliseconds;
         private BehaviorColorAssigner _behaviorColorAssigner;
 
+        private bool _TrialDataSourceBeingSet = false;
+
         public RunForm(Run run = null)
         {
             InitializeComponent();
@@ -68,7 +70,15 @@ namespace observador
         private void InitializeNoRunControls()
         {
             ShowHideControlsOnIsRunActive(false);
+            _TrialDataSourceBeingSet = false;
+            Trial trialToPreselect = (Trial)Settings.getLastActiveTrialForProject(Researcher.Current.ActiveProject);
             cbTrial.DataSource = Researcher.Current.ActiveProject.Trials;
+            _TrialDataSourceBeingSet = true;
+            if (trialToPreselect != null)
+            {
+                cbTrial.SelectedItem =trialToPreselect;
+            }
+
         }
 
         private void ShowHideControlsOnIsRunActive(bool isRunActive)
@@ -376,7 +386,10 @@ namespace observador
         {
             Trial trial = (Trial)(cbTrial.SelectedItem);
             trial.PopulateWithRuns();
-
+            if (_TrialDataSourceBeingSet)
+            {
+                Settings.setLastActiveTrialForProject(trial);
+            }
             List<Run> runs = new List<Run>();
             Run emptyRun = new Run();
             emptyRun.Id = -1;

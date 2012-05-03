@@ -92,13 +92,14 @@ namespace observador
                 return;
             }
 
+            Project activeProject = Researcher.Current.ActiveProject;
             SetTitle();
             tssResearcher.Text = String.Format("Researcher {0} logged in", Researcher.Current.Username);
-            activeProjectToolStripMenuItem.Text = Researcher.Current.ActiveProject != null ? Researcher.Current.ActiveProject.ToString() : "(Project)";
+            activeProjectToolStripMenuItem.Text = activeProject != null ? activeProject.ToString() : "(Project)";
 
             NHibernateHelper.ProjectModified += new ProjectModifiedHandler(NHibernateHelper_ProjectModified);
             NHibernateHelper.ActiveProjectChanged += new ActiveProjectChangedHandler(NHibernateHelper_ActiveProjectChanged);
-            if (Researcher.Current.ActiveProject != null)
+            if (activeProject != null)
             {
                 NHibernateHelper.ActiveProjectModified += new ActiveProjectModifiedHandler(NHibernateHelper_ActiveProjectModified);
             }
