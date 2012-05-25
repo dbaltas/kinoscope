@@ -155,7 +155,7 @@ namespace observador
 
         private void manageProjectsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _listFormCreator.CreateProjectListForm().Show();
+            (new ProjectListForm()).Show();
 
             FillProjectsMenu();
             SetTitle();

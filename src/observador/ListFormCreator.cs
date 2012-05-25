@@ -23,18 +23,6 @@ namespace observador
                 (item) => new AdminResearcherForm(item)) { ItemTypeDescription = "researcher", Text = "Researchers" };
         }
 
-        public Form CreateProjectListForm()
-        {
-            DataGridViewColumn[] columns = new DataGridViewColumn[] {
-                new DataGridViewTextBoxColumn() { DataPropertyName = "Name", HeaderText = "Name" },
-                new DataGridViewTextBoxColumn() { DataPropertyName = "TmCreated", HeaderText = "Date Created" }};
-
-            return new ListForm<Project>(
-                columns,
-                () => (IList)Researcher.Current.Projects,
-                (item) => new ProjectForm(item)) { ItemTypeDescription = "project", Text = "My Projects" };
-        }
-
         public Form CreateSubjectGroupListForm()
         {
             DataGridViewColumn[] columns = new DataGridViewColumn[] {

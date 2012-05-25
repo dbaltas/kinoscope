@@ -92,6 +92,21 @@
     <Compile Include="BehaviorListEventVisualiser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ProjectListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectBehavioralTestControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProjectBehavioralTestControl.Designer.cs">
+      <DependentUpon>ProjectBehavioralTestControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProjectEditForm.Designer.cs">
+      <DependentUpon>ProjectEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ResearcherBehaviorKeyStrokeListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -180,6 +195,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BehavioralTestTemplateTrialControl.resx">
       <DependentUpon>BehavioralTestTemplateTrialControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectBehavioralTestControl.resx">
+      <DependentUpon>ProjectBehavioralTestControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProjectEditForm.resx">
+      <DependentUpon>ProjectEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ResearcherBehaviorKeyStrokeForm.resx">
       <DependentUpon>ResearcherBehaviorKeyStrokeForm.cs</DependentUpon>
