@@ -57,5 +57,24 @@ namespace ObLib.Domain
 
             return behaviors;
         }
+
+        public virtual List<Run> GetRuns()
+        {
+            List<Run> runList = new List<Run>();
+            foreach (Session session in Sessions)
+            {
+                foreach (Trial trial in session.Trials)
+                {
+                    foreach (Run run in trial.Runs)
+                    {
+                        if (run.Status == Run.RunStatus.Complete)
+                        {
+                            runList.Add(run);
+                        }
+                    }
+                }
+            }
+            return runList;
+        }
     }
 }

@@ -71,12 +71,15 @@ namespace ObLib.Domain
             {
                 test = (BehavioralTest)x.Deserialize(stringReader);
             }
+            test.TmCreated = DateTime.Now;
             foreach (Session s in test.SessionsForSerialization)
             {
                 test.Sessions.Add(s);
+                s.TmCreated = DateTime.Now;
                 foreach (Trial t in s.TrialsForSerialization)
                 {
                     s.Trials.Add(t);
+                    t.TmCreated = DateTime.Now;
                 }
             }
 

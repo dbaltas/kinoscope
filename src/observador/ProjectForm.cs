@@ -21,7 +21,6 @@ namespace observador
             InitializeComponent();
             if (_project == null)
             {
-                cbTemplate.DataSource = BehavioralTestType.All();
                 bSave.Text = "Create Project";
             }
         }
@@ -33,7 +32,6 @@ namespace observador
             if (_project != null)
             {
                 txtName.Text = _project.Name;
-                cbTemplate.Enabled = false;
             }
         }
 
@@ -54,32 +52,18 @@ namespace observador
 
                 if (_project == null)
                 {
-                    Project project;
-                    if (cbTemplate.SelectedItem == BehavioralTestType.Epm)
-                    {
-                        project = SeedData.CreateDefaultEpm(Researcher.Current, txtName.Text);
-                    }
-                    else if (cbTemplate.SelectedItem == BehavioralTestType.ObjectRecognition)
-                    {
-                        project = SeedData.CreateDefaultObjectRecognition(Researcher.Current, txtName.Text);
-                    }
-                    else
-                    {
-                        project = SeedData.CreateDefaultFst(Researcher.Current, txtName.Text);
-                    }
-                    if (CallerForm is ListForm<Project>)
-                    {
-                        (CallerForm as ListForm<Project>).OrderRefresh(project);
-                    }
+                    Project project = new Project();
+                    project.Name = txtName.Text;
+                    Researcher.Current.AddProject(project);
+                    Researcher.Current.Save();
+                    this.Close();
+                    (new ProjectEditForm(project)).Show();
                 }
                 else
                 {
                     _project.Name = txtName.Text;
                     _project.Save();
                 }
-
-                //dashboard.refreshprojectmenu
-
                 this.Close();
             }
             catch (Exception ex)

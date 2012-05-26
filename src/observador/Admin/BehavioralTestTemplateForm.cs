@@ -129,7 +129,7 @@ namespace observador
             if (!Regex.IsMatch(text, "^[a-zA-Z0-9_ ]*$"))
             {
                 e.Cancel = true;
-                errorProvider.SetError(control, "Name can only contain letters, numbers spaces and underscores.");
+                errorProvider.SetError(control, "Name can only contain letters, numbers, spaces and underscores.");
                 return;
             }
 

@@ -69,5 +69,16 @@ namespace ObLib.Domain
                 transaction.Commit();
             }
         }
+
+        public virtual void Refresh()
+        {
+            ISession session = NHibernateHelper.OpenSession();
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                session.Refresh(this);
+                transaction.Commit();
+            }
+        }
+
     }
 }
