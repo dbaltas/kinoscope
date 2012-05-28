@@ -6,7 +6,7 @@ namespace ObLib.Domain
         {
             Map(x => x.Name);
             References(x => x.Researcher);
-            HasMany(x => x.BehavioralTests).Cascade.AllDeleteOrphan();
+            HasMany(x => x.BehavioralTests).Cascade.AllDeleteOrphan().Inverse();
             HasMany(x => x.SubjectGroups).Cascade.AllDeleteOrphan();
             HasMany(x => x.Subjects).Cascade.AllDeleteOrphan();
         }

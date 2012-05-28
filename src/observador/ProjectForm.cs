@@ -56,6 +56,11 @@ namespace observador
                     project.Name = txtName.Text;
                     Researcher.Current.AddProject(project);
                     Researcher.Current.Save();
+
+                    if (CallerForm is ListForm<Project>)
+                    {
+                        (CallerForm as ListForm<Project>).OrderRefresh(project);
+                    }
                     this.Close();
                     (new ProjectEditForm(project)).Show();
                 }
