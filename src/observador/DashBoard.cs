@@ -177,11 +177,16 @@ namespace observador
                 runImageExporter.FolderPath = folderPath;
                 int imagesExported = runImageExporter.Export(Researcher.Current.ActiveProject);
 
-                MessageBox.Show(
+                DialogResult dialogResult = MessageBox.Show(
                     string.Format(
                         "{1} images were exported in the following directory: {0}{2}",
-                        Environment.NewLine, imagesExported, folderPath),
-                    "Info");
+                        Environment.NewLine, imagesExported, System.IO.Path.GetFullPath(folderPath)),
+                    "Images Exported", MessageBoxButtons.YesNo);
+
+                if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+                {
+                    System.Diagnostics.Process.Start(System.IO.Path.GetFullPath(folderPath));
+                }
         }
 
         void projectItem_Click(object sender, EventArgs e)
