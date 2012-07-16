@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ApplicationDirectory="$(var.observador.TargetDir)" ?>
+  <?define DatabaseDirectory="$(var.observador.TargetDir)" ?>
+  <?define DocumentDirectory="$(var.observador.TargetDir)" ?>
+  <?define ExportDirectory="$(var.observador.TargetDir)" ?>
+  
+  <?define VersionNumber="!(bind.FileVersion.observadorExe)" ?>
+  <?define ProductName="Observador"?>
+  <?define UpgradeCode="66b8179f-6e00-4228-9f1e-0076cc8ee0c0"?>
+
+  <?ifdef Win64Build?>
+  <?define ProgramFiles="Program Files (x86)"?>
+  <?else?>
+  <?define ProgramFiles="Program Files"?>
+  <?endif?>
+</Include>

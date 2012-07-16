@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  <?include Variables.wxi ?>
+
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.VersionNumber)" Manufacturer="Observador" UpgradeCode="$(var.UpgradeCode)">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Icon Id="observadorIcon.exe" SourceFile="$(var.ApplicationDirectory)/observador.exe"/>
+
+    <Upgrade Id="$(var.UpgradeCode)">
+      <UpgradeVersion Minimum="$(var.VersionNumber)"
+                      IncludeMinimum="no"
+                      OnlyDetect="yes"
+                      Language="1033"
+                      Property="NEWPRODUCTFOUND" />
+      <UpgradeVersion Minimum="$(var.VersionNumber)"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.VersionNumber)"
+                      IncludeMaximum="yes"
+                      OnlyDetect="yes"
+                      Language="1033"
+                      Property="SAMEVERSIONFOUND" />
+      <UpgradeVersion Minimum="0.0.0.0"
+                      IncludeMinimum="yes"
+                      Maximum="$(var.VersionNumber)"
+                      IncludeMaximum="no"
+                      Language="1033"
+                      Property="UPGRADEFOUND" />
+    </Upgrade>
+
+    <Media Id="1" Cabinet="test.cab" EmbedCab="yes"/>
+
+    <Property Id="INSTALLSTARTMENUSHORTCUT" Value="1" />
+    <Property Id="INSTALLDESKTOPSHORTCUT" Value="1" />
+    <Property Id="UNINSTALLDATAFILES" Secure="yes"/>
+    <Property Id="UNINSTALLCHECKBOX" />
+
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Application now" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+
+    <CustomAction Id="StartAppOnExit" Directory='application' ExeCommand='[INSTALLFOLDER]$(var.ProductName)\application\observador.exe' Impersonate='yes' Return="asyncNoWait" />
+
+    <UI>
+      <UIRef Id="WixUI_Mondo" />
+      <UIRef Id="WixUI_ErrorProgressText" />
+
+      <DialogRef Id="InstallDirDlg"/>
+      <DialogRef Id="InstallShortcutDlg"/>
+
+      <Publish Dialog="LicenseAgreementDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="2">LicenseAccepted = "1"</Publish>
+
+      <Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SetTargetPath" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="DoAction" Value="WixUIValidatePath" Order="2">NOT WIXUI_DONTVALIDATEPATH</Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="SpawnDialog" Value="InvalidDirDlg" Order="3"><![CDATA[NOT WIXUI_DONTVALIDATEPATH AND WIXUI_INSTALLDIR_VALID<>"1"]]></Publish>
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="InstallShortcutDlg" Order="4">WIXUI_DONTVALIDATEPATH OR WIXUI_INSTALLDIR_VALID="1"</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Property="_BrowseProperty" Value="[WIXUI_INSTALLDIR]" Order="1">1</Publish>
+      <Publish Dialog="InstallDirDlg" Control="ChangeFolder" Event="SpawnDialog" Value="BrowseDlg" Order="2">1</Publish>
+
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="InstallShortcutDlg">NOT Installed</Publish>
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="InstallShortcutDlg">Installed</Publish>
+      <Publish Dialog="ExitDialog" Control="Finish" Order="1" Event="DoAction" Value="StartAppOnExit">WIXUI_EXITDIALOGOPTIONALCHECKBOX</Publish>
+
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Property="WixUI_InstallMode" Value="Remove" Order="1">1</Publish>
+      <Publish Dialog="MaintenanceWelcomeDlg" Control="Next" Event="NewDialog" Value="UninstallDlg" Order="2">1</Publish>
+    </UI>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+
+    <Feature Id="ProductFeature" Title="ObservadorInstaller" Level="1">
+      <ComponentRef Id="DesktopShortcut"/>
+      <ComponentRef Id="programMenuShortcuts"/>
+      <ComponentRef Id="application"/>
+      <ComponentRef Id="db"/>
+      <ComponentRef Id="doc"/>
+      <ComponentRef Id="export"/>
+      <ComponentRef Id="uninstallDbData"/>
+      <ComponentRef Id="uninstallExportData"/>
+    </Feature>
+
+    <!-- Prevent downgrading -->
+    <CustomAction Id="PreventDowngrading"
+                  Error="A later version of Observador is already installed at the system. The setup will exit." />
+    <CustomAction Id="SameVersionError"
+                  Error="Observador is already installed at the system. The setup will exit." />
+
+    <InstallExecuteSequence>
+      <Custom Action="PreventDowngrading"
+              After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+      <Custom Action="SameVersionError"
+              After="FindRelatedProducts">SAMEVERSIONFOUND</Custom>
+      <RemoveExistingProducts After="InstallFinalize" />
+    </InstallExecuteSequence>
+
+    <InstallUISequence>
+      <Custom Action="PreventDowngrading"
+              After="FindRelatedProducts">NEWPRODUCTFOUND</Custom>
+      <Custom Action="SameVersionError"
+              After="FindRelatedProducts">SAMEVERSIONFOUND</Custom>
+      <Show Dialog="MaintenanceWelcomeDlg" Before="ProgressDlg">Installed</Show>
+      <Show Dialog="ResumeDlg" Before="ProgressDlg">0</Show>
+    </InstallUISequence>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="DesktopFolder" Name="Desktop">
+        <Component Id="DesktopShortcut" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DD0">
+          <CreateFolder/>
+          <Condition>INSTALLDESKTOPSHORTCUT</Condition>
+          <RegistryKey Root="HKCU"
+                         Key="Software\[ProductName]\Desktop">
+            <RegistryValue Value="required"
+                           Type="string"
+                           KeyPath="yes" />
+          </RegistryKey>
+          <Shortcut Id="observadorExeDesktop" Target="[INSTALLFOLDER]application\observador.exe" Name="Observador v$(var.VersionNumber)" WorkingDirectory='application' Icon="observadorIcon.exe" IconIndex="0" />
+          <RemoveFolder Id="RemoveDesktopFolder"
+                          On="uninstall" />
+        </Component>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ObservadorProgramMenu" Name="$(var.ProductName)">
+          <Component Id="programMenuShortcuts" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DE0">
+            <Condition>INSTALLSTARTMENUSHORTCUT</Condition>
+            <CreateFolder />
+            <Shortcut Id="observadorExeStartMenu" Target="[INSTALLFOLDER]application\observador.exe" Name="Observador v$(var.VersionNumber)" WorkingDirectory='application' Icon="observadorIcon.exe" IconIndex="0" />
+            <Shortcut Id="UninstallProduct"
+                      Name="Uninstall $(var.ProductName)"
+                      Target="[SystemFolder]msiexec.exe"
+                      Arguments="/x [ProductCode] /qf"
+                      Description="Uninstalls $(var.ProductName)" />
+            <Shortcut Id="readmeStartMenu" Target="[INSTALLFOLDER]doc\readme.txt" Name="Readme" WorkingDirectory='application' Icon="readmeIcon.ico" IconIndex="0">
+              <Icon Id="readmeIcon.ico" SourceFile="$(var.DocumentDirectory)/readme.txt" />
+            </Shortcut>
+            <RegistryKey Root="HKCU"
+                         Key="Software\[ProductName]\Uninstall">
+              <RegistryValue Value="required"
+                             Type="string"
+                             KeyPath="yes" />
+            </RegistryKey>
+            <RemoveFolder Id="RemoveShorcutFolder"
+                          On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="INSTALLFOLDER" Name="$(var.ProgramFiles)">
+        <Directory Id="Observador" Name="$(var.ProductName)">
+          <Directory Id="application" Name="application">
+            <Component Id="application" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DF0">
+              <File Id="observadorExe" Name="observador.exe" Source="$(var.ApplicationDirectory)/observador.exe" KeyPath="yes" />
+              <File Id="observadorExeConfig" Name="observador.exe.config" Source="$(var.ApplicationDirectory)/observador.exe.config" />
+              <File Id="DbMigrationsDll" Name="DbMigrations.dll" Source="$(var.ApplicationDirectory)/DbMigrations.dll" />
+              <File Id="FluentNHibernateDll" Name="FluentNHibernate.dll" Source="$(var.ApplicationDirectory)/FluentNHibernate.dll" />
+              <File Id="IesiCollectionsDll" Name="Iesi.Collections.dll" Source="$(var.ApplicationDirectory)/Iesi.Collections.dll" />
+              <File Id="MigratorDll" Name="Migrator.dll" Source="$(var.ApplicationDirectory)/Migrator.dll" />
+              <File Id="MigratorFrameworkDll" Name="Migrator.Framework.dll" Source="$(var.ApplicationDirectory)/Migrator.Framework.dll" />
+              <File Id="MigratorProvidersDll" Name="Migrator.Providers.dll" Source="$(var.ApplicationDirectory)/Migrator.Providers.dll" />
+              <File Id="NHibernateDll" Name="NHibernate.dll" Source="$(var.ApplicationDirectory)/NHibernate.dll" />
+              <File Id="ObLibDll" Name="ObLib.dll" Source="$(var.ApplicationDirectory)/ObLib.dll" />
+              <File Id="ObWinDll" Name="ObWin.dll" Source="$(var.ApplicationDirectory)/ObWin.dll" />
+              <File Id="SystemDataSQLiteDll" Name="System.Data.SQLite.dll" Source="$(var.ApplicationDirectory)/System.Data.SQLite.dll" />
+            </Component>
+          </Directory>
+          <Directory Id="db" Name="db">
+            <Component Id="db" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DF1" Permanent="yes">
+              <CreateFolder>
+                <util:PermissionEx User="Users" GenericAll="yes"/>
+              </CreateFolder>
+              <File Id="obDb" Name="ob.db" Source="$(var.DatabaseDirectory)/ob.db" KeyPath="yes">
+                <util:PermissionEx User="Users" GenericAll="yes"/>
+              </File>
+            </Component>
+          </Directory>
+          <Directory Id="doc" Name="doc">
+            <Component Id="doc" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DF2">
+              <File Id="licenseRtf" Name="license.rtf" Source="$(var.DocumentDirectory)/license.rtf" KeyPath="yes" />
+              <File Id="readmeTxt" Name="readme.txt" Source="$(var.DocumentDirectory)/readme.txt" />
+            </Component>
+          </Directory>
+          <Directory Id="export" Name="export">
+            <Component Id="export" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DF3">
+              <CreateFolder>
+                <util:PermissionEx User="Users" GenericAll="yes"/>
+              </CreateFolder>
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <Component Id="uninstallDbData" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DFF" Directory="db">
+      <Condition>UNINSTALLDATAFILES</Condition>
+      <RemoveFile Id="removeDbDataFiles" Name="*" On="uninstall"/>
+      <RemoveFolder Id="removeDbFolder" On="uninstall"/>
+    </Component>
+    <Component Id="uninstallExportData" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DFE" Directory="export">
+      <Condition>UNINSTALLDATAFILES</Condition>
+      <RemoveFile Id="removeExportDataFiles" Name="*" On="uninstall"/>
+      <RemoveFolder Id="removeExportFolder" On="uninstall"/>
+    </Component>
+  </Fragment>
+
+  <Fragment>
+    <UI>
+      <Dialog Id="InstallShortcutDlg" Width="370" Height="270" Title="[ProductName] Setup" NoMinimize="yes">
+        <Control Id="ShortcutText" Type="Text" X="20" Y="100" Width="290" Height="10" Text="Create Icons for Observador:" />
+        <Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="25" Y="115" Width="290" Height="10" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="On my Desktop" />
+        <Control Id="StartMenuShortcutCheckBox" Type="CheckBox" X="25" Y="130" Width="290" Height="10" Property="INSTALLSTARTMENUSHORTCUT" CheckBoxValue="1" Text="In my Start Menu Programs folder" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back">
+          <Publish Event="NewDialog" Value="InstallDirDlg">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="&amp;Next">
+          <Publish Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes">
+          <Text>Please enter your customer information</Text>
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes">
+          <Text>{\WixUI_Font_Title}</Text>
+        </Control>
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+      </Dialog>
+      <Dialog Id="UninstallDlg" Width="370" Height="270" Title="[ProductName] Setup" NoMinimize="yes">
+        <Control Id="UninstallTxt" Type="Text" X="20" Y="100" Width="290" Height="10" Text=" Are you sure you want to uninstall observador?" />
+        <Control Id="UninstallDataCheckBox" Type="CheckBox" X="25" Y="115" Width="290" Height="10" Property="UNINSTALLCHECKBOX" CheckBoxValue="1" Text="Also delete data files" />
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back">
+          <Publish Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="&amp;Next">
+          <Publish Event="NewDialog" Value="VerifyReadyDlg">1</Publish>
+          <Publish Property="UNINSTALLDATAFILES" Value="1">UNINSTALLCHECKBOX</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="WixUI_Bmp_Banner" />
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes">
+          <Text>Please enter your customer information</Text>
+        </Control>
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes">
+          <Text>{\WixUI_Font_Title}</Text>
+        </Control>
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>
