@@ -170,8 +170,7 @@ namespace observador
 
                 string folderPath = String.Format(String.Format("{0}/{1}/images/",
                 ExportRun.EXPORT_DIRECTORY,
-                Researcher.Current.ActiveProject));
-
+                ExportRun.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
 
                 RunImageExporter runImageExporter = new RunImageExporter();
                 runImageExporter.FolderPath = folderPath;
@@ -179,7 +178,7 @@ namespace observador
 
                 DialogResult dialogResult = MessageBox.Show(
                     string.Format(
-                        "{1} images were exported in the following directory: {0}{2}",
+                        "{1} images were exported in the following directory: {0}{2}\n\nOpen Containing Folder?",
                         Environment.NewLine, imagesExported, System.IO.Path.GetFullPath(folderPath)),
                     "Images Exported", MessageBoxButtons.YesNo);
 
@@ -297,6 +296,16 @@ namespace observador
                 return false;
             }
             return true;
+        }
+
+        private void manualToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String path = "../doc";
+            if (!System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.CreateDirectory(path);
+            }
+            System.Diagnostics.Process.Start(System.IO.Path.GetFullPath(path));
         }
     }
 }

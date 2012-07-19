@@ -37,7 +37,20 @@ namespace observador
         {
             ExportRun export = new ExportRun();
             export.exportTrial(trial);
-            MessageBox.Show("Export Successful at export directory.", "Info");
+            string folderPath = String.Format(String.Format("{0}/{1}/text/",
+            ExportRun.EXPORT_DIRECTORY,
+            ExportRun.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
+
+            DialogResult dialogResult = MessageBox.Show(
+                string.Format(
+                    "Export Successfull in the following directory: {0}\n\nOpen Containing Folder?",
+                    System.IO.Path.GetFullPath(folderPath)),
+                "Exported Trial", MessageBoxButtons.YesNo);
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start(System.IO.Path.GetFullPath(folderPath));
+            }
+
         }
     }
 }

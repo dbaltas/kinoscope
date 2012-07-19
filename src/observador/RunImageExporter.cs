@@ -40,7 +40,7 @@ namespace observador
             {
                 Export(run);
             }
-
+            /*
             string searchPatern = String.Format("*{0}*.png", project);
             string[] files = System.IO.Directory.GetFiles(_FolderPath, searchPatern);
             System.Drawing.Bitmap stitchedImage = Combine(files);
@@ -48,6 +48,7 @@ namespace observador
             string fullPath = string.Format("{0}\\{1}", FolderPath, fileName);
 
             stitchedImage.Save(fullPath, System.Drawing.Imaging.ImageFormat.Png);
+            */
             return runs.Count;
         }
 

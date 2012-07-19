@@ -260,7 +260,7 @@ namespace ObLib
             return data;
         }
 
-        public string ToFriendlyFilename(string filename)
+        public static string ToFriendlyFilename(string filename)
         {
             string result = filename.Replace(':', '-');
             return System.Text.RegularExpressions.Regex.Replace(filename, @"[^\w\.-]", "_");
