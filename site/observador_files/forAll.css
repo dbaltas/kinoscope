@@ -1,0 +1,224 @@
+a:link {
+	color: #0000FF;
+	text-decoration:none;
+}
+a:visited {
+	color: #0000FF;
+	text-decoration:none;
+}
+a:active {
+	color: #0099FF;
+	text-decoration:none;
+}
+a:hover {
+	letter-spacing: normal;
+	color: #000000;
+	text-decoration:none;
+}
+
+.forCopyright {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #666666;
+}
+.forTexts {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #333333;
+	line-height: 20px;
+	text-align: justify;
+
+}
+.forForms {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	border: 1px inset;
+}
+.forButton {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: #000000;
+	border: 1px outset;
+}
+.forTexts1 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 20px;
+	color: #084A8D;
+	text-align: justify;
+}
+
+#navcontainer { width: 100%;}
+
+#navcontainer ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer1 { width: 100%;}
+
+#navcontainer1 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer1 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer1 a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer2 { width: 100%;}
+
+#navcontainer2 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer2 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer2 a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer3 { width: 100%;}
+
+#navcontainer3 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer3 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer3 a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer4 { width: 100%;}
+
+#navcontainer4 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer4 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer4 a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer5 { width: 100%;}
+
+#navcontainer5 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer5 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer5 a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer6 { width: 100%;}
+
+#navcontainer6 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer6 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer6 a:hover	{background-color: #82bede;color: #fff;}
+
+#navcontainer7 { width: 100%;}
+
+#navcontainer7 ul
+{
+	margin-left: 0;	padding-left: 0;
+	list-style-type: none;
+	font-size: 100%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+#navcontainer7 a
+{	display: block;
+	width: 100%;
+	padding: 0.25em;
+	color: #333;text-decoration: none;
+}
+#navcontainer7 a:hover	{background-color: #82bede;color: #fff;}
+
+#dropmenudiv{
+	position:absolute;
+	background-color: #CCE6F2;
+	border:1px solid white;
+	border-bottom-width: 0;
+	font:normal 10px Verdana, Arial, sans-serif;
+	line-height:18px;
+	z-index:100;
+	left: 173px;
+	top: 208px;
+	width: 150px;
+	height: 38px;
+}
+
+#dropmenudiv a{
+	width: 100%;
+	display: block;
+	text-indent: 3px;
+	border-bottom: 1px solid white;
+	padding: 1px 0;
+	text-decoration: none;
+	font-weight: normal;
+	color: #000000;
+}
+
+#dropmenudiv a:hover{ /*hover background color*/
+	background-color: #82bede;
+	color: #FFFFFF;
+}
