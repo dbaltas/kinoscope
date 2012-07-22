@@ -24,6 +24,21 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="files-for-package\application\DbMigrations.dll" />
+    <Content Include="files-for-package\application\FluentNHibernate.dll" />
+    <Content Include="files-for-package\application\Iesi.Collections.dll" />
+    <Content Include="files-for-package\application\Migrator.dll" />
+    <Content Include="files-for-package\application\Migrator.Framework.dll" />
+    <Content Include="files-for-package\application\Migrator.Providers.dll" />
+    <Content Include="files-for-package\application\NHibernate.dll" />
+    <Content Include="files-for-package\application\ObLib.dll" />
+    <Content Include="files-for-package\application\observador.exe" />
+    <Content Include="files-for-package\application\observador.exe.config" />
+    <Content Include="files-for-package\application\ObWin.dll" />
+    <Content Include="files-for-package\application\System.Data.SQLite.dll" />
+    <Content Include="files-for-package\db\ob.db" />
+    <Content Include="files-for-package\doc\license.rtf" />
+    <Content Include="files-for-package\doc\readme.txt" />
     <Content Include="Variables.wxi" />
   </ItemGroup>
   <ItemGroup>
@@ -37,14 +52,11 @@
     </WixExtension>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\observador\observador.csproj">
-      <Name>observador</Name>
-      <Project>{f6c230e4-b2d5-423d-9988-9067afd14eb8}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
-    </ProjectReference>
+    <Folder Include="files-for-package\" />
+    <Folder Include="files-for-package\application\" />
+    <Folder Include="files-for-package\db\" />
+    <Folder Include="files-for-package\doc\" />
+    <Folder Include="files-for-package\export\" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

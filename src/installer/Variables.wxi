@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Include>
-  <?define ApplicationDirectory="$(var.observador.TargetDir)" ?>
-  <?define DatabaseDirectory="$(var.observador.TargetDir)" ?>
-  <?define DocumentDirectory="$(var.observador.TargetDir)" ?>
-  <?define ExportDirectory="$(var.observador.TargetDir)" ?>
+  <?define ApplicationDirectory="files-for-package/application" ?>
+  <?define DatabaseDirectory="files-for-package/db" ?>
+  <?define DocumentDirectory="files-for-package/doc" ?>
+  <?define ExportDirectory="files-for-package/export" ?>
   
   <?define VersionNumber="!(bind.FileVersion.observadorExe)" ?>
   <?define ProductName="Observador"?>
