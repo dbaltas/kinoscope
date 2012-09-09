@@ -37,9 +37,9 @@ namespace observador
             }
             if (MessageBox.Show(msg, "Delete Behavioral Test", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) == DialogResult.Yes) 
             {
+                this.Dispose();
                 _BehavioralTest.Project.BehavioralTests.Remove(_BehavioralTest);
                 _BehavioralTest.Project.Save();
-                this.ParentForm.Refresh();
             }
         }
     }
