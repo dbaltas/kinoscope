@@ -198,6 +198,39 @@ namespace ObLib
             behavior.Save();
         }
 
+        public static void HackForTempleBehavioralTestTypeAndBehaviors()
+        {
+            var behavioralTestType = new BehavioralTestType { Name = "Open Field", Description = "Open Field Temple" };
+            behavioralTestType.Save();
+
+            var behavior = new Behavior
+            {
+                Name = "Burying",
+                DefaultKeyStroke = "1",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Grooming",
+                DefaultKeyStroke = "2",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Head Shake",
+                DefaultKeyStroke = "3",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.Instant
+            };
+            behavior.Save();
+        }
+
         public static Project CreateDefaultFst(Researcher researcher, String name)
         {
             if (researcher == null)

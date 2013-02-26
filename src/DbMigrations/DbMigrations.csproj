@@ -53,6 +53,7 @@
     <Compile Include="002_EntityTemplates.cs" />
     <Compile Include="003_BehavioralTestTypeSeeds.cs" />
     <Compile Include="004_SettingsTable.cs" />
+    <Compile Include="005_HackForTempleTestTypeSeed.cs" />
     <Compile Include="MigrationManager.cs" />
     <Compile Include="MigratorConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
