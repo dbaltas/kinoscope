@@ -229,6 +229,15 @@ namespace ObLib
                 Type = Behavior.BehaviorType.Instant
             };
             behavior.Save();
+
+            behavior = new Behavior
+            {
+                Name = "Idle",
+                DefaultKeyStroke = "Space",
+                BehavioralTestType = behavioralTestType,
+                Type = Behavior.BehaviorType.State
+            };
+            behavior.Save();
         }
 
         public static Project CreateDefaultFst(Researcher researcher, String name)
