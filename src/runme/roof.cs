@@ -147,7 +147,7 @@ using DbMigrations;
             }
             else
             {
-                System.Console.WriteLine("Welcome to Observador 0.0");
+                System.Console.WriteLine("Welcome to Kinoscope 0.0");
             }
             System.Console.WriteLine("");
             System.Console.WriteLine("  TYPE ONE of the available COMMANDS to get started:");

@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObLib", "ObLib\ObLib.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "runme", "runme\runme.csproj", "{04D3529C-369E-46A2-976A-7C6DF94A02A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "observador", "observador\observador.csproj", "{F6C230E4-B2D5-423D-9988-9067AFD14EB8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kinoscope", "kinoscope\kinoscope.csproj", "{F6C230E4-B2D5-423D-9988-9067AFD14EB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObWin", "ObWin\ObWin.csproj", "{6AA08A64-DD44-4EF6-948C-DCD6CE4343DF}"
 EndProject
