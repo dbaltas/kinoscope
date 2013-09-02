@@ -31,7 +31,7 @@ namespace ObLib
                 ToFriendlyFilename(filename));
         }
 
-        private string exportFile(Trial trial)
+        private string exportPath(Trial trial)
         {
             string filename = String.Format("{0}-{1}-{2}.csv",
                 trial.Session.BehavioralTest.Project,
@@ -84,7 +84,7 @@ namespace ObLib
                 }
             }
 
-            string exportFilename = exportFile(trial);
+            string exportFilename = exportPath(trial);
 
             string exportDirectory = Path.GetDirectoryName(exportFilename);
             if (!Directory.Exists(exportDirectory))
