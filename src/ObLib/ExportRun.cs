@@ -162,8 +162,8 @@ namespace ObLib
             data.Add(run.Subject.Sex);
             data.Add(run.Trial.ToString());
             data.Add(run.Trial.Duration.ToString());
-            data.Add(run.TmCreated.ToString("dd/MM/yyyy"));
-            data.Add(run.TmCreated.ToString("HH:mm:ss"));
+            data.Add(run.TmRun.ToString("dd/MM/yyyy"));
+            data.Add(run.TmRun.ToString("HH:mm:ss"));
             data.Add(run.RunEvents.Count.ToString());
 
             List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
