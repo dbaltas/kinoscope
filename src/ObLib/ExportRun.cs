@@ -102,7 +102,7 @@ namespace ObLib
             }
         }
 
-        List<string> fstHeaders(BehavioralTest behavioralTest)
+        public List<string> fstHeaders(BehavioralTest behavioralTest)
         {
             List<string> headers = new List<string>();
             headers.Add("Project");

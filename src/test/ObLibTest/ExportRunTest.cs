@@ -4,14 +4,99 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
+using ObLib;
+using ObLib.Domain;
+
 namespace ObLibTest
 {
     public class ExportRunTest
     {
-        [Test]
-        public void testNunitSetup()
+        [SetUp]
+        public void SetupContext()
         {
-            Assert.AreEqual(5, 7 - 2);
+        }
+
+        [TearDown]
+        public void TearDownContext()
+        {
+        }
+
+        [Test]
+        public void testFstHeader()
+        {
+            Researcher researcher = Researcher.Find("admin");
+            Researcher.Current = researcher;
+            BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
+            Trial trial = fstTest.Sessions[0].Trials[0];
+
+            List<Behavior> behaviors = fstTest.GetBehaviors();
+            Behavior swimming = null;
+            Behavior climbing = null;
+            Behavior floating = null;
+
+            foreach (Behavior behavior in behaviors)
+            {
+                if ("Swimming" == behavior.Name)
+                {
+                    swimming = behavior;
+                }
+                if ("Climbing" == behavior.Name)
+                {
+                    climbing = behavior;
+                }
+                if ("Floating" == behavior.Name)
+                {
+                    floating = behavior;
+                }
+            }
+            Assert.NotNull(swimming);
+            Assert.NotNull(climbing);
+            Assert.NotNull(floating);
+
+            Subject subject = researcher.ActiveProject.Subjects[1];
+            Assert.AreEqual(fstTest.BehavioralTestType, BehavioralTestType.Fst);
+            Assert.AreEqual("T1", trial.Name);
+            Assert.AreEqual("2", subject.Code);
+            Assert.AreEqual(5, trial.Runs.Count);
+            Assert.AreEqual(1, trial.CompleteRunCount);
+
+            Run run = trial.Runs[1];
+
+            run.RunEvents.Clear();
+
+            addRunEvent(run, swimming, 0);
+            addRunEvent(run, climbing, 2100);
+            addRunEvent(run, swimming, 3300);
+            addRunEvent(run, floating, 5200);
+            addRunEvent(run, swimming, 7500);
+            addRunEvent(run, floating, 11300);
+            addRunEvent(run, swimming, 12500);
+            addRunEvent(run, floating, 13300);
+            addRunEvent(run, climbing, 14700);
+
+            run.TmRun = DateTime.Now;
+            run.Save();
+            run.Trial.Duration = 15;
+            run.Trial.Save();
+
+            Assert.AreEqual(15, run.Trial.Duration);
+
+            Assert.AreEqual(2, run.Id);
+            Assert.AreEqual(9, run.RunEvents.Count);
+            Assert.AreEqual(2.1, run.RunEvents[1].TimeTrackedInSeconds);
+
+            ExportRun exportRun = new ExportRun();
+            exportRun.exportRun(run);
+            Assert.AreEqual(23, exportRun.fstHeaders(run.Trial.Session.BehavioralTest).Count);
+            run.RunEvents.Clear();
+        }
+
+        void addRunEvent(Run run, Behavior behavior, long timeTracked)
+        {
+            RunEvent runEvent = new RunEvent();
+            runEvent.TimeTracked = timeTracked;
+            runEvent.Behavior = behavior;
+            run.AddRunEvent(runEvent);
         }
     }
 }
