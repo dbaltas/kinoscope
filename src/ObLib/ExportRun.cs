@@ -9,12 +9,52 @@ using ObLib.Domain;
 
 namespace ObLib
 {
+    //TODO: move to separate class
+    public class TimeBin
+    {
+        public long start;
+        public long end;
+        public Dictionary<Behavior, double> stateBehaviorTotalDuration = new Dictionary<Behavior, double>();
+
+        public static List<TimeBin> runTimeBins(Run run)
+        {
+            List<TimeBin> timeBins = new List<TimeBin>();
+            int totalTime = run.Trial.Duration * 1000;
+            int start = 0;
+            int end = totalTime;
+            int binDuration = 5000;
+            int index = start;
+
+            while (index < end)
+            {
+                TimeBin timeBin = new TimeBin();
+                timeBin.start = index;
+                index += binDuration;
+                timeBin.end = Math.Min(index, end);
+                foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
+                {
+                    if (behavior.Type == Behavior.BehaviorType.State)
+                    {
+                        timeBin.stateBehaviorTotalDuration.Add(behavior, 0.0);
+                    }
+                }
+
+                timeBins.Add(timeBin);
+            }
+
+            return timeBins;
+        }
+    }
+
     public class ExportRun
     {
         private const double _LATENCY_TIME_TO_IGNORE_IN_SECONDS = 10;
         private const double _LATENCY_MINIMUM_DURATION_IN_SECONDS = 3;
 
         public const string EXPORT_DIRECTORY = @"../export/";
+
+        //TODO: temp only for testing until extracted
+        public List<TimeBin> timeBins;
 
         private string exportFile(Run run)
         {
@@ -169,6 +209,7 @@ namespace ObLib
             List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
             sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
 
+            List<RunEvent> sortedStateRunEvents = sortedRunEvents.FindAll(new Predicate<RunEvent>(r => r.Behavior.Type == Behavior.BehaviorType.State));
             // initialize counters
             foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
             {
@@ -180,7 +221,50 @@ namespace ObLib
                 }
             }
 
+            timeBins = TimeBin.runTimeBins(run);
+
             RunEvent lastStateRunEvent = sortedRunEvents[0];
+
+            int eventIndex = 1;
+            int binIndex = 0;
+            while (true)
+            {
+                TimeBin currentBin = timeBins[binIndex];
+                long eventEnd;
+
+                if (eventIndex >= sortedStateRunEvents.Count)
+                {
+                    eventEnd = run.Trial.Duration * 1000;
+                }
+                else
+                {
+                    eventEnd = sortedStateRunEvents[eventIndex].TimeTracked;
+                }
+
+                long eventStartInBin = Math.Max(lastStateRunEvent.TimeTracked, currentBin.start);
+                long eventEndInBin = Math.Min(eventEnd, currentBin.end);
+
+                double currentEventDurationInBin = eventEndInBin - eventStartInBin;
+
+                currentBin.stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += currentEventDurationInBin;
+
+                if (eventEnd < currentBin.end)
+                {
+                    if (eventIndex >= sortedStateRunEvents.Count) break;
+                    lastStateRunEvent = sortedStateRunEvents[eventIndex];
+                    eventIndex++;
+                    continue;
+                }
+                else
+                {
+                    binIndex++;
+                    if (binIndex >= timeBins.Count) break;
+                    continue;
+                }
+            }
+
+            lastStateRunEvent = sortedRunEvents[0];
+
             foreach (RunEvent runEvent in sortedRunEvents)
             {
                 // calculate frequency

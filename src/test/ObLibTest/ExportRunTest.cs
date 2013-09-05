@@ -58,7 +58,7 @@ namespace ObLibTest
             Assert.AreEqual("T1", trial.Name);
             Assert.AreEqual("2", subject.Code);
             Assert.AreEqual(5, trial.Runs.Count);
-            Assert.AreEqual(1, trial.CompleteRunCount);
+            Assert.AreEqual(2, trial.CompleteRunCount);
 
             Run run = trial.Runs[1];
 
@@ -86,7 +86,15 @@ namespace ObLibTest
             Assert.AreEqual(2.1, run.RunEvents[1].TimeTrackedInSeconds);
 
             ExportRun exportRun = new ExportRun();
+
+            List<TimeBin> timeBins = TimeBin.runTimeBins(run);
+            Assert.AreEqual(3, timeBins.Count);
+            Assert.AreEqual(5000, timeBins[1].start);
+            Assert.AreEqual(10000, timeBins[1].end);
+
             exportRun.exportRun(run);
+            Assert.AreEqual(3, exportRun.timeBins.Count);
+            Assert.AreEqual(3800, exportRun.timeBins[0].stateBehaviorTotalDuration[swimming]);
             Assert.AreEqual(23, exportRun.fstHeaders(run.Trial.Session.BehavioralTest).Count);
             run.RunEvents.Clear();
         }
