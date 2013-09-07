@@ -55,10 +55,11 @@
     <Compile Include="Domain\Settings.cs" />
     <Compile Include="Domain\EntityTemplate.cs" />
     <Compile Include="Domain\ModifiedEventListener.cs" />
+    <Compile Include="Export\TimeBin.cs" />
     <Compile Include="Mappings\SettingsMap.cs" />
     <Compile Include="Mappings\EntityTemplateMap.cs" />
     <Compile Include="Version.cs" />
-    <Compile Include="ExportRun.cs" />
+    <Compile Include="Export\ExportRun.cs" />
     <Compile Include="Domain\ResearcherBehaviorKeyStroke.cs" />
     <Compile Include="Domain\RunEvent.cs" />
     <Compile Include="Domain\Run.cs" />

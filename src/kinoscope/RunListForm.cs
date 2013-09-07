@@ -7,6 +7,7 @@ using System.Windows.Forms;
 
 using ObLib;
 using ObLib.Domain;
+using ObLib.Export;
 
 namespace kinoscope
 {
