@@ -74,7 +74,7 @@ Please upgrade {0}. The application will now exit", Application.ProductName),
 
             //Run run = trial.Runs[1];
 
-            //List<ObLib.TimeBin> timeBins = ObLib.TimeBin.runTimeBins(run);
+            //List<ObLib.TimeBin> timeBins = ObLib.TimeBin.initializeTimeBins(run);
             //ObLib.ExportRun export = new ObLib.ExportRun();
             //export.exportRun(run);
 

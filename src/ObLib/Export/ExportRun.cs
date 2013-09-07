@@ -15,9 +15,12 @@ namespace ObLib.Export
         private const double _LATENCY_MINIMUM_DURATION_IN_SECONDS = 3;
 
         public const string EXPORT_DIRECTORY = @"../export/";
+        private ExportSettings exportSettings;
 
-        //TODO: temp only for testing until extracted
-        public List<TimeBin> timeBins;
+        public ExportRun(ExportSettings exportSettings = null)
+        {
+            this.exportSettings = (null != exportSettings) ? exportSettings : new ExportSettings();
+        }
 
         private string exportFile(Run run)
         {
@@ -50,7 +53,7 @@ namespace ObLib.Export
         public void exportRun(Run run)
         {
             string headerRow = String.Join<String>("\t", 
-                fstHeaders(run.Trial.Session.BehavioralTest));
+                fstHeaders(run.Trial));
             string dataRow = String.Join<String>("\t", 
                 fstRun(run));
 
@@ -73,7 +76,7 @@ namespace ObLib.Export
         {
             List<string> dataRows = new List<string>();
             string headerRow = String.Join<String>("\t",
-                fstHeaders(trial.Session.BehavioralTest));
+                fstHeaders(trial));
 
             foreach (Run run in trial.Runs)
             {
@@ -105,9 +108,11 @@ namespace ObLib.Export
             }
         }
 
-        public List<string> fstHeaders(BehavioralTest behavioralTest)
+        public List<string> fstHeaders(Trial trial)
         {
             List<string> headers = new List<string>();
+            BehavioralTest behavioralTest = trial.Session.BehavioralTest;
+
             headers.Add("Project");
             headers.Add("SubjectID");
             headers.Add("SubjectGroup");
@@ -143,6 +148,14 @@ namespace ObLib.Export
                 }
             }
 
+            if (exportSettings.useTimeBins)
+            {
+                if (trial.Runs.Count > 0)
+                {
+                    ExportTimeBin exportTimeBin = new ExportTimeBin(trial.Runs[0]);
+                    headers.AddRange(exportTimeBin.headers());
+                }
+            }
             return headers;
         }
 
@@ -184,49 +197,7 @@ namespace ObLib.Export
                 }
             }
 
-            timeBins = TimeBin.runTimeBins(run);
-
             RunEvent lastStateRunEvent = sortedRunEvents[0];
-
-            int eventIndex = 1;
-            int binIndex = 0;
-            while (true)
-            {
-                TimeBin currentBin = timeBins[binIndex];
-                long eventEnd;
-
-                if (eventIndex >= sortedStateRunEvents.Count)
-                {
-                    eventEnd = run.Trial.Duration * 1000;
-                }
-                else
-                {
-                    eventEnd = sortedStateRunEvents[eventIndex].TimeTracked;
-                }
-
-                long eventStartInBin = Math.Max(lastStateRunEvent.TimeTracked, currentBin.start);
-                long eventEndInBin = Math.Min(eventEnd, currentBin.end);
-
-                double currentEventDurationInBin = eventEndInBin - eventStartInBin;
-
-                currentBin.stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += currentEventDurationInBin;
-
-                if (eventEnd < currentBin.end)
-                {
-                    if (eventIndex >= sortedStateRunEvents.Count) break;
-                    lastStateRunEvent = sortedStateRunEvents[eventIndex];
-                    eventIndex++;
-                    continue;
-                }
-                else
-                {
-                    binIndex++;
-                    if (binIndex >= timeBins.Count) break;
-                    continue;
-                }
-            }
-
-            lastStateRunEvent = sortedRunEvents[0];
 
             foreach (RunEvent runEvent in sortedRunEvents)
             {
@@ -283,7 +254,7 @@ namespace ObLib.Export
                 }
             }
 
-
+            // export to data array
             foreach (var behaviorTotal in stateBehaviorTotalDuration)
             {
                 data.Add(behaviorTotal.Value.ToString("F3"));
@@ -302,6 +273,13 @@ namespace ObLib.Export
                     latency = run.Trial.Duration;
                 }
                 data.Add(latency.Value.ToString("F3"));
+            }
+
+            if (exportSettings.useTimeBins)
+            {
+                ExportTimeBin exportTimeBin = new ExportTimeBin(run);
+                List<TimeBin> timeBins = exportTimeBin.calculateTimeBins(sortedStateRunEvents);
+                data.AddRange(exportTimeBin.data());
             }
 
             return data;

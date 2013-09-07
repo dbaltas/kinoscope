@@ -12,28 +12,20 @@ namespace ObLibTest
 {
     public class ExportRunTest
     {
+        private Behavior swimming = null;
+        private Behavior climbing = null;
+        private Behavior floating = null;
+        private ExportRun exportRun = null;
+
         [SetUp]
         public void SetupContext()
-        {
-        }
-
-        [TearDown]
-        public void TearDownContext()
-        {
-        }
-
-        [Test]
-        public void testFstHeader()
         {
             Researcher researcher = Researcher.Find("admin");
             Researcher.Current = researcher;
             BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
-            Trial trial = fstTest.Sessions[0].Trials[0];
+            exportRun = new ExportRun();
 
             List<Behavior> behaviors = fstTest.GetBehaviors();
-            Behavior swimming = null;
-            Behavior climbing = null;
-            Behavior floating = null;
 
             foreach (Behavior behavior in behaviors)
             {
@@ -50,6 +42,20 @@ namespace ObLibTest
                     floating = behavior;
                 }
             }
+        }
+
+        [TearDown]
+        public void TearDownContext()
+        {
+        }
+
+        [Test]
+        public void testFstHeader()
+        {
+            Researcher researcher = Researcher.Current;
+            BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
+            Trial trial = fstTest.Sessions[0].Trials[0];
+
             Assert.NotNull(swimming);
             Assert.NotNull(climbing);
             Assert.NotNull(floating);
@@ -61,6 +67,66 @@ namespace ObLibTest
             Assert.AreEqual(5, trial.Runs.Count);
             Assert.AreEqual(2, trial.CompleteRunCount);
 
+            Run run = createSampleRun(trial);
+
+            Assert.AreEqual(15, run.Trial.Duration);
+
+            Assert.AreEqual(2, run.Id);
+            Assert.AreEqual(9, run.RunEvents.Count);
+            Assert.AreEqual(2.1, run.RunEvents[1].TimeTrackedInSeconds);
+
+            exportRun.exportRun(run);
+            Assert.AreEqual(23, exportRun.fstHeaders(run.Trial).Count);
+            run.RunEvents.Clear();
+        }
+
+        [Test]
+        public void testTimeBins()
+        {
+            Researcher researcher = Researcher.Current;
+            BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
+            Trial trial = fstTest.Sessions[0].Trials[0];
+            Run run = createSampleRun(trial);
+
+            List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
+            sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
+
+            List<RunEvent> sortedStateRunEvents = sortedRunEvents.FindAll(new Predicate<RunEvent>(r => r.Behavior.Type == Behavior.BehaviorType.State));
+
+            ExportTimeBin exportTimeBin = new ExportTimeBin(run, 5);
+            List<TimeBin> timeBins = exportTimeBin.calculateTimeBins(sortedStateRunEvents);
+
+            // initialization
+            Assert.AreEqual(3, timeBins.Count);
+            Assert.AreEqual(5000, timeBins[1].start);
+            Assert.AreEqual(10000, timeBins[1].end);
+            
+            // calculation
+            Assert.AreEqual(3800, timeBins[0].stateBehaviorTotalDuration[swimming]);
+
+            // export headers
+            List<string> headers = exportTimeBin.headers();
+            Assert.AreEqual(12, headers.Count);
+            Assert.AreEqual("Climbing 0-5", headers[0]);
+            Assert.AreEqual("Climbing 5-10", headers[1]);
+            Assert.AreEqual("Swimming 0-5", headers[3]);
+            Assert.AreEqual("Diving 10-15", headers[11]);
+
+            // export data
+            List<string> data = exportTimeBin.data();
+            Assert.AreEqual(12, data.Count);
+            Assert.AreEqual("1,200", data[0]);
+            Assert.AreEqual("0,000", data[1]);
+            Assert.AreEqual("3,800", data[3]);
+            Assert.AreEqual("0,000", data[11]);
+
+            //exportRun = new ExportRun(new ExportSettings(5));
+            //exportRun.exportRun(run);
+            run.RunEvents.Clear();
+        }
+
+        private Run createSampleRun(Trial trial)
+        {
             Run run = trial.Runs[1];
 
             run.RunEvents.Clear();
@@ -79,25 +145,7 @@ namespace ObLibTest
             run.Save();
             run.Trial.Duration = 15;
             run.Trial.Save();
-
-            Assert.AreEqual(15, run.Trial.Duration);
-
-            Assert.AreEqual(2, run.Id);
-            Assert.AreEqual(9, run.RunEvents.Count);
-            Assert.AreEqual(2.1, run.RunEvents[1].TimeTrackedInSeconds);
-
-            ExportRun exportRun = new ExportRun();
-
-            List<TimeBin> timeBins = TimeBin.runTimeBins(run);
-            Assert.AreEqual(3, timeBins.Count);
-            Assert.AreEqual(5000, timeBins[1].start);
-            Assert.AreEqual(10000, timeBins[1].end);
-
-            exportRun.exportRun(run);
-            Assert.AreEqual(3, exportRun.timeBins.Count);
-            Assert.AreEqual(3800, exportRun.timeBins[0].stateBehaviorTotalDuration[swimming]);
-            Assert.AreEqual(23, exportRun.fstHeaders(run.Trial.Session.BehavioralTest).Count);
-            run.RunEvents.Clear();
+            return run;
         }
 
         void addRunEvent(Run run, Behavior behavior, long timeTracked)
