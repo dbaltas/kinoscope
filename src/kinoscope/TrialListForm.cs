@@ -36,11 +36,11 @@ namespace kinoscope
 
         protected override void ItemExport(Trial trial)
         {
-            ExportRun export = new ExportRun();
-            export.exportTrial(trial);
+            Exporter exporter = new Exporter();
+            exporter.export(trial);
             string folderPath = String.Format(String.Format("{0}/{1}/text/",
-            ExportRun.EXPORT_DIRECTORY,
-            ExportRun.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
+            Exporter.EXPORT_DIRECTORY,
+            Exporter.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
 
             DialogResult dialogResult = MessageBox.Show(
                 string.Format(

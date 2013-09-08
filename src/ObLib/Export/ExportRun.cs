@@ -3,113 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.IO;
-
 using ObLib.Domain;
 
 namespace ObLib.Export
 {
     public class ExportRun
     {
-        private const double _LATENCY_TIME_TO_IGNORE_IN_SECONDS = 10;
-        private const double _LATENCY_MINIMUM_DURATION_IN_SECONDS = 3;
+        protected const double _LATENCY_TIME_TO_IGNORE_IN_SECONDS = 10;
+        protected const double _LATENCY_MINIMUM_DURATION_IN_SECONDS = 3;
 
-        public const string EXPORT_DIRECTORY = @"../export/";
-        private ExportSettings exportSettings;
+        protected Run run;
+        protected ExportSettings exportSettings;
 
-        public ExportRun(ExportSettings exportSettings = null)
+        public static ExportRun Create(Run run, ExportSettings exportSettings)
         {
-            this.exportSettings = (null != exportSettings) ? exportSettings : new ExportSettings();
+            if (run.Trial.Session.BehavioralTest.BehavioralTestType == BehavioralTestType.Fst)
+            {
+                return new ExportFstRun(run, exportSettings);
+            }
+            return new ExportRun(run, exportSettings);
         }
 
-        private string exportFile(Run run)
+        protected ExportRun(Run run, ExportSettings exportSettings)
         {
-            string filename = String.Format("{0}-{1}-{2}-{3}.csv",
-                run.Trial.Session.BehavioralTest.Project,
-                run.Trial,
-                run.Subject,
-                DateTime.Now.ToString("yyyyMMddHHmmss"));
-
-
-            return String.Format("{0}/{1}/text/{2}",
-                EXPORT_DIRECTORY,
-                ToFriendlyFilename(run.Trial.Session.BehavioralTest.Project.ToString()),
-                ToFriendlyFilename(filename));
+            this.run = run;
+            this.exportSettings = exportSettings;
         }
 
-        private string exportPath(Trial trial)
+        public virtual List<string> Headers()
         {
-            string filename = String.Format("{0}-{1}-{2}.csv",
-                trial.Session.BehavioralTest.Project,
-                trial,
-                DateTime.Now.ToString("yyyyMMddHHmmss"));
-
-            return String.Format("{0}/{1}/text/{2}",
-                EXPORT_DIRECTORY,
-                ToFriendlyFilename(trial.Session.BehavioralTest.Project.ToString()),
-                ToFriendlyFilename(filename));
-        }
-
-        public void exportRun(Run run)
-        {
-            string headerRow = String.Join<String>("\t", 
-                fstHeaders(run.Trial));
-            string dataRow = String.Join<String>("\t", 
-                fstRun(run));
-
-            string exportFilename = exportFile(run);
-
-            string exportDirectory = Path.GetDirectoryName(exportFilename);
-            if (!Directory.Exists(exportDirectory))
-            {
-                Directory.CreateDirectory(exportDirectory);
-            }
-
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(exportFilename))
-            {
-                file.WriteLine(headerRow);
-                file.WriteLine(dataRow);
-            }
-        }
-
-        public void exportTrial(Trial trial)
-        {
-            List<string> dataRows = new List<string>();
-            string headerRow = String.Join<String>("\t",
-                fstHeaders(trial));
-
-            foreach (Run run in trial.Runs)
-            {
-                if (run.Status == Run.RunStatus.Complete)
-                {
-                    Run.ValidationResult runValidationResult = run.Validate();
-                    if (runValidationResult.IsValid)
-                    {
-                        dataRows.Add(String.Join<String>("\t", fstRun(run)));
-                    }
-                }
-            }
-
-            string exportFilename = exportPath(trial);
-
-            string exportDirectory = Path.GetDirectoryName(exportFilename);
-            if (!Directory.Exists(exportDirectory))
-            {
-                Directory.CreateDirectory(exportDirectory);
-            }
-
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(exportFilename))
-            {
-                file.WriteLine(headerRow);
-                foreach (string dataRow in dataRows)
-                {
-                    file.WriteLine(dataRow);
-                }
-            }
-        }
-
-        public List<string> fstHeaders(Trial trial)
-        {
+            Trial trial = run.Trial;
             List<string> headers = new List<string>();
             BehavioralTest behavioralTest = trial.Session.BehavioralTest;
 
@@ -152,14 +75,14 @@ namespace ObLib.Export
             {
                 if (trial.Runs.Count > 0)
                 {
-                    ExportTimeBin exportTimeBin = new ExportTimeBin(trial.Runs[0]);
+                    ExportTimeBin exportTimeBin = new ExportTimeBin(trial.Runs[0], exportSettings.timeBinDuration);
                     headers.AddRange(exportTimeBin.headers());
                 }
             }
             return headers;
         }
 
-        List<string> fstRun(Run run)
+        public List<string> RunData()
         {
             List<string> data = new List<string>();
             Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
@@ -277,18 +200,12 @@ namespace ObLib.Export
 
             if (exportSettings.useTimeBins)
             {
-                ExportTimeBin exportTimeBin = new ExportTimeBin(run);
+                ExportTimeBin exportTimeBin = new ExportTimeBin(run, exportSettings.timeBinDuration);
                 List<TimeBin> timeBins = exportTimeBin.calculateTimeBins(sortedStateRunEvents);
                 data.AddRange(exportTimeBin.data());
             }
 
             return data;
-        }
-
-        public static string ToFriendlyFilename(string filename)
-        {
-            string result = filename.Replace(':', '-');
-            return System.Text.RegularExpressions.Regex.Replace(filename, @"[^\w\.-]", "_");
         }
     }
 }

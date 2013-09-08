@@ -67,17 +67,6 @@ Please upgrade {0}. The application will now exit", Application.ProductName),
                 }
             }
 
-            //Researcher researcher = Researcher.Find("admin");
-            //Researcher.Current = researcher;
-            //BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
-            //Trial trial = fstTest.Sessions[0].Trials[0];
-
-            //Run run = trial.Runs[1];
-
-            //List<ObLib.TimeBin> timeBins = ObLib.TimeBin.initializeTimeBins(run);
-            //ObLib.ExportRun export = new ObLib.ExportRun();
-            //export.exportRun(run);
-
             Application.Run(new DashBoard());
         }
     }

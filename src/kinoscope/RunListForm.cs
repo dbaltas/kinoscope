@@ -54,12 +54,12 @@ namespace kinoscope
                 return;
             }
 
-            ExportRun export = new ExportRun();
-            export.exportRun(run);
+            Exporter exporter = new Exporter();
+            exporter.export(run);
 
             string folderPath = String.Format(String.Format("{0}/{1}/text/",
-            ExportRun.EXPORT_DIRECTORY,
-            ExportRun.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
+            Exporter.EXPORT_DIRECTORY,
+            Exporter.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
 
             DialogResult dialogResult = MessageBox.Show(
                 string.Format(

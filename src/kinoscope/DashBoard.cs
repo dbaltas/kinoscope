@@ -170,8 +170,8 @@ namespace kinoscope
             }
 
                 string folderPath = String.Format(String.Format("{0}/{1}/images/",
-                ExportRun.EXPORT_DIRECTORY,
-                ExportRun.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
+                Exporter.EXPORT_DIRECTORY,
+                Exporter.ToFriendlyFilename(Researcher.Current.ActiveProject.ToString())));
 
                 RunImageExporter runImageExporter = new RunImageExporter();
                 runImageExporter.FolderPath = folderPath;
