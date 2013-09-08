@@ -45,9 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExportRunTest.cs" />
+    <Compile Include="Fixtures\Fixtures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DbMigrations\DbMigrations.csproj">
+      <Project>{185F2AEB-ADC4-4BA5-A9AF-F87BA0CE0DB9}</Project>
+      <Name>DbMigrations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ObLib\ObLib.csproj">
       <Project>{0F19FEDA-F26C-402A-A02C-8434FB011F73}</Project>
       <Name>ObLib</Name>

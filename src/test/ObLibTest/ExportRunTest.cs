@@ -4,44 +4,24 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
+
 using ObLib;
 using ObLib.Domain;
 using ObLib.Export;
+using ObLibTest.Fixtures;
 
 namespace ObLibTest
 {
     public class ExportRunTest
     {
-        private Behavior swimming = null;
-        private Behavior climbing = null;
-        private Behavior floating = null;
         private ExportRun exportRun = null;
 
         [SetUp]
         public void SetupContext()
         {
-            Researcher researcher = Researcher.Find("admin");
-            Researcher.Current = researcher;
-            BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
+            Fixtures.Fixtures.setup();
+
             exportRun = new ExportRun();
-
-            List<Behavior> behaviors = fstTest.GetBehaviors();
-
-            foreach (Behavior behavior in behaviors)
-            {
-                if ("Swimming" == behavior.Name)
-                {
-                    swimming = behavior;
-                }
-                if ("Climbing" == behavior.Name)
-                {
-                    climbing = behavior;
-                }
-                if ("Floating" == behavior.Name)
-                {
-                    floating = behavior;
-                }
-            }
         }
 
         [TearDown]
@@ -50,28 +30,30 @@ namespace ObLibTest
         }
 
         [Test]
-        public void testFstHeader()
+        public void testBehaviorAndTestSetup()
         {
-            Researcher researcher = Researcher.Current;
-            BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
+            Assert.NotNull(Fixtures.Fixtures.swimming);
+            Assert.NotNull(Fixtures.Fixtures.climbing);
+            Assert.NotNull(Fixtures.Fixtures.floating);
+
+            BehavioralTest fstTest = Fixtures.Fixtures.fstTest;
             Trial trial = fstTest.Sessions[0].Trials[0];
+            Subject subject = Researcher.Current.ActiveProject.Subjects[1];
 
-            Assert.NotNull(swimming);
-            Assert.NotNull(climbing);
-            Assert.NotNull(floating);
-
-            Subject subject = researcher.ActiveProject.Subjects[1];
             Assert.AreEqual(fstTest.BehavioralTestType, BehavioralTestType.Fst);
             Assert.AreEqual("T1", trial.Name);
             Assert.AreEqual("2", subject.Code);
-            Assert.AreEqual(5, trial.Runs.Count);
-            Assert.AreEqual(2, trial.CompleteRunCount);
+            Assert.AreEqual(2, trial.Runs.Count);
+            Assert.AreEqual(0, trial.CompleteRunCount);
+        }
 
-            Run run = createSampleRun(trial);
+        [Test]
+        public void testFstHeader()
+        {
+            Trial trial = Fixtures.Fixtures.fstTrial;
+            Run run = Fixtures.Fixtures.createSampleRun(trial);
 
             Assert.AreEqual(15, run.Trial.Duration);
-
-            Assert.AreEqual(2, run.Id);
             Assert.AreEqual(9, run.RunEvents.Count);
             Assert.AreEqual(2.1, run.RunEvents[1].TimeTrackedInSeconds);
 
@@ -83,10 +65,8 @@ namespace ObLibTest
         [Test]
         public void testTimeBins()
         {
-            Researcher researcher = Researcher.Current;
-            BehavioralTest fstTest = researcher.ActiveProject.BehavioralTests[0];
-            Trial trial = fstTest.Sessions[0].Trials[0];
-            Run run = createSampleRun(trial);
+            Trial trial = Fixtures.Fixtures.fstTrial;
+            Run run = Fixtures.Fixtures.createSampleRun(trial);
 
             List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
             sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
@@ -102,7 +82,7 @@ namespace ObLibTest
             Assert.AreEqual(10000, timeBins[1].end);
             
             // calculation
-            Assert.AreEqual(3800, timeBins[0].stateBehaviorTotalDuration[swimming]);
+            Assert.AreEqual(3800, timeBins[0].stateBehaviorTotalDuration[Fixtures.Fixtures.swimming]);
 
             // export headers
             List<string> headers = exportTimeBin.headers();
@@ -123,37 +103,6 @@ namespace ObLibTest
             //exportRun = new ExportRun(new ExportSettings(5));
             //exportRun.exportRun(run);
             run.RunEvents.Clear();
-        }
-
-        private Run createSampleRun(Trial trial)
-        {
-            Run run = trial.Runs[1];
-
-            run.RunEvents.Clear();
-
-            addRunEvent(run, swimming, 0);
-            addRunEvent(run, climbing, 2100);
-            addRunEvent(run, swimming, 3300);
-            addRunEvent(run, floating, 5200);
-            addRunEvent(run, swimming, 7500);
-            addRunEvent(run, floating, 11300);
-            addRunEvent(run, swimming, 12500);
-            addRunEvent(run, floating, 13300);
-            addRunEvent(run, climbing, 14700);
-
-            run.TmRun = DateTime.Now;
-            run.Save();
-            run.Trial.Duration = 15;
-            run.Trial.Save();
-            return run;
-        }
-
-        void addRunEvent(Run run, Behavior behavior, long timeTracked)
-        {
-            RunEvent runEvent = new RunEvent();
-            runEvent.TimeTracked = timeTracked;
-            runEvent.Behavior = behavior;
-            run.AddRunEvent(runEvent);
         }
     }
 }
