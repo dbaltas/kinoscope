@@ -36,7 +36,12 @@ namespace kinoscope
 
         protected override void ItemExport(Trial trial)
         {
-            Exporter exporter = new Exporter();
+            Export.ExportSettingsForm settingsForm = new Export.ExportSettingsForm(trial);
+            DialogResult settingsDialogResult = settingsForm.ShowDialog();
+
+            if (settingsDialogResult != System.Windows.Forms.DialogResult.OK) return;
+
+            Exporter exporter = new Exporter(settingsForm.exportSettings);
             exporter.export(trial);
             string folderPath = String.Format(String.Format("{0}/{1}/text/",
             Exporter.EXPORT_DIRECTORY,

@@ -92,6 +92,12 @@
     <Compile Include="BehaviorListEventVisualiser.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Export\ExportSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Export\ExportSettingsForm.Designer.cs">
+      <DependentUpon>ExportSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProjectListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -195,6 +201,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BehavioralTestTemplateTrialControl.resx">
       <DependentUpon>BehavioralTestTemplateTrialControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Export\ExportSettingsForm.resx">
+      <DependentUpon>ExportSettingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectBehavioralTestControl.resx">
       <DependentUpon>ProjectBehavioralTestControl.cs</DependentUpon>

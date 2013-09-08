@@ -9,6 +9,6 @@ namespace ObLib
 {
     public class CurrentVersion
     {
-        public const string Version = "0.3.0";
+        public const string Version = "0.3.0.1";
     }
 }
