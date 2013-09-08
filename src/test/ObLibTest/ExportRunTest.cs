@@ -76,7 +76,7 @@ namespace ObLibTest
             };
 
             // standard, duration, frequency, latency
-            Assert.AreEqual(10 + 3 + 3 + 3, headers.Count);
+            Assert.AreEqual(10 + 3 + 3 + 3, headers.Count, "Items on Object Recognition header output");
             Assert.AreEqual(expectedSubjectHeaders, headers.GetRange(0, 9));
             Assert.AreEqual(expectedDurationHeaders, headers.GetRange(10, 3));
             run.RunEvents.Clear();
@@ -106,7 +106,7 @@ namespace ObLibTest
             };
 
             // standard, duration, frequency, latency, detke
-            Assert.AreEqual(10 + 4 + 5 + 4 + 4, headers.Count);
+            Assert.AreEqual(10 + 4 + 5 + 4 + 4, headers.Count, "Items on FST header output");
             Assert.AreEqual(expectedSubjectHeaders, headers.GetRange(0, 9));
             Assert.AreEqual(expectedDurationHeaders, headers.GetRange(10, 4));
             Assert.AreEqual(expectedDetkeScoringHeaders, headers.GetRange(23, 4));
@@ -116,29 +116,35 @@ namespace ObLibTest
         [Test]
         public void testFstData()
         {
-            Trial trial = Fixtures.Fixtures.fstLightTrial;
+            Trial trial = Fixtures.Fixtures.fstTrial;
             Run run = Fixtures.Fixtures.createLightFstRun(trial);
             ExportRun exportRun = ExportRun.Create(run, new ExportSettings());
 
+            Assert.IsInstanceOf(typeof(ExportFstRun), exportRun);
             List<string> data = exportRun.RunData();
             List<string> expectedSubjectData = new List<string>(){
                 "UnitTest Project", run.Subject.ToString(), "", null, null,
                 run.Trial.ToString(), run.Trial.Duration.ToString()
             };
             List<string> expectedDurationData = new List<string>(){
-                (1.5).ToString("F3"), (8.6).ToString("F3"),
+                (286.5).ToString("F3"), (8.6).ToString("F3"),
                 (4.9).ToString("F3"), (0).ToString("F3")
             };
             List<string> expectedFrequencyData = new List<string>(){
                 (2).ToString(), (4).ToString(),
                 (3).ToString(), (0).ToString(), (2).ToString()
             };
+            List<string> expectedDetkeScoringData = new List<string>(){
+                (58).ToString(), (2).ToString(),
+                (0).ToString(), (0).ToString()
+            };
 
-            Assert.AreEqual(23, data.Count);
+            Assert.AreEqual(27, data.Count, "Items on FST data output");
             Assert.AreEqual(expectedSubjectData, data.GetRange(0, 7));
             Assert.AreEqual("11", data[9], "Number Of Events");
             Assert.AreEqual(expectedDurationData, data.GetRange(10, 4), "Behavior Duration");
             Assert.AreEqual(expectedFrequencyData, data.GetRange(14, 5), "Frequency Duration");
+            Assert.AreEqual(expectedDetkeScoringData, data.GetRange(23, 4), "Detke Scoring");
         }
 
         [Test]
@@ -147,13 +153,8 @@ namespace ObLibTest
             Trial trial = Fixtures.Fixtures.fstLightTrial;
             Run run = Fixtures.Fixtures.createLightFstRun(trial);
 
-            List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
-            sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
-
-            List<RunEvent> sortedStateRunEvents = sortedRunEvents.FindAll(new Predicate<RunEvent>(r => r.Behavior.Type == Behavior.BehaviorType.State));
-
             ExportTimeBin exportTimeBin = new ExportTimeBin(run, 5);
-            List<TimeBin> timeBins = exportTimeBin.calculateTimeBins(sortedStateRunEvents);
+            List<TimeBin> timeBins = exportTimeBin.calculateTimeBins();
 
             // initialization
             Assert.AreEqual(3, timeBins.Count);
@@ -163,7 +164,7 @@ namespace ObLibTest
             // calculation
             Assert.AreEqual(3800, timeBins[0].stateBehaviorTotalDuration[Fixtures.Fixtures.FstSwimming]);
 
-            // export headers
+            // export runData
             List<string> headers = exportTimeBin.headers();
             Assert.AreEqual(12, headers.Count);
             Assert.AreEqual("Climbing 0-5", headers[0]);

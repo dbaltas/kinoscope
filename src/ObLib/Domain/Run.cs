@@ -47,6 +47,34 @@ namespace ObLib.Domain
             }
         }
 
+        public virtual List<RunEvent> SortedRunEvents
+        {
+            get
+            {
+                if (_sortedRunEvents == null)
+                {
+                    _sortedRunEvents = new List<RunEvent>(RunEvents);
+                    _sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
+                }
+                return _sortedRunEvents;
+            }
+        }
+
+        public virtual List<RunEvent> SortedStateRunEvents
+        {
+            get
+            {
+                if (_sortedStateRunEvents == null)
+                {
+                    _sortedStateRunEvents = SortedRunEvents.FindAll(new Predicate<RunEvent>(r => r.Behavior.Type == Behavior.BehaviorType.State));
+                }
+                return _sortedStateRunEvents;
+            }
+        }
+
+        private List<RunEvent> _sortedRunEvents;
+        private List<RunEvent> _sortedStateRunEvents;
+
         public Run()
         {
             RunEvents = new List<RunEvent>();

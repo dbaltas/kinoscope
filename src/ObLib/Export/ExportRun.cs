@@ -82,7 +82,7 @@ namespace ObLib.Export
             return headers;
         }
 
-        public List<string> RunData()
+        public virtual List<string> RunData()
         {
             List<string> data = new List<string>();
             Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
@@ -105,10 +105,6 @@ namespace ObLib.Export
             data.Add(run.TmRun.ToString("HH:mm:ss"));
             data.Add(run.RunEvents.Count.ToString());
 
-            List<RunEvent> sortedRunEvents = new List<RunEvent>(run.RunEvents);
-            sortedRunEvents.Sort(new Comparison<RunEvent>((re1, re2) => (int)(re1.TimeTracked - re2.TimeTracked)));
-
-            List<RunEvent> sortedStateRunEvents = sortedRunEvents.FindAll(new Predicate<RunEvent>(r => r.Behavior.Type == Behavior.BehaviorType.State));
             // initialize counters
             foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
             {
@@ -120,9 +116,9 @@ namespace ObLib.Export
                 }
             }
 
-            RunEvent lastStateRunEvent = sortedRunEvents[0];
+            RunEvent lastStateRunEvent = run.SortedRunEvents[0];
 
-            foreach (RunEvent runEvent in sortedRunEvents)
+            foreach (RunEvent runEvent in run.SortedRunEvents)
             {
                 // calculate frequency
                 behaviorFrequency[runEvent.Behavior]++;
@@ -201,7 +197,7 @@ namespace ObLib.Export
             if (exportSettings.useTimeBins)
             {
                 ExportTimeBin exportTimeBin = new ExportTimeBin(run, exportSettings.timeBinDuration);
-                List<TimeBin> timeBins = exportTimeBin.calculateTimeBins(sortedStateRunEvents);
+                List<TimeBin> timeBins = exportTimeBin.calculateTimeBins();
                 data.AddRange(exportTimeBin.data());
             }
 

@@ -26,25 +26,18 @@ namespace ObLib.Export
             initializeTimeBins();
         }
 
-        public List<TimeBin> calculateTimeBins(List<RunEvent> sortedStateRunEvents)
+        public List<TimeBin> calculateTimeBins()
         {
-            RunEvent lastStateRunEvent = sortedStateRunEvents[0];
+            RunEvent lastStateRunEvent = run.SortedStateRunEvents[0];
 
             int eventIndex = 1;
             int binIndex = 0;
             while (true)
             {
                 TimeBin currentBin = timeBins[binIndex];
-                long eventEnd;
 
-                if (eventIndex >= sortedStateRunEvents.Count)
-                {
-                    eventEnd = run.Trial.Duration * 1000;
-                }
-                else
-                {
-                    eventEnd = sortedStateRunEvents[eventIndex].TimeTracked;
-                }
+                long eventEnd = (eventIndex >= run.SortedStateRunEvents.Count) ? run.Trial.Duration * 1000 :
+                    run.SortedStateRunEvents[eventIndex].TimeTracked;
 
                 long eventStartInBin = Math.Max(lastStateRunEvent.TimeTracked, currentBin.start);
                 long eventEndInBin = Math.Min(eventEnd, currentBin.end);
@@ -55,8 +48,8 @@ namespace ObLib.Export
 
                 if (eventEnd < currentBin.end)
                 {
-                    if (eventIndex >= sortedStateRunEvents.Count) break;
-                    lastStateRunEvent = sortedStateRunEvents[eventIndex];
+                    if (eventIndex >= run.SortedStateRunEvents.Count) break;
+                    lastStateRunEvent = run.SortedStateRunEvents[eventIndex];
                     eventIndex++;
                     continue;
                 }
