@@ -83,7 +83,7 @@ namespace kinoscope.Properties {
         
         internal static System.Drawing.Bitmap export {
             get {
-                object obj = ResourceManager.GetObject("exporter", resourceCulture);
+                object obj = ResourceManager.GetObject("export", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
