@@ -52,6 +52,7 @@ namespace ObLib.Export
 
             foreach (Run run in trial.Runs)
             {
+                exportRun = ExportRun.Create(run, exportSettings);
                 if (run.Status == Run.RunStatus.Complete)
                 {
                     Run.ValidationResult runValidationResult = run.Validate();
