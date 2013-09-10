@@ -147,6 +147,37 @@ namespace ObLibTest
             Assert.AreEqual(expectedDetkeScoringData, data.GetRange(23, 4), "Detke Scoring");
         }
 
+
+        //[Test]
+        //public void testExportRange()
+        //{
+        //    Trial trial = Fixtures.Fixtures.fstTrial;
+        //    Run run = Fixtures.Fixtures.createLightFstRun(trial);
+        //    ExportRun exportRun = ExportRun.Create(run, new ExportSettings(trial, -1, 3, 8));
+
+        //    Assert.IsInstanceOf(typeof(ExportFstRun), exportRun);
+        //    List<string> data = exportRun.RunData();
+
+        //    List<string> expectedDurationData = new List<string>(){
+        //        (0.3).ToString("F3"), (2.4).ToString("F3"),
+        //        (2.3).ToString("F3"), (0).ToString("F3")
+        //    };
+        //    List<string> expectedFrequencyData = new List<string>(){
+        //        (1).ToString(), (2).ToString(),
+        //        (1).ToString(), (0).ToString(), (1).ToString()
+        //    };
+        //    List<string> expectedDetkeScoringData = new List<string>(){
+        //        (0).ToString(), (1).ToString(),
+        //        (0).ToString(), (0).ToString()
+        //    };
+
+        //    Assert.AreEqual(27, data.Count, "Items on FST data output");
+        //    Assert.AreEqual("4", data[9], "Number Of Events");
+        //    Assert.AreEqual(expectedDurationData, data.GetRange(10, 4), "Behavior Duration");
+        //    Assert.AreEqual(expectedFrequencyData, data.GetRange(14, 5), "Frequency Duration");
+        //    Assert.AreEqual(expectedDetkeScoringData, data.GetRange(23, 4), "Detke Scoring");
+        //}
+
         [Test]
         public void testTimeBins()
         {

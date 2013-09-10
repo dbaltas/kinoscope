@@ -116,6 +116,25 @@ namespace ObLib.Export
                 }
             }
 
+            RunEvent lastStateRunEventInRange = null;
+            List<RunEvent> runEventsInRange = new List<RunEvent>(run.SortedRunEvents);
+
+            foreach (RunEvent runEvent in run.SortedRunEvents)
+            {
+                if (runEvent.TimeTracked < exportSettings.ExportStart * 1000) 
+                {
+                    if (runEvent.Behavior.Type == Behavior.BehaviorType.State) lastStateRunEventInRange = runEvent;
+                    runEventsInRange.Remove(runEvent);
+                }
+                if (runEvent.TimeTracked >= exportSettings.ExportEnd * 1000) 
+                {
+                    runEventsInRange.RemoveAll(new Predicate<RunEvent>(r => (r.TimeTracked >= runEvent.TimeTracked)));
+                    break;
+                }
+            }
+
+            if (runEventsInRange.Count < run.SortedRunEvents.Count) runEventsInRange.Insert(0, lastStateRunEventInRange);
+
             RunEvent lastStateRunEvent = run.SortedRunEvents[0];
 
             foreach (RunEvent runEvent in run.SortedRunEvents)
@@ -124,14 +143,15 @@ namespace ObLib.Export
                 behaviorFrequency[runEvent.Behavior]++;
 
                 // ignore first event since we calculate diffs with previous event time
-                if (runEvent.TimeTracked == 0)
+                if (runEvent.TimeTracked <= exportSettings.ExportStart * 1000)
                 {
                     continue;
                 }
 
                 if (runEvent.Behavior.Type == Behavior.BehaviorType.State)
                 {
-                    double currentEventDuration = runEvent.TimeTrackedInSeconds - lastStateRunEvent.TimeTrackedInSeconds;
+                    double eventStart = Math.Max(lastStateRunEvent.TimeTrackedInSeconds, exportSettings.ExportStart);
+                    double currentEventDuration = runEvent.TimeTrackedInSeconds - eventStart;
                     // State Behaviors Duration
                     stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += currentEventDuration;
 
@@ -142,8 +162,8 @@ namespace ObLib.Export
                         {
                             if (stateBehaviorLatency[lastStateRunEvent.Behavior] == null)
                             {
-                                double latencyNoticedAt = lastStateRunEvent.TimeTrackedInSeconds;
-                                if (lastStateRunEvent.TimeTrackedInSeconds < _LATENCY_TIME_TO_IGNORE_IN_SECONDS)
+                                double latencyNoticedAt = eventStart;
+                                if (eventStart < _LATENCY_TIME_TO_IGNORE_IN_SECONDS)
                                 {
                                     latencyNoticedAt = _LATENCY_TIME_TO_IGNORE_IN_SECONDS;
                                 }
@@ -159,7 +179,7 @@ namespace ObLib.Export
             }
 
             // State Behavior Duration add the time left till the end of the run
-            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += run.Trial.Duration - lastStateRunEvent.TimeTrackedInSeconds;
+            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += exportSettings.ExportEnd - lastStateRunEvent.TimeTrackedInSeconds;
 
             // state behavior latency set to trial duration if unset
             foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
@@ -189,7 +209,7 @@ namespace ObLib.Export
                 double? latency = stateBehaviorLatency[behaviorTime.Key];
                 if (latency == null)
                 {
-                    latency = run.Trial.Duration;
+                    latency = exportSettings.ExportEnd;
                 }
                 data.Add(latency.Value.ToString("F3"));
             }
