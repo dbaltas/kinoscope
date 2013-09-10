@@ -59,7 +59,7 @@ namespace ObLibTest
         {
             Trial trial = Fixtures.Fixtures.orTrial;
             Run run = Fixtures.Fixtures.createObjectRecognitionRun(trial);
-            ExportRun exportRun = ExportRun.Create(run, new ExportSettings());
+            ExportRun exportRun = ExportRun.Create(run, new ExportSettings(trial));
 
             Assert.AreEqual(100, run.Trial.Duration);
             Assert.AreEqual(13, run.RunEvents.Count);
@@ -87,7 +87,7 @@ namespace ObLibTest
         {
             Trial trial = Fixtures.Fixtures.fstLightTrial;
             Run run = Fixtures.Fixtures.createLightFstRun(trial);
-            ExportRun exportRun = ExportRun.Create(run, new ExportSettings());
+            ExportRun exportRun = ExportRun.Create(run, new ExportSettings(trial));
 
             Assert.AreEqual(15, run.Trial.Duration);
             Assert.AreEqual(11, run.RunEvents.Count);
@@ -118,7 +118,7 @@ namespace ObLibTest
         {
             Trial trial = Fixtures.Fixtures.fstTrial;
             Run run = Fixtures.Fixtures.createLightFstRun(trial);
-            ExportRun exportRun = ExportRun.Create(run, new ExportSettings());
+            ExportRun exportRun = ExportRun.Create(run, new ExportSettings(trial));
 
             Assert.IsInstanceOf(typeof(ExportFstRun), exportRun);
             List<string> data = exportRun.RunData();
@@ -180,8 +180,8 @@ namespace ObLibTest
             Assert.AreEqual((3.8).ToString("F3"), data[3]);
             Assert.AreEqual((0.0).ToString("F3"), data[11]);
 
-            Exporter exporter = new Exporter(new ExportSettings(5));
-            exporter.export(run);
+            //Exporter exporter = new Exporter(new ExportSettings(5));
+            //exporter.export(run);
             run.RunEvents.Clear();
         }
     }

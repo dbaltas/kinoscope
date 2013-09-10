@@ -71,11 +71,11 @@ namespace ObLib.Export
                 }
             }
 
-            if (exportSettings.useTimeBins)
+            if (exportSettings.UseTimeBins)
             {
                 if (trial.Runs.Count > 0)
                 {
-                    ExportTimeBin exportTimeBin = new ExportTimeBin(trial.Runs[0], exportSettings.timeBinDuration);
+                    ExportTimeBin exportTimeBin = new ExportTimeBin(trial.Runs[0], exportSettings.TimeBinDuration);
                     headers.AddRange(exportTimeBin.headers());
                 }
             }
@@ -194,9 +194,9 @@ namespace ObLib.Export
                 data.Add(latency.Value.ToString("F3"));
             }
 
-            if (exportSettings.useTimeBins)
+            if (exportSettings.UseTimeBins)
             {
-                ExportTimeBin exportTimeBin = new ExportTimeBin(run, exportSettings.timeBinDuration);
+                ExportTimeBin exportTimeBin = new ExportTimeBin(run, exportSettings.TimeBinDuration);
                 List<TimeBin> timeBins = exportTimeBin.calculateTimeBins();
                 data.AddRange(exportTimeBin.data());
             }

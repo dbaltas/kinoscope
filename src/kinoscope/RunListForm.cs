@@ -54,7 +54,7 @@ namespace kinoscope
                 return;
             }
 
-            Exporter exporter = new Exporter();
+            Exporter exporter = new Exporter(run.Trial);
             exporter.export(run);
 
             string folderPath = String.Format(String.Format("{0}/{1}/text/",

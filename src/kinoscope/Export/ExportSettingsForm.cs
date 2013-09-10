@@ -35,7 +35,7 @@ namespace kinoscope.Export
                 ShowInputError();
                 return;
             }
-            exportSettings = new ObLib.Export.ExportSettings(timeBinDuration);
+            exportSettings = new ObLib.Export.ExportSettings(trial, timeBinDuration);
             Close();
         }
 

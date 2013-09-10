@@ -14,9 +14,9 @@ namespace ObLib.Export
         public const string EXPORT_DIRECTORY = @"../export/";
         private ExportSettings exportSettings;
 
-        public Exporter(ExportSettings exportSettings = null)
+        public Exporter(Trial trial, ExportSettings exportSettings = null)
         {
-            this.exportSettings = (null != exportSettings) ? exportSettings : new ExportSettings();
+            this.exportSettings = (null != exportSettings) ? exportSettings : new ExportSettings(trial);
         }
 
         public void export(Run run)

@@ -42,7 +42,7 @@ namespace kinoscope
             if (settingsDialogResult != System.Windows.Forms.DialogResult.OK) return;
 
             Cursor.Current = Cursors.WaitCursor;
-            Exporter exporter = new Exporter(settingsForm.exportSettings);
+            Exporter exporter = new Exporter(trial, settingsForm.exportSettings);
             exporter.export(trial);
             string folderPath = String.Format(String.Format("{0}/{1}/text/",
             Exporter.EXPORT_DIRECTORY,
