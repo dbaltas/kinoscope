@@ -15,6 +15,10 @@ namespace ObLib.Export
         protected Run run;
         protected ExportSettings exportSettings;
 
+        protected Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
+        protected Dictionary<Behavior, double> stateBehaviorTotalDuration = new Dictionary<Behavior, double>();
+        protected Dictionary<Behavior, double?> stateBehaviorLatency = new Dictionary<Behavior, double?>();
+
         public static ExportRun Create(Run run, ExportSettings exportSettings)
         {
             if (run.Trial.Session.BehavioralTest.BehavioralTestType == BehavioralTestType.Fst)
@@ -85,9 +89,6 @@ namespace ObLib.Export
         public virtual List<string> RunData()
         {
             List<string> data = new List<string>();
-            Dictionary<Behavior, int> behaviorFrequency = new Dictionary<Behavior, int>();
-            Dictionary<Behavior, double> stateBehaviorTotalDuration = new Dictionary<Behavior, double>();
-            Dictionary<Behavior, double?> stateBehaviorLatency = new Dictionary<Behavior, double?>();
 
             data.Add(run.Trial.Session.BehavioralTest.Project.ToString());
             data.Add(run.Subject.ToString());
@@ -103,7 +104,6 @@ namespace ObLib.Export
             data.Add(run.Trial.Duration.ToString());
             data.Add(run.TmRun.ToString("dd/MM/yyyy"));
             data.Add(run.TmRun.ToString("HH:mm:ss"));
-            data.Add(run.RunEvents.Count.ToString());
 
             // initialize counters
             foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
@@ -116,22 +116,28 @@ namespace ObLib.Export
                 }
             }
 
-            RunEvent lastStateRunEvent = run.SortedRunEvents[0];
+            List<RunEvent> runEventsInRange = GetRunEventsInExportRange();
 
-            foreach (RunEvent runEvent in run.SortedRunEvents)
+            data.Add(runEventsInRange.Count.ToString());
+
+            RunEvent lastStateRunEvent = runEventsInRange[0];
+
+            foreach (RunEvent runEvent in runEventsInRange)
             {
                 // calculate frequency
                 behaviorFrequency[runEvent.Behavior]++;
 
                 // ignore first event since we calculate diffs with previous event time
-                if (runEvent.TimeTracked == 0)
+                if (runEvent.TimeTracked <= exportSettings.ExportStart * 1000)
                 {
+                    lastStateRunEvent = runEvent;
                     continue;
                 }
 
                 if (runEvent.Behavior.Type == Behavior.BehaviorType.State)
                 {
-                    double currentEventDuration = runEvent.TimeTrackedInSeconds - lastStateRunEvent.TimeTrackedInSeconds;
+                    double eventStart = Math.Max(lastStateRunEvent.TimeTrackedInSeconds, exportSettings.ExportStart);
+                    double currentEventDuration = runEvent.TimeTrackedInSeconds - eventStart;
                     // State Behaviors Duration
                     stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += currentEventDuration;
 
@@ -142,8 +148,8 @@ namespace ObLib.Export
                         {
                             if (stateBehaviorLatency[lastStateRunEvent.Behavior] == null)
                             {
-                                double latencyNoticedAt = lastStateRunEvent.TimeTrackedInSeconds;
-                                if (lastStateRunEvent.TimeTrackedInSeconds < _LATENCY_TIME_TO_IGNORE_IN_SECONDS)
+                                double latencyNoticedAt = eventStart;
+                                if (eventStart < _LATENCY_TIME_TO_IGNORE_IN_SECONDS)
                                 {
                                     latencyNoticedAt = _LATENCY_TIME_TO_IGNORE_IN_SECONDS;
                                 }
@@ -159,7 +165,7 @@ namespace ObLib.Export
             }
 
             // State Behavior Duration add the time left till the end of the run
-            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += run.Trial.Duration - lastStateRunEvent.TimeTrackedInSeconds;
+            stateBehaviorTotalDuration[lastStateRunEvent.Behavior] += exportSettings.ExportEnd - lastStateRunEvent.TimeTrackedInSeconds;
 
             // state behavior latency set to trial duration if unset
             foreach (Behavior behavior in run.Trial.Session.BehavioralTest.GetBehaviors())
@@ -189,7 +195,7 @@ namespace ObLib.Export
                 double? latency = stateBehaviorLatency[behaviorTime.Key];
                 if (latency == null)
                 {
-                    latency = run.Trial.Duration;
+                    latency = exportSettings.ExportEnd;
                 }
                 data.Add(latency.Value.ToString("F3"));
             }
@@ -202,6 +208,32 @@ namespace ObLib.Export
             }
 
             return data;
+        }
+
+        private List<RunEvent> GetRunEventsInExportRange()
+        {
+            RunEvent lastStateRunEventInRange = null;
+            RunEvent tempRunEventToRemoveIfNotLastBeforeExportStart = null;
+            List<RunEvent> runEventsInRange = new List<RunEvent>(run.SortedRunEvents);
+
+            foreach (RunEvent runEvent in run.SortedRunEvents)
+            {
+                if (runEvent.TimeTracked < exportSettings.ExportStart * 1000)
+                {
+                    if (runEvent.Behavior.Type == Behavior.BehaviorType.State) lastStateRunEventInRange = runEvent;
+                    if (tempRunEventToRemoveIfNotLastBeforeExportStart != null)
+                    {
+                        runEventsInRange.Remove(tempRunEventToRemoveIfNotLastBeforeExportStart);
+                    }
+                    tempRunEventToRemoveIfNotLastBeforeExportStart = runEvent;
+                }
+                if (runEvent.TimeTracked >= exportSettings.ExportEnd * 1000)
+                {
+                    runEventsInRange.RemoveAll(new Predicate<RunEvent>(r => (r.TimeTracked >= runEvent.TimeTracked)));
+                    break;
+                }
+            }
+            return runEventsInRange;
         }
     }
 }

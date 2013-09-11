@@ -15,12 +15,16 @@ namespace kinoscope.Export
     {
         private Trial trial;
         private int timeBinDuration = -1;
+        private int exportStart = -1;
+        private int exportEnd = -1;
         public ObLib.Export.ExportSettings exportSettings;
         public ExportSettingsForm(Trial trial)
         {
             MdiParent = null;
             InitializeComponent();
             this.trial = trial;
+            txtExportStart.Text = 0.ToString();
+            txtExportEnd.Text = trial.Duration.ToString();
         }
 
         private void bCancel_Click(object sender, EventArgs e)
@@ -35,7 +39,7 @@ namespace kinoscope.Export
                 ShowInputError();
                 return;
             }
-            exportSettings = new ObLib.Export.ExportSettings(trial, timeBinDuration);
+            exportSettings = new ObLib.Export.ExportSettings(trial, timeBinDuration, exportStart, exportEnd);
             Close();
         }
 
@@ -61,6 +65,36 @@ namespace kinoscope.Export
         private void ckExportTimeBins_CheckedChanged(object sender, EventArgs e)
         {
             txtTimeBinDuration.Enabled = ckExportTimeBins.Checked;
+        }
+
+        private void txtExportStart_Validating(object sender, CancelEventArgs e)
+        {
+            bool hasError = false;
+                int start;
+                if (int.TryParse(txtExportStart.Text, out start))
+                {
+                    hasError = start < 0 || start >= trial.Duration;
+                    if (!hasError) exportStart = start;
+                }
+                else hasError = true;
+
+            e.Cancel = hasError;
+            errorProvider1.SetError(txtTimeBinDuration, hasError ? "Invalid Export Start." : "");
+        }
+
+        private void txtExportEnd_Validating(object sender, CancelEventArgs e)
+        {
+            bool hasError = false;
+                int end;
+                if (int.TryParse(txtExportEnd.Text, out end))
+                {
+                    hasError = end <= 0 || end > trial.Duration;
+                    if (!hasError) exportEnd = end;
+                }
+                else hasError = true;
+
+            e.Cancel = hasError;
+            errorProvider1.SetError(txtTimeBinDuration, hasError ? "Invalid Export end." : "");
         }
     }
 }
