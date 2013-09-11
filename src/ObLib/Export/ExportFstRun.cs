@@ -32,6 +32,7 @@ namespace ObLib.Export
         public override List<string> RunData()
         {
             List<String> runData = base.RunData();
+
             Dictionary<Behavior, int> behaviorScoring = new Dictionary<Behavior, int>();
             // Detke Scoring
             // initialize
@@ -47,17 +48,17 @@ namespace ObLib.Export
             int scoringIndex = 1;
             int eventIndex = 0;
 
-            RunEvent lastStateRunEvent = run.SortedStateRunEvents[0];
+            RunEvent lastStateRunEvent = stateRunEventsInRange[0];
             eventIndex++;
 
             while (true)
             {
-                long eventEnd = eventIndex >= run.SortedStateRunEvents.Count ? run.Trial.Duration * 1000 :
-                    run.SortedStateRunEvents[eventIndex].TimeTracked;
+                long eventEnd = eventIndex >= stateRunEventsInRange.Count ? exportSettings.ExportEnd * 1000 :
+                    Math.Max(stateRunEventsInRange[eventIndex].TimeTracked, exportSettings.ExportStart * 1000);
 
                 if (eventEnd < scoringIndex*scoringInterval)
                 {
-                    lastStateRunEvent = run.SortedStateRunEvents[eventIndex];
+                    lastStateRunEvent = stateRunEventsInRange[eventIndex];
                     eventIndex++;
                     continue;
                 }
@@ -65,7 +66,7 @@ namespace ObLib.Export
                 {
                     scoringIndex++;
                     behaviorScoring[lastStateRunEvent.Behavior]++;
-                    if (scoringIndex*scoringInterval > run.Trial.Duration * 1000) break;
+                    if (scoringIndex*scoringInterval > exportSettings.ExportEnd * 1000) break;
                     continue;
                 }
             }

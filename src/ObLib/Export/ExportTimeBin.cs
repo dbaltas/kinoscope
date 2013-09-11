@@ -12,23 +12,28 @@ namespace ObLib.Export
         int binDuration = -1;
         List<TimeBin> timeBins;
         private Run run;
+        protected ExportSettings exportSettings;
+        protected List<RunEvent> stateRunEventsInRange;
 
-        public ExportTimeBin(Run run, int binDurationInSeconds = -1)
+        public ExportTimeBin(Run run, ExportSettings exportSettings, List<RunEvent> stateRunEventsInRange)
         {
-            if (binDurationInSeconds <= 0)
+            this.run = run;
+            this.exportSettings = exportSettings;
+            this.stateRunEventsInRange = stateRunEventsInRange;
+
+            if (exportSettings.TimeBinDuration <= 0)
             {
                 throw new IndexOutOfRangeException(String.Format("TimeBin duration: {0} out of range",
-                    binDurationInSeconds));
+                    exportSettings.TimeBinDuration));
             }
-            this.binDuration = binDurationInSeconds * 1000;
+            this.binDuration = exportSettings.TimeBinDuration * 1000;
 
-            this.run = run;
             initializeTimeBins();
         }
 
         public List<TimeBin> calculateTimeBins()
         {
-            RunEvent lastStateRunEvent = run.SortedStateRunEvents[0];
+            RunEvent lastStateRunEvent = stateRunEventsInRange[0];
 
             int eventIndex = 1;
             int binIndex = 0;
@@ -36,8 +41,8 @@ namespace ObLib.Export
             {
                 TimeBin currentBin = timeBins[binIndex];
 
-                long eventEnd = (eventIndex >= run.SortedStateRunEvents.Count) ? run.Trial.Duration * 1000 :
-                    run.SortedStateRunEvents[eventIndex].TimeTracked;
+                long eventEnd = (eventIndex >= stateRunEventsInRange.Count) ? exportSettings.ExportEnd * 1000 :
+                    Math.Max(stateRunEventsInRange[eventIndex].TimeTracked, exportSettings.ExportStart * 1000);
 
                 long eventStartInBin = Math.Max(lastStateRunEvent.TimeTracked, currentBin.start);
                 long eventEndInBin = Math.Min(eventEnd, currentBin.end);
@@ -48,8 +53,8 @@ namespace ObLib.Export
 
                 if (eventEnd < currentBin.end)
                 {
-                    if (eventIndex >= run.SortedStateRunEvents.Count) break;
-                    lastStateRunEvent = run.SortedStateRunEvents[eventIndex];
+                    if (eventIndex >= stateRunEventsInRange.Count) break;
+                    lastStateRunEvent = stateRunEventsInRange[eventIndex];
                     eventIndex++;
                     continue;
                 }
@@ -69,9 +74,9 @@ namespace ObLib.Export
             Trial trial = run.Trial;
 
             timeBins = new List<TimeBin>();
-            int totalTime = trial.Duration * 1000;
-            int start = 0;
-            int end = totalTime;
+
+            int start = exportSettings.ExportStart * 1000;
+            int end = exportSettings.ExportEnd * 1000;
             int index = start;
 
             while (index < end)

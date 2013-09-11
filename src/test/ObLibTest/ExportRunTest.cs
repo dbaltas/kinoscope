@@ -185,11 +185,11 @@ namespace ObLibTest
             Trial trial = Fixtures.Fixtures.fstLightTrial;
             Run run = Fixtures.Fixtures.createLightFstRun(trial);
 
-            ExportTimeBin exportTimeBin = new ExportTimeBin(run, 5);
+            ExportTimeBin exportTimeBin = new ExportTimeBin(run, new ExportSettings(trial, 5), run.SortedStateRunEvents);
             List<TimeBin> timeBins = exportTimeBin.calculateTimeBins();
 
             // initialization
-            Assert.AreEqual(3, timeBins.Count);
+            Assert.AreEqual(3, timeBins.Count, "TimeBins Count");
             Assert.AreEqual(5000, timeBins[1].start);
             Assert.AreEqual(10000, timeBins[1].end);
 
