@@ -4,9 +4,9 @@
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
   <?include Variables.wxi ?>
 
-  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.VersionNumber)" Manufacturer="Observador" UpgradeCode="$(var.UpgradeCode)">
+  <Product Id="*" Name="$(var.ProductName)" Language="1033" Version="$(var.VersionNumber)" Manufacturer="Kinoscope" UpgradeCode="$(var.UpgradeCode)">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
-    <Icon Id="observadorIcon.exe" SourceFile="$(var.ApplicationDirectory)/observador.exe"/>
+    <Icon Id="kinoscopeIcon.exe" SourceFile="$(var.ApplicationDirectory)/kinoscope.exe"/>
 
     <Upgrade Id="$(var.UpgradeCode)">
       <UpgradeVersion Minimum="$(var.VersionNumber)"
@@ -41,7 +41,7 @@
     <WixVariable Id="WixUILicenseRtf" Value="$(var.DocumentDirectory)\license.rtf"/>
     <WixVariable Id="WixUIManualPdf" Value="$(var.DocumentDirectory)\manual.pdf"/>
 
-    <CustomAction Id="StartAppOnExit" Directory='application' ExeCommand='[INSTALLFOLDER]$(var.ProductName)\application\observador.exe' Impersonate='yes' Return="asyncNoWait" />
+    <CustomAction Id="StartAppOnExit" Directory='application' ExeCommand='[INSTALLFOLDER]$(var.ProductName)\application\kinoscope.exe' Impersonate='yes' Return="asyncNoWait" />
 
     <UI>
       <UIRef Id="WixUI_Mondo" />
@@ -71,7 +71,7 @@
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     <Property Id="ARPNOREPAIR" Value="1" />
 
-    <Feature Id="ProductFeature" Title="ObservadorInstaller" Level="1">
+    <Feature Id="ProductFeature" Title="KinoscopeInstaller" Level="1">
       <ComponentRef Id="DesktopShortcut"/>
       <ComponentRef Id="programMenuShortcuts"/>
       <ComponentRef Id="application"/>
@@ -82,12 +82,12 @@
 
     <!-- Prevent downgrading -->
     <CustomAction Id="PreventDowngrading"
-                  Error="A later version of Observador is already installed at the system. The setup will exit." />
+                  Error="A later version of Kinoscope is already installed at the system. The setup will exit." />
     <CustomAction Id="SameVersionError"
-                  Error="Observador is already installed at the system. The setup will exit." />
+                  Error="Kinoscope is already installed at the system. The setup will exit." />
 
     <CustomAction Id="QtExecDeferredExampleWithProperty_Cmd" Property="RemoveDb"
-              Value="rm -r -f &quot;[INSTALLFOLDER]Observador\db&quot;" Execute="immediate"/>
+              Value="rm -r -f &quot;[INSTALLFOLDER]Kinoscope\db&quot;" Execute="immediate"/>
     <CustomAction Id="RemoveDb" BinaryKey="WixCA" DllEntry="CAQuietExec"
                   Execute="deferred" Return="ignore" Impersonate="no"/>
 
@@ -124,17 +124,17 @@
                            Type="string"
                            KeyPath="yes" />
           </RegistryKey>
-          <Shortcut Id="observadorExeDesktop" Target="[INSTALLFOLDER]application\observador.exe" Name="Observador v$(var.VersionNumber)" WorkingDirectory='application' Icon="observadorIcon.exe" IconIndex="0" />
+          <Shortcut Id="kinoscopeExeDesktop" Target="[INSTALLFOLDER]application\kinoscope.exe" Name="Kinoscope v$(var.VersionNumber)" WorkingDirectory='application' Icon="kinoscopeIcon.exe" IconIndex="0" />
           <RemoveFolder Id="RemoveDesktopFolder"
                           On="uninstall" />
         </Component>
       </Directory>
       <Directory Id="ProgramMenuFolder">
-        <Directory Id="ObservadorProgramMenu" Name="$(var.ProductName)">
+        <Directory Id="KinoscopeProgramMenu" Name="$(var.ProductName)">
           <Component Id="programMenuShortcuts" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DE0">
             <Condition>INSTALLSTARTMENUSHORTCUT</Condition>
             <CreateFolder />
-            <Shortcut Id="observadorExeStartMenu" Target="[INSTALLFOLDER]application\observador.exe" Name="Observador v$(var.VersionNumber)" WorkingDirectory='application' Icon="observadorIcon.exe" IconIndex="0" />
+            <Shortcut Id="kinoscopeExeStartMenu" Target="[INSTALLFOLDER]application\kinoscope.exe" Name="Kinoscope v$(var.VersionNumber)" WorkingDirectory='application' Icon="kinoscopeIcon.exe" IconIndex="0" />
             <Shortcut Id="UninstallProduct"
                       Name="Uninstall $(var.ProductName)"
                       Target="[SystemFolder]msiexec.exe"
@@ -158,8 +158,8 @@
         <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)">
           <Directory Id="application" Name="application">
             <Component Id="application" Guid="9C555A5B-47AC-4EA4-95D2-447B7DC83DF0">
-              <File Id="observadorExe" Name="observador.exe" Source="$(var.ApplicationDirectory)/observador.exe" KeyPath="yes" />
-              <File Id="observadorExeConfig" Name="observador.exe.config" Source="$(var.ApplicationDirectory)/observador.exe.config" />
+              <File Id="kinoscopeExe" Name="kinoscope.exe" Source="$(var.ApplicationDirectory)/kinoscope.exe" KeyPath="yes" />
+              <File Id="kinoscopeExeConfig" Name="kinoscope.exe.config" Source="$(var.ApplicationDirectory)/kinoscope.exe.config" />
               <File Id="DbMigrationsDll" Name="DbMigrations.dll" Source="$(var.ApplicationDirectory)/DbMigrations.dll" />
               <File Id="FluentNHibernateDll" Name="FluentNHibernate.dll" Source="$(var.ApplicationDirectory)/FluentNHibernate.dll" />
               <File Id="IesiCollectionsDll" Name="Iesi.Collections.dll" Source="$(var.ApplicationDirectory)/Iesi.Collections.dll" />
@@ -204,7 +204,7 @@
   <Fragment>
     <UI>
       <Dialog Id="InstallShortcutDlg" Width="370" Height="270" Title="[ProductName] Setup" NoMinimize="yes">
-        <Control Id="ShortcutText" Type="Text" X="20" Y="100" Width="290" Height="10" Text="Create Icons for Observador:" />
+        <Control Id="ShortcutText" Type="Text" X="20" Y="100" Width="290" Height="10" Text="Create Icons for Kinoscope:" />
         <Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="25" Y="115" Width="290" Height="10" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="On my Desktop" />
         <Control Id="StartMenuShortcutCheckBox" Type="CheckBox" X="25" Y="130" Width="290" Height="10" Property="INSTALLSTARTMENUSHORTCUT" CheckBoxValue="1" Text="In my Start Menu Programs folder" />
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back">
@@ -227,7 +227,7 @@
         <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
       </Dialog>
       <Dialog Id="UninstallDlg" Width="370" Height="270" Title="[ProductName] Setup" NoMinimize="yes">
-        <Control Id="UninstallTxt" Type="Text" X="20" Y="100" Width="290" Height="10" Text=" Are you sure you want to uninstall observador?" />
+        <Control Id="UninstallTxt" Type="Text" X="20" Y="100" Width="290" Height="10" Text=" Are you sure you want to uninstall kinoscope?" />
         <Control Id="UninstallDataCheckBox" Type="CheckBox" X="25" Y="115" Width="290" Height="10" Property="UNINSTALLDATAFILES" CheckBoxValue="1" Text="Also delete data files" />
         <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back">
           <Publish Event="NewDialog" Value="MaintenanceWelcomeDlg">1</Publish>

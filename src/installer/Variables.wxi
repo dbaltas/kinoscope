@@ -5,8 +5,8 @@
   <?define DocumentDirectory="files-for-package/doc" ?>
   <?define ExportDirectory="files-for-package/export" ?>
   
-  <?define VersionNumber="!(bind.FileVersion.observadorExe)" ?>
-  <?define ProductName="Observador"?>
+  <?define VersionNumber="!(bind.FileVersion.kinoscopeExe)" ?>
+  <?define ProductName="Kinoscope"?>
   <?define UpgradeCode="66b8179f-6e00-4228-9f1e-0076cc8ee0c0"?>
 
   <?ifdef Win64Build?>
