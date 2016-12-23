@@ -1,9 +1,12 @@
 FST SAMPLE OF 15 SECONDS IN 5 SECOND BINS (A,B,C and T for Total time)
+```
 S: Swimming
 C: Climbing
 F: Floating
+```
 
 Run:
+```
 S 0
 C 2.1
 S 3.3
@@ -13,14 +16,16 @@ F 11.3
 S 12.5
 F 13.3
 C 14.7
-
+```
 	
 Expected Results:
+```
 A-S	A-C	A-F		B-S	B-C	B-F		C-S	C-C	C-F		T-S	T-C	T-F
 3.8	1.2	0.0		2.7	0.0	2.3		2.1	0.3	2.6		8.6	1.5	4.9
+```
 
-
-Calculations
+Calculations:
+```
 A-S 2.1+1.7
 B-S 0.2+2.5
 C-S 1.3+0.8
@@ -29,11 +34,12 @@ C-F 1.2+1.4
 T-S: 2.1+1.9+3.8+0.8=8.6
 T-C: 1.2+0.3=1.5
 T-F: 2.3+1.2+1.4=4.9
-
+```
 
 
 construct bins
 ## Pseudo Code
+```
 A:
 start:0
 end: 5
@@ -84,3 +90,4 @@ foreach behavior
 			bin[i][behavior]+=behavior.duration
 		else
 			bin[i][behavior]+=bin[i].end-behavior.start
+```
