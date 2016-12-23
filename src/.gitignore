@@ -11,7 +11,7 @@ Tests.VisualState.xml
 *.orig
 *.user
 *.vspscc
-LastBuild.log
+*.log
 .svn
 _ReSharper*
 .DS_Store
