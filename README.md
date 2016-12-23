@@ -12,8 +12,3 @@ http://sourceforge.net/p/kinoscope/discussion/general/
 
 ## Source Code
 http://github.com/kinoscope/kinoscope
-
-
-## Useful Links
-* http://bit.ly/observador (short description/screenshots)
-
